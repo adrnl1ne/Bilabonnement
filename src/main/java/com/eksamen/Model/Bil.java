@@ -5,18 +5,17 @@ import java.util.List;
 public class Bil {
 
     private String Stelnummer;
-    private int Model_ID;
     private String Bilmodel;
     private int Biltilstand;
-    private List<String> Skadeapport;
+    //private List<String> Skaderapport;
 
 
-    public Bil(String stelnummer, int model_ID, String bilmodel, int biltilstand, List<String> skadeapport) {
+    public Bil(String stelnummer, String bilmodel, int biltilstand/*, List<String> skaderapport*/) {
         Stelnummer = stelnummer;
-        Model_ID = model_ID;
+
         Bilmodel = bilmodel;
         Biltilstand = biltilstand;
-        Skadeapport = skadeapport;
+        //Skaderapport = skaderapport;
     }
 
     public int getBiltilstand() {
@@ -35,13 +34,7 @@ public class Bil {
         Stelnummer = stelnummer;
     }
 
-    public int getModel_ID() {
-        return Model_ID;
-    }
 
-    public void setModel_ID(int model_ID) {
-        Model_ID = model_ID;
-    }
 
     public String getBilmodel() {
         return Bilmodel;
@@ -51,11 +44,4 @@ public class Bil {
         Bilmodel = bilmodel;
     }
 
-    public List<String> getSkadeapport() {
-        return Skadeapport;
-    }
-
-    public void setSkadeapport(List<String> skadeapport) {
-        Skadeapport = skadeapport;
-    }
 }

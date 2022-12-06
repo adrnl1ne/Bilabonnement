@@ -21,6 +21,11 @@ public class LejeAftale {
         AfleveringsDato = afleveringsDato;
     }
 
+    public double calculateTotalPrice() {
+        double sum = getAbonnementPris() * getAbonnementLængde();
+        return sum;
+    }
+
     public int getLejeAftale_ID() {
         return LejeAftale_ID;
     }
