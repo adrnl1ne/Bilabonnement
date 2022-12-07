@@ -10,7 +10,7 @@ public class LejeaftaleService {
     private static BilRepository bilRepository = new BilRepository();
 
 
-   private static double calculateSumForUdlejedeBiler() {
+    public static double calculateSumForUdlejedeBiler() {
        List<LejeAftale> udlejedeBiler = bilRepository.viewLejeaftelerPåUdlejetBiler();
        double sum = 0;
        for (LejeAftale aftale : udlejedeBiler) {
@@ -18,5 +18,7 @@ public class LejeaftaleService {
        }
        return sum;
    }
+
+
 
 }

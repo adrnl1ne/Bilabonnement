@@ -73,7 +73,7 @@ public class BilRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Kan ikke opdatere " + bil);
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -93,10 +93,29 @@ public class BilRepository {
         } catch (SQLException e) {
             System.err.println("Fejl, kan ikke hente biler");
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return udlejedeBiler;
     }
 
+
+    public List<Bil> viewKlarBiler() {
+        List<Bil> bilerKlar = new ArrayList<>();
+        try {
+            //Laver Callable statement
+            cstmt = conn.prepareCall("{call viewklar(1)}");
+            cstmt.execute();
+            rs = cstmt.getResultSet();
+            String stelnummer = rs.getString("Stelnummer");
+            bilerKlar.add(viewBil(stelnummer));
+
+        } catch (SQLException e) {
+            System.err.println("Fejl, kan ikke hente biler");
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return bilerKlar;
+    }
 
    public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
         List<LejeAftale> udlejetBilsLejeaftale = new ArrayList<>();

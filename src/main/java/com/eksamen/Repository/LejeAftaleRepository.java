@@ -1,6 +1,7 @@
 package com.eksamen.Repository;
 
 import com.eksamen.Model.*;
+import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
 import com.eksamen.utilities.DCM;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 
@@ -33,16 +34,16 @@ public class LejeAftaleRepository {
         return -1;
     }
 
-    private void createAbonnement(Abonnement abonnement) {
-        int lejeaftalens_ID = abonnement.getLejeaftale_ID();
-        boolean isUnlimited = abonnement.isUnlimited();
-        int kmPrMd = abonnement.getKmprMd();
-        int abonnementLængde = abonnement.getAbonnementLængde();
-        double overAflPris = abonnement.getAfleveringPrice();
-        double prisPrMd = abonnement.getPriceprmonth();
-        double udbetaling = abonnement.getUdbetaling();
-        double farvePrisPrMd = abonnement.getXtraColorprice();
-        double prisPrKmOver = abonnement.getPriceForOverDrive();
+    private void createAbonnement(AbonnementLejeaftale abonnementLejeaftale) {
+        int lejeaftalens_ID = abonnementLejeaftale.getLejeaftale_ID();
+        boolean isUnlimited = abonnementLejeaftale.isUnlimited();
+        int kmPrMd = abonnementLejeaftale.getKmprMd();
+        int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
+        double overAflPris = abonnementLejeaftale.getAfleveringPrice();
+        double prisPrMd = abonnementLejeaftale.getPriceprmonth();
+        double udbetaling = abonnementLejeaftale.getUdbetaling();
+        double farvePrisPrMd = abonnementLejeaftale.getXtraColorprice();
+        double prisPrKmOver = abonnementLejeaftale.getPriceForOverDrive();
 
         try {
 
@@ -62,7 +63,7 @@ public class LejeAftaleRepository {
             preparedStatement2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at create, altså inserte i tabellen, Abonnementet: " + abonnement);
+            System.err.println("Det var ikke muligt at create, altså inserte i tabellen, Abonnementet: " + abonnementLejeaftale);
             throw new RuntimeException();
         }
     }
@@ -94,19 +95,19 @@ public class LejeAftaleRepository {
         }
     }
 
-    private void updateAbonnement(Abonnement abonnement) {
+    private void updateAbonnement(AbonnementLejeaftale abonnementLejeaftale) {
         // Finder id'et til hvor i tabellen dette Abonnement skal updates
-        int lejeaftale_ID = abonnement.getLejeaftale_ID();
+        int lejeaftale_ID = abonnementLejeaftale.getLejeaftale_ID();
 
         // Finder alle de værdier der er i en lejeaftales abonnement, som så skal updates
-        boolean isUnlimited = abonnement.isUnlimited();
-        int kmPrMd = abonnement.getKmprMd();
-        int abonnementLængde = abonnement.getAbonnementLængde();
-        double overAflPris = abonnement.getAfleveringPrice();
-        double prisPrMd = abonnement.getPriceprmonth();
-        double udbetaling = abonnement.getUdbetaling();
-        double farvePrisPrMd = abonnement.getXtraColorprice();
-        double prisPrKmOver = abonnement.getPriceForOverDrive();
+        boolean isUnlimited = abonnementLejeaftale.isUnlimited();
+        int kmPrMd = abonnementLejeaftale.getKmprMd();
+        int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
+        double overAflPris = abonnementLejeaftale.getAfleveringPrice();
+        double prisPrMd = abonnementLejeaftale.getPriceprmonth();
+        double udbetaling = abonnementLejeaftale.getUdbetaling();
+        double farvePrisPrMd = abonnementLejeaftale.getXtraColorprice();
+        double prisPrKmOver = abonnementLejeaftale.getPriceForOverDrive();
 
         // Updater de fundne værdier med dem i tabellen
         try {
@@ -126,7 +127,7 @@ public class LejeAftaleRepository {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at update Abonnementet: " + abonnement);
+            System.err.println("Det var ikke muligt at update Abonnementet: " + abonnementLejeaftale);
             throw new RuntimeException(e);
         }
     }
@@ -200,9 +201,9 @@ public class LejeAftaleRepository {
         }
     }
 
-    private Abonnement viewAbonnement(LejeAftale lejeAftale) {
+    private AbonnementLejeaftale viewAbonnement(LejeAftale lejeAftale) {
         int lejeAftale_ID = lejeAftale.getLejeAftale_ID();
-        Abonnement lejeAftalesAbo = new Abonnement(lejeAftale_ID);
+        AbonnementLejeaftale lejeAftalesAbo = new AbonnementLejeaftale(lejeAftale_ID);
 
         try {
             String abonnementQUERY = "SELECT * FROM abnmt WHERE abnmt.Lejeaftale_ID = ?";
@@ -277,7 +278,7 @@ public class LejeAftaleRepository {
 
         potentielBilTilUdlejning.setBiltilstand(Biltilstand.UDLEJET);
         new BilRepository().updateBil(potentielBilTilUdlejning);
-        Abonnement abonnement = lejeAftale.getAbonnement();
+        AbonnementLejeaftale abonnementLejeaftale = lejeAftale.getAbonnement();
         String CPR = lejeAftale.getKunde().getCprnumber();
 
 
@@ -303,7 +304,7 @@ public class LejeAftaleRepository {
 
 
             if (lejeaftalens_ID > 0) {
-                this.createAbonnement(abonnement);
+                this.createAbonnement(abonnementLejeaftale);
                 this.createLevering(lejeAftale);
                 new KundeRepository().createKunde(lejeAftale.getKunde());
             } else {
@@ -321,7 +322,7 @@ public class LejeAftaleRepository {
     public LejeAftale viewLejeaftale(int Lejeaftale_ID) {
         try {
             LejeAftale lejeAftalen;
-            Abonnement abmnt;
+            AbonnementLejeaftale abmnt;
             Kunde kunden;
             // Creating the LejeAftale object from the table
             String lejeaftaleQUERY = "SELECT * FROM lejeaftale WHERE lejeaftale.Lejeaftale_ID = ?";

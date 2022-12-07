@@ -1,8 +1,12 @@
 package com.eksamen.Model;
 
+import com.eksamen.Model.Abonnement.AbonnementBilModel;
+
+import java.util.List;
+
 public class BilModel {
 
-    private AbonnementsPriser Abopris;
+    private AbonnementBilModel Abopris;
     private String Mærke;
     private String Model;
     private int Model_ID;
@@ -11,6 +15,8 @@ public class BilModel {
     private double KmPrX;
     private boolean isGearManuel;
     private Energitype energitype;
+
+    private List<String> udstyr;
 
 
     //Constructor
@@ -23,11 +29,11 @@ public class BilModel {
     //Getters og Setters
 
 
-    public AbonnementsPriser getAbopris() {
+    public AbonnementBilModel getAbopris() {
         return Abopris;
     }
 
-    public void setAbopris(AbonnementsPriser abopris) {
+    public void setAbopris(AbonnementBilModel abopris) {
         Abopris = abopris;
     }
 
@@ -93,5 +99,13 @@ public class BilModel {
 
     public void setEnergitype(Energitype energitype) {
         this.energitype = energitype;
+    }
+
+    public List<String> getUdstyr() {
+        return udstyr;
+    }
+
+    public void setUdstyr(List<String> udstyr) {
+        this.udstyr = udstyr;
     }
 }

@@ -1,5 +1,7 @@
 package com.eksamen.Model;
 
+import com.eksamen.Model.Skader.Skaderapport;
+
 import java.util.List;
 
 public class Bil {
@@ -68,11 +70,11 @@ public class Bil {
         this.bilModel = bilModel;
     }
 
-    public List<com.eksamen.Model.Skaderapport> getSkaderapport() {
+    public List<com.eksamen.Model.Skader.Skaderapport> getSkaderapport() {
         return Skaderapport;
     }
 
-    public void setSkaderapport(List<com.eksamen.Model.Skaderapport> skaderapport) {
+    public void setSkaderapport(List<com.eksamen.Model.Skader.Skaderapport> skaderapport) {
         Skaderapport = skaderapport;
     }
 }

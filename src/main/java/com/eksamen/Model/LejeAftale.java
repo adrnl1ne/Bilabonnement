@@ -1,10 +1,13 @@
 package com.eksamen.Model;
 
+import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
+import com.eksamen.Model.Skader.Skaderapport;
+
 import java.time.LocalDate;
 
 public class LejeAftale {
     private Kunde kunde;
-    private Abonnement abonnement;
+    private AbonnementLejeaftale abonnementLejeaftale;
     private int lejeAftale_ID;
     private String nummerPlade;
     private Bil bil;
@@ -104,12 +107,12 @@ public class LejeAftale {
         this.nummerPlade = nummerPlade;
     }
 
-    public Abonnement getAbonnement() {
-        return abonnement;
+    public AbonnementLejeaftale getAbonnement() {
+        return abonnementLejeaftale;
     }
 
-    public void setAbonnement(Abonnement abonnement) {
-        this.abonnement = abonnement;
+    public void setAbonnement(AbonnementLejeaftale abonnementLejeaftale) {
+        this.abonnementLejeaftale = abonnementLejeaftale;
     }
 
     public Kunde getKunde() {
@@ -165,7 +168,7 @@ public class LejeAftale {
     public String toString() {
         return "LejeAftale{" +
                 "kunde=" + kunde +
-                ", abonnement=" + abonnement +
+                ", abonnement=" + abonnementLejeaftale +
                 ", lejeAftale_ID=" + lejeAftale_ID +
                 ", nummerPlade='" + nummerPlade + '\'' +
                 ", bil=" + bil +

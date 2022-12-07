@@ -1,6 +1,6 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Abonnement;
 
-public class Abonnement {
+public class AbonnementLejeaftale {
 
     private int lejeaftale_ID;
     private boolean isUnlimited;
@@ -12,7 +12,7 @@ public class Abonnement {
     private double XtraColorprice;
     private double PriceForOverDrive;
 
-    public Abonnement(int lejeaftale_ID) {
+    public AbonnementLejeaftale(int lejeaftale_ID) {
         this.lejeaftale_ID = lejeaftale_ID;
     }
 

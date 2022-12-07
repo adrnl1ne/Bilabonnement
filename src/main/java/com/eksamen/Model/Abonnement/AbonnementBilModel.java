@@ -1,6 +1,6 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Abonnement;
 
-public class AbonnementsPriser {
+public class AbonnementBilModel {
     private int bilModel;
     private boolean isUnlimited;
     private double ThreeMonthsPris;
