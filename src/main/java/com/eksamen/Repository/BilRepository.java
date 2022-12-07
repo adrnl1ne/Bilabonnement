@@ -1,7 +1,9 @@
 package com.eksamen.Repository;
 
 import com.eksamen.Model.Bil;
-import com.eksamen.Model.DCM;
+import com.eksamen.Model.BilModel;
+import com.eksamen.Model.Biltilstand;
+import com.eksamen.utilities.DCM;
 import com.eksamen.Model.LejeAftale;
 
 import java.sql.*;
@@ -21,28 +23,67 @@ public class BilRepository {
             PreparedStatement preparedStatement = conn.prepareStatement(Model_QUERY);
             preparedStatement.setString(1, Stelnummer);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 String stelnummer = resultSet.getString("Stelnummer");
-                String Bilmodel = resultSet.getString("Bilmodel");
-                int Biltilstand = resultSet.getInt("Biltilstand");
-                Bil bil = new Bil(stelnummer, Bilmodel, Biltilstand);
-                bil.setStelnummer(stelnummer);
-                bil.setBilmodel(Bilmodel);
-                bil.setBiltilstand(Biltilstand);
-                return bil;
+                int Tilstands_ID = resultSet.getInt("Tilstands_ID");
+                int Model_ID = resultSet.getInt("Model_ID");
+                double KmKørt = resultSet.getDouble("Km_Kørt");
+
+
+                String Tilstand_QUERY = "SELECT Biltilstand FROM biltilstand WHERE TilStands_ID = ?";
+                PreparedStatement preparedStatement1 = conn.prepareStatement(Tilstand_QUERY);
+                preparedStatement1.setInt(1, Tilstands_ID);
+                ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+                if (resultSet1.next()) {
+                    Biltilstand tilstand = Biltilstand.getEnum(resultSet1.getInt(Tilstands_ID));
+                    Bil bil = new Bil(stelnummer);
+                    bil.setBiltilstand(tilstand);
+                    bil.setBilmodel_ID(Model_ID);
+                    bil.setKm_Kørt(KmKørt);
+                    BilModel bilModel = new BilModelRepository().viewBilmodel(Model_ID);
+                    bil.setBilModel(bilModel);
+
+                    return bil;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Ikke muligt at se bil med stelnummeret: " + Stelnummer);
+            throw new RuntimeException(e);
         }
         return null;
     }
 
 
+    public void updateBil(Bil bil) {
+        viewBil(bil.getStelnummer());
+        try {
+            String Stelnummer = bil.getStelnummer();
+            Biltilstand tilstand = bil.getBiltilstand();
+            int Tilstands_ID = tilstand.getInt();
+            double Km_Kørt = bil.getKm_Kørt();
+            String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
+            preparedStatement.setInt(1, Tilstands_ID);
+            preparedStatement.setDouble(2, Km_Kørt);
+            preparedStatement.setString(3, Stelnummer);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Kan ikke opdatere " + bil);
+            //throw new RuntimeException(e);
+        }
+    }
 
-    public List<Bil> viewUdlejetBiler() {
+
+
+
+   public List<Bil> viewUdlejetBiler() {
         List<Bil> udlejedeBiler = new ArrayList<>();
         try {
+            //Laver Callable statement
             cstmt = conn.prepareCall("{call viewudlejet(2)}");
             cstmt.execute();
             rs = cstmt.getResultSet();
@@ -57,7 +98,7 @@ public class BilRepository {
     }
 
 
-    public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
+   public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
         List<LejeAftale> udlejetBilsLejeaftale = new ArrayList<>();
         List<Bil> udlejetBiler = viewUdlejetBiler();
 
