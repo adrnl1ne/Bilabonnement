@@ -1,4 +1,4 @@
-package com.eksamen.Model;
+package com.eksamen.utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
