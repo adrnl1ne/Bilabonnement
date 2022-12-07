@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class LejeAftale {
     private int LejeAftale_ID;
     private Bil bil;
-    private double AbonnementPris;
+    private double PrisPrMåned;
     private int AbonnementLængde;
     private LocalDate StartDato;
     private LocalDate AfleveringsDato;
@@ -15,14 +15,14 @@ public class LejeAftale {
                       LocalDate startDato, LocalDate afleveringsDato) {
         LejeAftale_ID = lejeAftale_ID;
         this.bil = bil;
-        AbonnementPris = abonnementPris;
+        PrisPrMåned = abonnementPris;
         AbonnementLængde = abonnementLængde;
         StartDato = startDato;
         AfleveringsDato = afleveringsDato;
     }
 
     public double calculateTotalPrice() {
-        double sum = getAbonnementPris() * getAbonnementLængde();
+        double sum = getPrisPrMåned() * getAbonnementLængde();
         return sum;
     }
 
@@ -42,12 +42,12 @@ public class LejeAftale {
         this.bil = bil;
     }
 
-    public double getAbonnementPris() {
-        return AbonnementPris;
+    public double getPrisPrMåned() {
+        return PrisPrMåned;
     }
 
-    public void setAbonnementPris(double abonnementPris) {
-        AbonnementPris = abonnementPris;
+    public void setPrisPrMåned(double prisPrMåned) {
+        PrisPrMåned = prisPrMåned;
     }
 
     public int getAbonnementLængde() {
