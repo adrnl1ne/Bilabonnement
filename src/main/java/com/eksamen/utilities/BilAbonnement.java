@@ -1,19 +1,5 @@
 package com.eksamen.utilities;
 
-import com.eksamen.Model.Bil;
-import com.eksamen.Model.Kunde;
-import com.eksamen.Model.LejeAftale;
-import com.eksamen.Repository.BilRepository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 // Marcus: Alt inde i denne klasse er lavet af mig
 public class BilAbonnement {
 /*

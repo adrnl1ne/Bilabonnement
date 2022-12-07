@@ -1,4 +1,6 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Kunde;
+
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 
 import java.util.List;
 

@@ -1,7 +1,5 @@
 package com.eksamen.Repository;
 
-import com.eksamen.Model.Bil;
-import com.eksamen.Model.LejeAftale;
 import com.eksamen.Model.Skader.Skade;
 import com.eksamen.Model.Skader.SkadeType;
 import com.eksamen.Model.Skader.Skaderapport;

@@ -1,4 +1,4 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Kunde;
 
 public class Kontaktinfo {
     private String FirstName;

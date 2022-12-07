@@ -1,6 +1,8 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Lejeaftale;
 
 import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
+import com.eksamen.Model.Bil.Bil;
+import com.eksamen.Model.Kunde.Kunde;
 import com.eksamen.Model.Skader.Skaderapport;
 
 import java.time.LocalDate;

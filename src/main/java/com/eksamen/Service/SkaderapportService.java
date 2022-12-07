@@ -1,6 +1,6 @@
 package com.eksamen.Service;
 
-import com.eksamen.Model.Bil;
+import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Skader.Skaderapport;
 import com.eksamen.Repository.BilRepository;
 import com.eksamen.Repository.LejeAftaleRepository;

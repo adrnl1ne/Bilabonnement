@@ -1,4 +1,4 @@
-package com.eksamen.Model;
+package com.eksamen.Model.Bil;
 
 public enum Biltilstand {
 

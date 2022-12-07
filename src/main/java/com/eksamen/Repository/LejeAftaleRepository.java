@@ -1,7 +1,11 @@
 package com.eksamen.Repository;
 
-import com.eksamen.Model.*;
 import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
+import com.eksamen.Model.Bil.Bil;
+import com.eksamen.Model.Bil.Biltilstand;
+import com.eksamen.Model.Kunde.Kunde;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
+import com.eksamen.Model.Lejeaftale.LeveringsType;
 import com.eksamen.utilities.DCM;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 

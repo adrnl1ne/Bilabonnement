@@ -1,8 +1,7 @@
 package com.eksamen.Repository;
 
-import com.eksamen.Model.Kontaktinfo;
-import com.eksamen.Model.Kunde;
-import com.eksamen.Model.LejeAftale;
+import com.eksamen.Model.Kunde.Kontaktinfo;
+import com.eksamen.Model.Kunde.Kunde;
 import com.eksamen.utilities.DCM;
 
 import java.sql.Connection;

@@ -1,6 +1,6 @@
 package com.eksamen.Service;
 
-import com.eksamen.Model.LejeAftale;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Repository.BilRepository;
 
 

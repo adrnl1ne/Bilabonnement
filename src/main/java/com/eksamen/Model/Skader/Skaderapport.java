@@ -1,7 +1,7 @@
 package com.eksamen.Model.Skader;
 
-import com.eksamen.Model.Bil;
-import com.eksamen.Model.LejeAftale;
+import com.eksamen.Model.Bil.Bil;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 
 import java.time.LocalDate;
 import java.util.List;

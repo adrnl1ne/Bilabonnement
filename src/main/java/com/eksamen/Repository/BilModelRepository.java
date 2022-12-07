@@ -1,8 +1,8 @@
 package com.eksamen.Repository;
 
 import com.eksamen.Model.Abonnement.AbonnementBilModel;
-import com.eksamen.Model.BilModel;
-import com.eksamen.Model.Energitype;
+import com.eksamen.Model.Bil.BilModel;
+import com.eksamen.Model.Bil.Energitype;
 import com.eksamen.utilities.DCM;
 
 import java.sql.Connection;

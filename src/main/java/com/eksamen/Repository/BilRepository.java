@@ -1,10 +1,10 @@
 package com.eksamen.Repository;
 
-import com.eksamen.Model.Bil;
-import com.eksamen.Model.BilModel;
-import com.eksamen.Model.Biltilstand;
+import com.eksamen.Model.Bil.Bil;
+import com.eksamen.Model.Bil.BilModel;
+import com.eksamen.Model.Bil.Biltilstand;
 import com.eksamen.utilities.DCM;
-import com.eksamen.Model.LejeAftale;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 
 import java.sql.*;
 import java.util.ArrayList;
