@@ -9,7 +9,7 @@
 <body>
 <section class="header">
     <nav>
-        <a href="index"><img src="/Pictures/newlogo.png" alt=""></a>
+        <a href="/index"><img src="/Pictures/newlogo.png" alt=""></a>
         <div class="nav-links" id="navLinks">
             <i class="fa fa-close" onclick="hideMenu()"></i>
 <form method="GET" action="/Admin/RegistrerAftale/deleteAftale" id="deleteAftale"></form>
@@ -32,8 +32,8 @@
                 <th>By</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.getKunden().getCprnumber()}"></td>
-                <td th:text="${lejeaftale.getKunden().getKontoNum()}"></td>
+                <td th:text="${lejeaftale.kunde.getCprnumber()}"></td>
+                <td th:text="${lejeaftale.kunde.getKontoNum()}"></td>
                 <td th:text="${lejeaftale.getKunden().getRegNum()}"></td>
                 <td th:text="${lejeaftale.getKontakt().getFirstName()}"></td>
                 <td th:text="${lejeaftale.getKontakt().getLastName()}"></td>
@@ -80,7 +80,7 @@
         <h2>Abonnementets info:</h2>
         <table>
             <tr>
-                <th>Type Abonnement</th>
+
                 <th>Længde på Abonnement</th>
                 <th>Km kørsel per måned</th>
                 <th>Abonnement prisen per måned</th>
@@ -90,7 +90,6 @@
                 <th>Pris for hver overkørt km</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.getAbonnement().displayAbonnementType()}"></td>
                 <td th:text="${lejeaftale.getAbonnement().getAbonnementLængde()} + ' Måneder'"></td>
                 <td th:text="${lejeaftale.getAbonnement().getKmprMd()} + ' km/måned'"></td>
                 <td th:text="${lejeaftale.getAbonnement().getPriceprmonth()} + ' kr./måned'"></td>

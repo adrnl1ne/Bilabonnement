@@ -3,6 +3,7 @@ package com.eksamen.Repository;
 import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Bil.BilModel;
 import com.eksamen.Model.Bil.Biltilstand;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.utilities.DCM;
 
 import java.sql.*;
@@ -77,7 +78,6 @@ public class BilRepository {
     }
 
 
-
     public List<Bil> viewLejeAftalePåKlarBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
@@ -88,7 +88,7 @@ public class BilRepository {
             cstmt.execute();
 
             rs = cstmt.getResultSet();
-            if (rs.next()) {
+            while (rs.next()) {
                 String stelnummer = rs.getString("Stelnummer");
                 udlejedeBiler.add(viewBil(stelnummer));
             }
@@ -102,7 +102,7 @@ public class BilRepository {
         return udlejedeBiler;
     }
 
-   public List<Bil> viewLejeAftalePåUdlejetBil() {
+    public List<Bil> viewLejeAftalePåUdlejetBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
         try {
@@ -111,7 +111,7 @@ public class BilRepository {
             cstmt = conn.prepareCall("{call viewInfo(2)}");
             cstmt.execute();
             rs = cstmt.getResultSet();
-            if (rs.next()) {
+            while (rs.next()) {
                 String stelnummer = rs.getString("Stelnummer");
                 udlejedeBiler.add(viewBil(stelnummer));
             }
@@ -124,40 +124,22 @@ public class BilRepository {
         return udlejedeBiler;
     }
 
+    public List<Bil> viewAlleBiler() {
+        List<Bil> alleBiler = new ArrayList<>();
 
-
-  /* public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
-        List<LejeAftale> udlejetBilsLejeaftale = new ArrayList<>();
-        List<Bil> udlejetBiler = viewUdlejetBiler();
-
-        for (Bil udlejetBil: udlejetBiler) {
-            try {
-                String Query = "SELECT Lejeaftale_ID FROM lejeaftale WHERE Stelnummer=? " +
-                        "AND Lejeaftale_ID=(SELECT MAX(Lejeaftale_ID) FROM lejeaftale WHERE Stelnummer=?)";
-
-                PreparedStatement preparedStatement = conn.prepareStatement(Query);
-                preparedStatement.setString(1, udlejetBil.getStelnummer());
-                preparedStatement.setString(2, udlejetBil.getStelnummer());
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    int lejeaftale_ID = resultSet.getInt(1);
-                    LejeAftale lejeAftale = new LejeAftaleRepository().viewLejeaftale(lejeaftale_ID);
-                    if (lejeAftale != null) {
-                        udlejetBilsLejeaftale.add(lejeAftale);
-                    }
-                }
-
-
-            } catch (SQLException e){
-                System.err.println("Kan ikke viewe udlejde bilers aftale");
-                e.printStackTrace();
-
+        try {
+            String QUERY = "SELECT * FROM bil";
+            PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String stelnummer = resultSet.getString("Stelnummer");
+                alleBiler.add(viewBil(stelnummer));
             }
+        } catch (SQLException e) {
+            System.err.println("Fejl, Kan ikke se alle biler");
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        return udlejetBilsLejeaftale;
-
-    }*/
-
+        return alleBiler;
+    }
 }

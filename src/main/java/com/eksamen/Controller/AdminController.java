@@ -1,10 +1,18 @@
 package com.eksamen.Controller;
 
+import com.eksamen.Model.Lejeaftale.LejeAftale;
+import com.eksamen.Service.LejeaftaleService;
+import com.eksamen.utilities.NoCarReadyToRentOutException;
+import com.eksamen.utilities.RentingOutNoneReadyCarException;
+import com.eksamen.utilities.Simulator;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AdminController {
-    /*
+
     private final LejeaftaleService lejeaftaleService = new LejeaftaleService();
 
     // Marcus
@@ -21,7 +29,7 @@ public class AdminController {
         LejeAftale sessionAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");
         session.invalidate();
         try {
-            lejeaftaleService.createLejeaftale(sessionAftale);
+            lejeaftaleService.createLejeAftale(sessionAftale);
             return "redirect:/Admin/RegistrerAftale";
         } catch (RentingOutNoneReadyCarException e) {
             e.printStackTrace();
@@ -42,7 +50,7 @@ public class AdminController {
             if (sessionLejeAftale != null) {
                 return sessionLejeAftale;
             } else {
-                LejeAftale simuleretLejeAftale = BilAbonnement.simulateLejeAftale();
+                LejeAftale simuleretLejeAftale = Simulator.simulateLejeAftale();
                 session.setAttribute("sessionLejeAftale", simuleretLejeAftale);
                 return simuleretLejeAftale;
             }
@@ -51,5 +59,5 @@ public class AdminController {
             System.err.println("Det var ikke muligt at sætte en HttpSession for en simuleret LejeAftale, da der ikke er flere biler der kan udlejes.");
             return null;
         }
-*/
     }
+     }
