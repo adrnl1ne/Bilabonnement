@@ -1,7 +1,6 @@
 package com.eksamen.Model.Bil;
 
 import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
-import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skaderapport;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class Bil {
     }
 
     public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
-        double sum = abonnementLejeaftale.getPriceprmonth() * abonnementLejeaftale.getAbonnementLængde();
+        double sum = abonnementLejeaftale.getPricePrMonth() * abonnementLejeaftale.getAbonnementLængde();
         return sum;
     }
 

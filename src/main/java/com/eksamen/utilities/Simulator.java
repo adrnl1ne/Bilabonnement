@@ -375,11 +375,11 @@ public class Simulator {
         double prisPrKmOver = viewPrisliste("Per Overkørt km");
 
         simuleretAbonnement.setUnlimited(isUnlimited);
-        simuleretAbonnement.setPriceprmonth(prisPrMd);
+        simuleretAbonnement.setPricePrMonth(prisPrMd);
         simuleretAbonnement.setAbonnementLængde(abonnementslængde);
-        simuleretAbonnement.setKmprMd(kmPrMd);
+        simuleretAbonnement.setKmPrMd(kmPrMd);
         simuleretAbonnement.setUdbetaling(udbetaling);
-        simuleretAbonnement.setXtraColorprice(farvePris);
+        simuleretAbonnement.setExtraColorPrice(farvePris);
         simuleretAbonnement.setAfleveringPrice(overAflPris);
         simuleretAbonnement.setPriceForOverDrive(prisPrKmOver);
 

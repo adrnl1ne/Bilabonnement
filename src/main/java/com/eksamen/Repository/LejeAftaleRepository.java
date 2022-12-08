@@ -41,17 +41,17 @@ public class LejeAftaleRepository {
     private void createAbonnement(AbonnementLejeaftale abonnementLejeaftale) {
         int lejeaftalens_ID = abonnementLejeaftale.getLejeaftale_ID();
         boolean isUnlimited = abonnementLejeaftale.isUnlimited();
-        int kmPrMd = abonnementLejeaftale.getKmprMd();
+        int kmPrMd = abonnementLejeaftale.getKmPrMd();
         int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
         double overAflPris = abonnementLejeaftale.getAfleveringPrice();
-        double prisPrMd = abonnementLejeaftale.getPriceprmonth();
+        double prisPrMd = abonnementLejeaftale.getPricePrMonth();
         double udbetaling = abonnementLejeaftale.getUdbetaling();
-        double farvePrisPrMd = abonnementLejeaftale.getXtraColorprice();
+        double farvePrisPrMd = abonnementLejeaftale.getExtraColorPrice();
         double prisPrKmOver = abonnementLejeaftale.getPriceForOverDrive();
 
         try {
 
-            String abonnementQUERY = "INSERT INTO abnmt (Lejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
+            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (Lejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
                     "OverAflPris, PrisPrMåned, Udbetaling, " +
                     "FarvePrisPrMåned, PrisPrKmOver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement2 = conn.prepareStatement(abonnementQUERY);
@@ -105,17 +105,17 @@ public class LejeAftaleRepository {
 
         // Finder alle de værdier der er i en lejeaftales abonnement, som så skal updates
         boolean isUnlimited = abonnementLejeaftale.isUnlimited();
-        int kmPrMd = abonnementLejeaftale.getKmprMd();
+        int kmPrMd = abonnementLejeaftale.getKmPrMd();
         int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
         double overAflPris = abonnementLejeaftale.getAfleveringPrice();
-        double prisPrMd = abonnementLejeaftale.getPriceprmonth();
+        double prisPrMd = abonnementLejeaftale.getPricePrMonth();
         double udbetaling = abonnementLejeaftale.getUdbetaling();
-        double farvePrisPrMd = abonnementLejeaftale.getXtraColorprice();
+        double farvePrisPrMd = abonnementLejeaftale.getExtraColorPrice();
         double prisPrKmOver = abonnementLejeaftale.getPriceForOverDrive();
 
         // Updater de fundne værdier med dem i tabellen
         try {
-            String abonnementQUERY = "UPDATE abnmt SET isUnlimited = ?, KmPrMd = ?, AbnmtLængde = ?, " +
+            String abonnementQUERY = "UPDATE abnmtlejeaftale SET isUnlimited = ?, KmPrMd = ?, AbnmtLængde = ?, " +
                     "OverAflPris = ?, PrisPrMåned = ?, Udbetaling = ?, FarvePrisPrMåned = ?, " +
                     "PrisPrKmOver = ? WHERE Lejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
@@ -210,7 +210,7 @@ public class LejeAftaleRepository {
         AbonnementLejeaftale lejeAftalesAbo = new AbonnementLejeaftale(lejeAftale_ID);
 
         try {
-            String abonnementQUERY = "SELECT * FROM abnmt WHERE abnmt.Lejeaftale_ID = ?";
+            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.Lejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setInt(1, lejeAftale_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -220,7 +220,7 @@ public class LejeAftaleRepository {
                 lejeAftalesAbo.setUnlimited(isUnlimited);
 
                 int kmPrMd = resultSet.getInt("KmPrMd");
-                lejeAftalesAbo.setKmprMd(kmPrMd);
+                lejeAftalesAbo.setKmPrMd(kmPrMd);
 
                 int aboLængde = resultSet.getInt("AbnmtLængde");
                 lejeAftalesAbo.setAbonnementLængde(aboLængde);
@@ -229,13 +229,13 @@ public class LejeAftaleRepository {
                 lejeAftalesAbo.setAfleveringPrice(overAflPris);
 
                 double prisPrMd = resultSet.getDouble("PrisPrMåned");
-                lejeAftalesAbo.setPriceprmonth(prisPrMd);
+                lejeAftalesAbo.setPricePrMonth(prisPrMd);
 
                 double udbetaling = resultSet.getDouble("Udbetaling");
                 lejeAftalesAbo.setUdbetaling(udbetaling);
 
                 double farvePrisPrMd = resultSet.getDouble("FarvePrisPrMåned");
-                lejeAftalesAbo.setXtraColorprice(farvePrisPrMd);
+                lejeAftalesAbo.setExtraColorPrice(farvePrisPrMd);
 
                 double prisPrKmOver = resultSet.getDouble("PrisPrKmOver");
                 lejeAftalesAbo.setPriceForOverDrive(prisPrKmOver);
@@ -294,7 +294,7 @@ public class LejeAftaleRepository {
         String nummerplade = lejeAftale.getNummerPlade();
 
         try {
-            String QUERY = "INSERT INTO lejeaftale (CPR, Stelnummer, StartDato, Nummerplade) VALUES (?, ?, ?, ?)";
+            String QUERY = "INSERT INTO lejeaftale (CPR, LAStelnummer, StartDato, Nummerplade) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
             preparedStatement.setString(1, CPR);
             preparedStatement.setString(2, stelnummer);
@@ -382,7 +382,7 @@ public class LejeAftaleRepository {
 
         // updater værdierne der lige er blevet fundet
         try {
-            String lejeAftaleQUERY = "UPDATE lejeaftale SET CPR = ?, Stelnummer = ?, StartDato = ?," +
+            String lejeAftaleQUERY = "UPDATE lejeaftale SET CPR = ?, LAStelnummer = ?, StartDato = ?," +
                     " Nummerplade = ? WHERE Lejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(lejeAftaleQUERY);
             preparedStatement.setString(1, CPR_Number);

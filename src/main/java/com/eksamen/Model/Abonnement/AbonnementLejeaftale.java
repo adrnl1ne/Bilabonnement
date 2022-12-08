@@ -4,14 +4,16 @@ public class AbonnementLejeaftale {
 
     private int lejeaftale_ID;
     private boolean isUnlimited;
-    private int kmprMd;
-    private int AbonnementLængde;
-    private double AfleveringPrice;
-    private double Priceprmonth;
-    private double Udbetaling;
-    private double XtraColorprice;
-    private double PriceForOverDrive;
+    private int kmPrMd;
+    private int abonnementLængde;
+    private double afleveringPrice;
+    private double pricePrMonth;
+    private double udbetaling;
+    private double extraColorPrice;
+    private double priceForOverDrive;
 
+
+    // Constructors
     public AbonnementLejeaftale() {
     }
 
@@ -19,7 +21,26 @@ public class AbonnementLejeaftale {
         this.lejeaftale_ID = lejeaftale_ID;
     }
 
-    // getters, setters and tostring.
+
+    // Custom made Metoder
+    public String displayAbonnementType() {
+        if (isUnlimited) {
+            return "Unlimited";
+        } else {
+            return "Limited";
+        }
+    }
+
+
+
+    // getters, setters and toString.
+    public int getLejeaftale_ID() {
+        return lejeaftale_ID;
+    }
+
+    public void setLejeaftale_ID(int lejeaftale_ID) {
+        this.lejeaftale_ID = lejeaftale_ID;
+    }
 
     public boolean isUnlimited() {
         return isUnlimited;
@@ -29,60 +50,60 @@ public class AbonnementLejeaftale {
         isUnlimited = unlimited;
     }
 
-    public int getKmprMd() {
-        return kmprMd;
+    public int getKmPrMd() {
+        return kmPrMd;
     }
 
-    public void setKmprMd(int kmprMd) {
-        this.kmprMd = kmprMd;
+    public void setKmPrMd(int kmPrMd) {
+        this.kmPrMd = kmPrMd;
     }
 
     public int getAbonnementLængde() {
-        return AbonnementLængde;
+        return abonnementLængde;
     }
 
     public void setAbonnementLængde(int abonnementLængde) {
-        AbonnementLængde = abonnementLængde;
+        this.abonnementLængde = abonnementLængde;
     }
 
     public double getAfleveringPrice() {
-        return AfleveringPrice;
+        return afleveringPrice;
     }
 
     public void setAfleveringPrice(double afleveringPrice) {
-        AfleveringPrice = afleveringPrice;
+        this.afleveringPrice = afleveringPrice;
     }
 
-    public double getPriceprmonth() {
-        return Priceprmonth;
+    public double getPricePrMonth() {
+        return pricePrMonth;
     }
 
-    public void setPriceprmonth(double priceprmonth) {
-        Priceprmonth = priceprmonth;
+    public void setPricePrMonth(double pricePrMonth) {
+        this.pricePrMonth = pricePrMonth;
     }
 
     public double getUdbetaling() {
-        return Udbetaling;
+        return udbetaling;
     }
 
     public void setUdbetaling(double udbetaling) {
-        Udbetaling = udbetaling;
+        this.udbetaling = udbetaling;
     }
 
-    public double getXtraColorprice() {
-        return XtraColorprice;
+    public double getExtraColorPrice() {
+        return extraColorPrice;
     }
 
-    public void setXtraColorprice(double xtraColorprice) {
-        XtraColorprice = xtraColorprice;
+    public void setExtraColorPrice(double extraColorPrice) {
+        this.extraColorPrice = extraColorPrice;
     }
 
     public double getPriceForOverDrive() {
-        return PriceForOverDrive;
+        return priceForOverDrive;
     }
 
     public void setPriceForOverDrive(double priceForOverDrive) {
-        PriceForOverDrive = priceForOverDrive;
+        this.priceForOverDrive = priceForOverDrive;
     }
 
 
@@ -91,21 +112,15 @@ public class AbonnementLejeaftale {
         return "AbonnementLejeaftale{" +
                 "lejeaftale_ID=" + lejeaftale_ID +
                 ", isUnlimited=" + isUnlimited +
-                ", kmprMd=" + kmprMd +
-                ", AbonnementLængde=" + AbonnementLængde +
-                ", AfleveringPrice=" + AfleveringPrice +
-                ", Priceprmonth=" + Priceprmonth +
-                ", Udbetaling=" + Udbetaling +
-                ", XtraColorprice=" + XtraColorprice +
-                ", PriceForOverDrive=" + PriceForOverDrive +
+                ", kmPrMd=" + kmPrMd +
+                ", AbonnementLængde=" + abonnementLængde +
+                ", AfleveringPrice=" + afleveringPrice +
+                ", PricePrMonth=" + pricePrMonth +
+                ", Udbetaling=" + udbetaling +
+                ", ExtraColorPrice=" + extraColorPrice +
+                ", PriceForOverDrive=" + priceForOverDrive +
                 '}';
     }
 
-    public int getLejeaftale_ID() {
-        return lejeaftale_ID;
-    }
 
-    public void setLejeaftale_ID(int lejeaftale_ID) {
-        this.lejeaftale_ID = lejeaftale_ID;
-    }
 }
