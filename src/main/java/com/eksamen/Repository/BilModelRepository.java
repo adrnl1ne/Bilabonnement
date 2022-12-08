@@ -136,7 +136,7 @@ public class BilModelRepository {
                 bilModel.setKmPrX(KmPrX);
                 bilModel.setUdstyr(udstyr);
                 AbonnementBilModel abonnementBilModel = viewAbonnementBilmodel(Model_ID);
-                bilModel.setAbopris(abonnementBilModel);
+                bilModel.setAbonnementBilModel(abonnementBilModel);
                 return bilModel;
 
             }

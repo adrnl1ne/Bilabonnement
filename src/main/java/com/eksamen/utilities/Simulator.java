@@ -352,7 +352,7 @@ public class Simulator {
     private static AbonnementLejeaftale simulateAbonnement(LejeAftale simuleretLejeAftale) {
         AbonnementLejeaftale simuleretAbonnement =
                 new AbonnementLejeaftale(simuleretLejeAftale.getLejeAftale_ID());
-        AbonnementBilModel udlejetBilModelsAbonnement = simuleretLejeAftale.getBil().getBilModel().getAbopris();
+        AbonnementBilModel udlejetBilModelsAbonnement = simuleretLejeAftale.getBil().getBilModel().getAbonnementBilModel();
         boolean isUnlimited = udlejetBilModelsAbonnement.isUnlimited();
 
         double prisPrMd;

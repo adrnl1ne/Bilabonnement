@@ -6,60 +6,78 @@ import java.util.List;
 
 public class BilModel {
 
-    private AbonnementBilModel Abopris;
-    private String Mærke;
-    private String Model;
-    private int Model_ID;
+    private int model_ID;
+    private AbonnementBilModel abonnementBilModel;
+    private String mærke;
+    private String model;
     private double CO2_Udslip;
-    private double Stålpris;
-    private double KmPrX;
+    private double stålpris;
+    private double kmPrX;
     private boolean isGearManuel;
     private Energitype energitype;
-
     private List<String> udstyr;
 
 
     //Constructor
 
     public BilModel(int model_ID) {
-        Model_ID = model_ID;
+        this.model_ID = model_ID;
+    }
+
+
+    // Custom made Metoder
+
+    // Marcus
+    public String displayKmPrX() {
+        if (energitype == Energitype.ELEKTRISK) {
+            return kmPrX + " km pr opladning";
+        }
+        return kmPrX + " km/l";
+    }
+
+    public String displayGearType() {
+        if (isGearManuel) {
+            return "Manuelt";
+        }
+        return "Automatisk";
     }
 
 
     //Getters og Setters
 
-
-    public AbonnementBilModel getAbopris() {
-        return Abopris;
-    }
-
-    public void setAbopris(AbonnementBilModel abopris) {
-        Abopris = abopris;
-    }
-
-    public String getMærke() {
-        return Mærke;
-    }
-
-    public void setMærke(String mærke) {
-        Mærke = mærke;
-    }
-
-    public String getModel() {
-        return Model;
-    }
-
-    public void setModel(String model) {
-        Model = model;
-    }
-
     public int getModel_ID() {
-        return Model_ID;
+        return model_ID;
     }
 
     public void setModel_ID(int model_ID) {
-        Model_ID = model_ID;
+        this.model_ID = model_ID;
     }
+
+    public AbonnementBilModel getAbonnementBilModel() {
+        return abonnementBilModel;
+    }
+
+    public void setAbonnementBilModel(AbonnementBilModel abonnementBilModel) {
+        this.abonnementBilModel = abonnementBilModel;
+    }
+
+    public String getMærke() {
+        return mærke;
+    }
+
+    public void setMærke(String mærke) {
+        this.mærke = mærke;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+
 
     public double getCO2_Udslip() {
         return CO2_Udslip;
@@ -70,19 +88,19 @@ public class BilModel {
     }
 
     public double getStålpris() {
-        return Stålpris;
+        return stålpris;
     }
 
     public void setStålpris(double stålpris) {
-        Stålpris = stålpris;
+        this.stålpris = stålpris;
     }
 
     public double getKmPrX() {
-        return KmPrX;
+        return kmPrX;
     }
 
     public void setKmPrX(double kmPrX) {
-        KmPrX = kmPrX;
+        this.kmPrX = kmPrX;
     }
 
     public boolean isGearManuel() {
@@ -113,13 +131,13 @@ public class BilModel {
     @Override
     public String toString() {
         return "BilModel{" +
-                "Abopris=" + Abopris +
-                ", Mærke='" + Mærke + '\'' +
-                ", Model='" + Model + '\'' +
-                ", Model_ID=" + Model_ID +
+                "Abopris=" + abonnementBilModel +
+                ", Mærke='" + mærke + '\'' +
+                ", Model='" + model + '\'' +
+                ", Model_ID=" + model_ID +
                 ", CO2_Udslip=" + CO2_Udslip +
-                ", Stålpris=" + Stålpris +
-                ", KmPrX=" + KmPrX +
+                ", Stålpris=" + stålpris +
+                ", KmPrX=" + kmPrX +
                 ", isGearManuel=" + isGearManuel +
                 ", energitype=" + energitype +
                 ", udstyr=" + udstyr +
