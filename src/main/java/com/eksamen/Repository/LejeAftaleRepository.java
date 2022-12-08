@@ -283,7 +283,7 @@ public class LejeAftaleRepository {
         potentielBilTilUdlejning.setBiltilstand(Biltilstand.UDLEJET);
         new BilRepository().updateBil(potentielBilTilUdlejning);
         AbonnementLejeaftale abonnementLejeaftale = lejeAftale.getAbonnement();
-        String CPR = lejeAftale.getKunde().getCprnumber();
+        String CPR = lejeAftale.getKunde().getCPR();
 
 
         String stelnummer = potentielBilTilUdlejning.getStelnummer();
@@ -375,7 +375,7 @@ public class LejeAftaleRepository {
 
         // Finder de værdier i en lejeAftale, som skal gemmes i LejeAftale Tabellen
         int lejeAftale_ID = lejeAftale.getLejeAftale_ID();
-        String CPR_Number = lejeAftale.getKunde().getCprnumber();
+        String CPR_Number = lejeAftale.getKunde().getCPR();
         String stelnummer = lejeAftale.getBil().getStelnummer();
         LocalDate startDato = lejeAftale.getStartDato();
         String nummerplade = lejeAftale.getNummerPlade();

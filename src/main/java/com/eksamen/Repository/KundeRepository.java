@@ -17,7 +17,7 @@ public class KundeRepository {
 
     // Marcus
     public void createKunde(Kunde kunde) {
-        String CPR = kunde.getCprnumber();
+        String CPR = kunde.getCPR();
         String regNum = kunde.getRegNum();
         String kontoNum = kunde.getKontoNum();
         boolean erNyKunde = true;
@@ -147,7 +147,7 @@ public class KundeRepository {
     // Marcus
     public void updateKunde(Kunde kunde) {
         try {
-            String CPR = kunde.getCprnumber();
+            String CPR = kunde.getCPR();
             String regNum = kunde.getRegNum();
             String kontoNum = kunde.getKontoNum();
             String QUERY = "UPDATE kunde SET RegNum = ?, KontoNum = ? WHERE CPR = ?";
@@ -203,7 +203,7 @@ public class KundeRepository {
 
     public void deleteKunde(Kunde kunde) {
         try {
-            String CPR = kunde.getCprnumber();
+            String CPR = kunde.getCPR();
             String QUERY = "DELETE FROM kunde WHERE CPR = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
             preparedStatement.setString(1, CPR);

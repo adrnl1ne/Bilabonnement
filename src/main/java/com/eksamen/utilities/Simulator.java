@@ -91,7 +91,7 @@ public class Simulator {
         Kunde kunde10 = new Kunde("311201-5119");
         kunde10.setRegNum("0000");
         kunde10.setKontoNum("4973620183");
-        Kontaktinfo kontaktInfo10 = new Kontaktinfo(kunde10.getCprnumber());
+        Kontaktinfo kontaktInfo10 = new Kontaktinfo(kunde10.getCPR());
         kunde10.setKontaktInfo(kontaktInfo10);
         kontaktInfo10.setFirstName("Anders");
         kontaktInfo10.setAddress("Snaregade 8, 1.");
@@ -115,7 +115,7 @@ public class Simulator {
         Kunde kunde9 = new Kunde("061200-1115");
         kunde9.setRegNum("9999");
         kunde9.setKontoNum("9836291204");
-        Kontaktinfo kontaktInfo9 = new Kontaktinfo(kunde9.getCprnumber());
+        Kontaktinfo kontaktInfo9 = new Kontaktinfo(kunde9.getCPR());
         kunde9.setKontaktInfo(kontaktInfo9);
         kontaktInfo9.setFirstName("Sophie");
         kontaktInfo9.setLastName("Blomster");
@@ -131,7 +131,7 @@ public class Simulator {
         Kunde kunde8 = new Kunde("200655-2356");
         kunde8.setRegNum("8888");
         kunde8.setKontoNum("6923405868");
-        Kontaktinfo kontaktInfo8 = new Kontaktinfo(kunde8.getCprnumber());
+        Kontaktinfo kontaktInfo8 = new Kontaktinfo(kunde8.getCPR());
         kunde8.setKontaktInfo(kontaktInfo8);
         kontaktInfo8.setFirstName("Gertrud");
         kontaktInfo8.setLastName("Hildebrand");
@@ -155,7 +155,7 @@ public class Simulator {
         Kunde kunde7 = new Kunde("050506-2415");
         kunde7.setRegNum("7777");
         kunde7.setKontoNum("8373920671");
-        Kontaktinfo kontaktInfo7 = new Kontaktinfo(kunde7.getCprnumber());
+        Kontaktinfo kontaktInfo7 = new Kontaktinfo(kunde7.getCPR());
         kunde7.setKontaktInfo(kontaktInfo7);
         kontaktInfo7.setFirstName("Johan");
         kontaktInfo7.setLastName("Buller");
@@ -184,7 +184,7 @@ public class Simulator {
         Kunde kunde6 = new Kunde("010101-0101");
         kunde6.setRegNum("6666");
         kunde6.setKontoNum("9483729657");
-        Kontaktinfo kontaktInfo6 = new Kontaktinfo(kunde6.getCprnumber());
+        Kontaktinfo kontaktInfo6 = new Kontaktinfo(kunde6.getCPR());
         kunde6.setKontaktInfo(kontaktInfo6);
         kontaktInfo6.setFirstName("NumseManden");
         kontaktInfo6.setLastName("HanNumseKan");
@@ -200,7 +200,7 @@ public class Simulator {
         Kunde kunde5 = new Kunde("290402-6752");
         kunde5.setRegNum("5555");
         kunde5.setKontoNum("9856308931");
-        Kontaktinfo kontaktInfo5 = new Kontaktinfo(kunde5.getCprnumber());
+        Kontaktinfo kontaktInfo5 = new Kontaktinfo(kunde5.getCPR());
         kunde5.setKontaktInfo(kontaktInfo5);
         kontaktInfo5.setFirstName("Anna");
         kontaktInfo5.setLastName("Rasmussen");
@@ -222,7 +222,7 @@ public class Simulator {
         Kunde kunde4 = new Kunde("261000-1116");
         kunde4.setRegNum("4444");
         kunde4.setKontoNum("8735201907");
-        Kontaktinfo kontaktInfo4 = new Kontaktinfo(kunde4.getCprnumber());
+        Kontaktinfo kontaktInfo4 = new Kontaktinfo(kunde4.getCPR());
         kunde4.setKontaktInfo(kontaktInfo4);
         kontaktInfo4.setFirstName("Louise");
         kontaktInfo4.setLastName("Gren");
@@ -238,7 +238,7 @@ public class Simulator {
         Kunde kunde3 = new Kunde("270378-5566");
         kunde3.setRegNum("3333");
         kunde3.setKontoNum("1234567890");
-        Kontaktinfo kontaktInfo3 = new Kontaktinfo(kunde3.getCprnumber());
+        Kontaktinfo kontaktInfo3 = new Kontaktinfo(kunde3.getCPR());
         kunde3.setKontaktInfo(kontaktInfo3);
         kontaktInfo3.setFirstName("Grethe");
         kontaktInfo3.setLastName("Hansen");
@@ -254,7 +254,7 @@ public class Simulator {
         Kunde kunde2 = new Kunde("061290-6666");
         kunde2.setRegNum("2222");
         kunde2.setKontoNum("2087654321");
-        Kontaktinfo kontaktInfo2 = new Kontaktinfo(kunde2.getCprnumber());
+        Kontaktinfo kontaktInfo2 = new Kontaktinfo(kunde2.getCPR());
         kunde2.setKontaktInfo(kontaktInfo2);
         kontaktInfo2.setFirstName("Marie");
         kontaktInfo2.setLastName("Petersen");
@@ -279,7 +279,7 @@ public class Simulator {
         Kunde kunde1 = new Kunde("061200-1115");
         kunde1.setRegNum("1111");
         kunde1.setKontoNum("1234567890");
-        Kontaktinfo kontaktInfo1 = new Kontaktinfo(kunde1.getCprnumber());
+        Kontaktinfo kontaktInfo1 = new Kontaktinfo(kunde1.getCPR());
         kunde1.setKontaktInfo(kontaktInfo1);
         kontaktInfo1.setFirstName("Hans");
         kontaktInfo1.setLastName("Hansen");

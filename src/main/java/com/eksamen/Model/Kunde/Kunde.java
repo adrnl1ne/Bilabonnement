@@ -5,23 +5,32 @@ import com.eksamen.Model.Lejeaftale.LejeAftale;
 import java.util.List;
 
 public class Kunde {
-    private List<LejeAftale> lejeaftaler;
-    private Kontaktinfo info;
-    private String cprnumber;
-    private String RegNum;
-    private String KontoNum;
 
+    private String CPR;
+    private Kontaktinfo info;
+    private String regNum;
+    private String kontoNum;
+    private List<LejeAftale> lejeaftaler;
+
+    // Constructors
     public Kunde(Kontaktinfo kontaktinfo, String CPR) {
         info = kontaktinfo;
-        cprnumber = CPR;
+        this.CPR = CPR;
     }
 
     public Kunde (String CPR) {
-        this.cprnumber = CPR;
+        this.CPR = CPR;
     }
 
-    // Getters, Setters and toString()
 
+
+    // Custom made Metoder
+
+
+
+
+
+    // Getters, Setters and toString()
 
     public List<LejeAftale> getLejeaftaler() {
         return lejeaftaler;
@@ -39,28 +48,28 @@ public class Kunde {
         info = nyestelinfo;
     }
 
-    public String getCprnumber() {
-        return cprnumber;
+    public String getCPR() {
+        return CPR;
     }
 
-    public void setCprnumber(String cprnumber) {
-        this.cprnumber = cprnumber;
+    public void setCPR(String CPR) {
+        this.CPR = CPR;
     }
 
     public String getRegNum() {
-        return RegNum;
+        return regNum;
     }
 
     public void setRegNum(String regNum) {
-        RegNum = regNum;
+        this.regNum = regNum;
     }
 
     public String getKontoNum() {
-        return KontoNum;
+        return kontoNum;
     }
 
     public void setKontoNum(String kontoNum) {
-        KontoNum = kontoNum;
+        this.kontoNum = kontoNum;
     }
 
     @Override
@@ -68,9 +77,9 @@ public class Kunde {
         return "Kunde{" +
                 "lejeaftaler=" + lejeaftaler +
                 ", info=" + info +
-                ", cprnumber='" + cprnumber + '\'' +
-                ", RegNum='" + RegNum + '\'' +
-                ", KontoNum='" + KontoNum + '\'' +
+                ", cprnumber='" + CPR + '\'' +
+                ", RegNum='" + regNum + '\'' +
+                ", KontoNum='" + kontoNum + '\'' +
                 '}';
     }
 }
