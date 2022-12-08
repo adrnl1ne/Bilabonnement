@@ -56,20 +56,15 @@ public class KundeRepository {
     }
 
     // Marcus
-    private Kontaktinfo viewKontaktInfo(Kunde kunde) {
-        // Finder kundens primær nøgle, CPR
-        String CPR = kunde.getCprnumber();
+    private Kontaktinfo viewKontaktInfo(String CPR) {
 
         try {
-            String KontaktInfoQUERY = "SELECT * FROM kontaktinfo WHERE CPR = ? AND Counter = (SELECT MAX(counter) FROM kontaktinfo WHERE CPR = ?)";
+            String KontaktInfoQUERY = "SELECT * FROM kontaktinfo WHERE CPR = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(KontaktInfoQUERY);
             preparedStatement.setString(1, CPR);
-            preparedStatement.setString(2,CPR);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if (resultSet.next()) {
-                Kontaktinfo kontaktInfo = new Kontaktinfo();
-                int lejeAftale_ID = resultSet.getInt("Lejeaftale_ID");
+                Kontaktinfo kontaktInfo = new Kontaktinfo(CPR);
                 String fornavn = resultSet.getString("Fornavn");
                 kontaktInfo.setFirstName(fornavn);
                 String efternavn = resultSet.getString("Efternavn");
@@ -84,14 +79,13 @@ public class KundeRepository {
                 kontaktInfo.setEmail(email);
                 int mobil = resultSet.getInt("Mobil");
                 kontaktInfo.setMobilNumber(mobil);
-                kunde.setKontaktInfo(kontaktInfo);
                 return kontaktInfo;
             }
             return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at view nyeste kontaktinfo for Kunden: " + kunde);
+            System.err.println("Det var ikke muligt at view nyeste kontaktinfo for Kunden med et CPR: " + CPR);
             throw new RuntimeException();
         }
     }
@@ -111,8 +105,8 @@ public class KundeRepository {
                 kunde.setRegNum(regNum);
                 kunde.setKontoNum(kontoNum);
 
-                // Finder den nyeste kontaktinfo for denne kunde med det CPR som blev givet og giver det til vores kunde
-                Kontaktinfo nyesteKontaktInfo = this.viewKontaktInfo(kunde);
+                // Finder kontaktinformationer, kontaktinfo, for kunden med det CPR som blev givet og giver det til vores kunde
+                Kontaktinfo nyesteKontaktInfo = this.viewKontaktInfo(CPR);
                 kunde.setKontaktInfo(nyesteKontaktInfo);
 
 
@@ -162,10 +156,48 @@ public class KundeRepository {
             preparedStatement.setString(2, kontoNum);
             preparedStatement.setString(3, CPR);
             preparedStatement.executeUpdate();
+            this.updateKontaktinfo(kunde.getInfo());
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Det var ikke muligt at opdatere kunden: " + kunde);
             throw new RuntimeException();
+        }
+    }
+
+    // Marcus
+    private void updateKontaktinfo(Kontaktinfo kontaktinfo) {
+        // Finder id'et, CPR'et, til hvor i tabellen denne Kontaktinfo skal updates
+        String CPR = kontaktinfo.getCPR();
+
+        // Finder alle de værdier der er i en lejeaftales KontaktInfo, som så skal updates
+        String fornavn = kontaktinfo.getFirstName();
+        String efternavn = kontaktinfo.getLastName();
+        String adresse = kontaktinfo.getAddress();
+        int postnr = kontaktinfo.getPostnr();
+        String mail = kontaktinfo.getEmail();
+        int mobil = kontaktinfo.getMobilNumber();
+        String by = kontaktinfo.getCity();
+
+        // Updater de fundne værdier med dem i tabellen
+        try {
+
+            String kontaktQUERY = "UPDATE kontaktinfo SET Fornavn = ?, Efternavn = ?, Adresse = ?, Postnr = ?, Mail = ?, Mobil = ?, 'By' = ? WHERE CPR = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(kontaktQUERY);
+
+            preparedStatement.setString(1, fornavn);
+            preparedStatement.setString(2, efternavn);
+            preparedStatement.setString(3, adresse);
+            preparedStatement.setInt(4, postnr);
+            preparedStatement.setString(5, mail);
+            preparedStatement.setInt(6, mobil);
+            preparedStatement.setString(7, by);
+            preparedStatement.setString(8, CPR);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at Update KontaktInformationen: " + kontaktinfo);
+            throw new RuntimeException(e);
         }
     }
 

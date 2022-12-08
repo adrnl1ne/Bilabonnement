@@ -395,7 +395,6 @@ public class LejeAftaleRepository {
             // Updater de individuelle objekter inde i en lejeAftale
             this.updateAbonnement(lejeAftale.getAbonnement());
             this.updateLevering(lejeAftale);
-            //this.updateKontaktInfo(lejeAftale.getKontakt());
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,98 +1,33 @@
 package com.eksamen.Model.Kunde;
 
 public class Kontaktinfo {
-    private Kunde kunde;
     private String CPR;
-    private String FirstName;
-    private String LastName;
-    private String Address;
-    private int Postnr;
-    private String City;
-    private String Email;
-    private int MobilNumber;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private int postnr;
+    private String city;
+    private String email;
+    private int mobilNumber;
 
-    public Kontaktinfo() {
-    }
+
+    // Constructors
 
     public Kontaktinfo(String CPR) {
         this.CPR = CPR;
     }
 
-    // Getters and Setters
 
+    // Custom made Metoder
 
-    public String getFirstName() {
-        return FirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
-    }
-
-    public String getLastName() {
-        return LastName;
-    }
-
-    public void setLastName(String lastName) {
-        LastName = lastName;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public int getPostnr() {
-        return Postnr;
-    }
-
-    public void setPostnr(int postnr) {
-        this.Postnr = postnr;
-    }
-
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String City) {
-        this.City = City;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public int getMobilNumber() {
-        return MobilNumber;
-    }
-
-    public void setMobilNumber(int mobilNumber) {
-        MobilNumber = mobilNumber;
+    public String displayNavn() {
+        return firstName + ' ' + lastName;
     }
 
 
-    @Override
-    public String toString() {
-        return "Kontaktinfo{" +
-                "kunde=" + kunde +
-                ", CPR='" + CPR + '\'' +
-                ", FirstName='" + FirstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Address='" + Address + '\'' +
-                ", Postnr=" + Postnr +
-                ", City='" + City + '\'' +
-                ", Email='" + Email + '\'' +
-                ", MobilNumber=" + MobilNumber +
-                '}';
-    }
 
+
+    // Getters, Setters og toString
     public String getCPR() {
         return CPR;
     }
@@ -100,4 +35,77 @@ public class Kontaktinfo {
     public void setCPR(String CPR) {
         this.CPR = CPR;
     }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPostnr() {
+        return postnr;
+    }
+
+    public void setPostnr(int postnr) {
+        this.postnr = postnr;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String City) {
+        this.city = City;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getMobilNumber() {
+        return mobilNumber;
+    }
+
+    public void setMobilNumber(int mobilNumber) {
+        this.mobilNumber = mobilNumber;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Kontaktinfo{" +
+            "CPR='" + CPR + '\'' +
+            ", FirstName='" + firstName + '\'' +
+            ", LastName='" + lastName + '\'' +
+            ", Address='" + address + '\'' +
+            ", Postnr=" + postnr +
+            ", City='" + city + '\'' +
+            ", Email='" + email + '\'' +
+            ", MobilNumber=" + mobilNumber +
+            '}';
+    }
+
 }
