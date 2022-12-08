@@ -1,5 +1,7 @@
 package com.eksamen.Repository;
 
+import com.eksamen.Model.Bil.Bil;
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skade;
 import com.eksamen.Model.Skader.SkadeType;
 import com.eksamen.Model.Skader.Skaderapport;
@@ -161,43 +163,94 @@ public class SkadeRapportRepository {
         }
     }
 
-    /*
-    public Skaderapport viewSkadesRapport(int Skaderapport_ID) {
+
+
+
+    public List<SkadeType> viewAlleSkadeTyper(Skaderapport rapport) {
+        // Finder de SkadeTyper, som kun må rapporteres efter at en anden er blevet rapporteret
+        SkadeType stenslag = SkadeType.STENSLAG;
+        SkadeType flereStenslag = SkadeType.FLERE_STENSLAG;
+
+
+        List<SkadeType> skadeTyper = this.viewAlleSkadeTyper();
+        List<Skade> rapportensSkader = rapport.getSkader();
+        List<SkadeType> valideSkadeTyper = new ArrayList<>();
+
+
+        for (SkadeType skadeType : skadeTyper) {
+            int antalEnSkadeTypeKanRapportes = skadeType.getTimesTypeCanBeReported();
+
+            for (Skade skade : rapportensSkader) {
+                SkadeType rapportensSkadesType = skade.getType();
+                if (rapportensSkadesType == skadeType) {
+                    antalEnSkadeTypeKanRapportes--;
+                    if (skadeType == stenslag) {
+                        valideSkadeTyper.add(flereStenslag);
+                    }
+                }
+            }
+            if (antalEnSkadeTypeKanRapportes > 0) {
+                valideSkadeTyper.add(skadeType);
+            }
+        }
+
+        return valideSkadeTyper;
+    }
+
+    public List<SkadeType> viewAlleSkadeTyper() {
+        List<SkadeType> skadeTyper = new ArrayList<>();
+        try {
+            String selectQUERY = "SELECT Skadetype_Id FROM skadetype";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int skadetype_ID = resultSet.getInt("Skadetype_Id");
+                SkadeType type = SkadeType.getEnum(skadetype_ID);
+                skadeTyper.add(type);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at view, altså Select, alle SkadeTyper");
+            throw new RuntimeException();
+        }
+        return skadeTyper;
+    }
+
+
+    public Skaderapport viewSkadesRapport(int skaderapport_ID) {
 
         try {
             String skadesRapportQUERY = "SELECT * FROM skadesrapport WHERE Skaderapport_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(skadesRapportQUERY);
-            preparedStatement.setInt(1, Skaderapport_ID);
+            preparedStatement.setInt(1, skaderapport_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Skaderapport skadesRapport = new Skaderapport(Skaderapport_ID);
+                Skaderapport skaderapport = new Skaderapport(skaderapport_ID);
                 int lejeAftale_ID = resultSet.getInt("Lejeaftale_ID");
                 LejeAftale lejeAftale = new LejeAftaleRepository().viewLejeaftale(lejeAftale_ID);
-                skadesRapport.setLejeaftale(lejeAftale);
+                skaderapport.setLejeaftale(lejeAftale);
 
                 String stelnummer = resultSet.getString("Stelnummer");
                 Bil bil = new BilRepository().viewBil(stelnummer);
-                skadesRapport.setBil(bil);
+                skaderapport.setBil(bil);
 
                 LocalDate afleveringsdato = resultSet.getDate("Afleveringsdato").toLocalDate();
-                skadesRapport.setAfleveringsdate(afleveringsdato);
+                skaderapport.setAfleveringsdate(afleveringsdato);
 
                 double kørselsdistance = resultSet.getDouble("Kørselsdistance");
-                skadesRapport.setKørselsdistance(kørselsdistance);
+                skaderapport.setKørselsdistance(kørselsdistance);
 
-                List<Skade> rapportensSkader = this.viewAlleSkader(skadesRapport);
-                skadesRapport.setSkade(rapportensSkader);
+                List<Skade> rapportensSkader = this.viewAlleSkader(skaderapport);
+                skaderapport.setSkader(rapportensSkader);
 
-                return skadesRapport;
+                return skaderapport;
             }
             return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at view, altså Select, en SkadesRapport med ID'et: " + Skaderapport_ID);
+            System.err.println("Det var ikke muligt at view, altså Select, en SkadesRapport med ID'et: " + skaderapport_ID);
             throw new RuntimeException();
         }
     }
-*/
-
 }

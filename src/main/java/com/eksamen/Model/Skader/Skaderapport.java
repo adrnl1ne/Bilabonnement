@@ -24,9 +24,9 @@ public class Skaderapport {
     }
 
     // Denne constructor er til at lave en skaderapport objekt der gives til vores repository, når den skal create en skaderapport
-    public Skaderapport(Bil bil, List<Skade> skader, LejeAftale lejeaftale, double kørselsdistance) {
+    // Inden en Skaderapport sendes til repository til at blive smidt ind i tabellen, så skal den have indsat en efter en de skader, som eftersyn vælger
+    public Skaderapport(Bil bil, LejeAftale lejeaftale, double kørselsdistance) {
         this.bil = bil;
-        this.skader = skader;
         this.lejeaftale = lejeaftale;
         this.kørselsdistance = kørselsdistance;
         //  Når en Skaderapport laves, så er det fordi at den udlejede bil er tilbage og den nuværende dato må være den rigtige afleveringsdato
@@ -66,6 +66,10 @@ public class Skaderapport {
 
     public void setSkader(List<Skade> skader) {
         this.skader = skader;
+    }
+
+    public void setSkader(Skade skade) {
+        skader.add(skade);
     }
 
     public LejeAftale getLejeaftale() {
