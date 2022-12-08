@@ -1,6 +1,8 @@
 package com.eksamen.Model.Kunde;
 
 public class Kontaktinfo {
+    private Kunde kunde;
+    private String CPR;
     private String FirstName;
     private String LastName;
     private String Address;
@@ -12,7 +14,9 @@ public class Kontaktinfo {
     public Kontaktinfo() {
     }
 
-
+    public Kontaktinfo(String CPR) {
+        this.CPR = CPR;
+    }
 
     // Getters and Setters
 
@@ -83,5 +87,13 @@ public class Kontaktinfo {
                 ", Email='" + Email + '\'' +
                 ", Mobilnumber=" + MobilNumber +
                 '}';
+    }
+
+    public String getCPR() {
+        return CPR;
+    }
+
+    public void setCPR(String CPR) {
+        this.CPR = CPR;
     }
 }

@@ -84,7 +84,7 @@ public class KundeRepository {
                 kontaktInfo.setEmail(email);
                 int mobil = resultSet.getInt("Mobil");
                 kontaktInfo.setMobilNumber(mobil);
-                kunde.setNyesteInfo(kontaktInfo);
+                kunde.setKontaktInfo(kontaktInfo);
                 return kontaktInfo;
             }
             return null;
@@ -113,7 +113,7 @@ public class KundeRepository {
 
                 // Finder den nyeste kontaktinfo for denne kunde med det CPR som blev givet og giver det til vores kunde
                 Kontaktinfo nyesteKontaktInfo = this.viewKontaktInfo(kunde);
-                kunde.setNyesteInfo(nyesteKontaktInfo);
+                kunde.setKontaktInfo(nyesteKontaktInfo);
 
 
                 // Til sidst bringes en kunde over, der mangler sine LejeAftaler, men disse kan hentes fra LejeaftaleRepo

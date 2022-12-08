@@ -12,8 +12,8 @@ import java.util.List;
 
 public class BilRepository {
 
-    private static CallableStatement cstmt = null;
-    private static ResultSet rs = null;
+    private CallableStatement cstmt;
+    private ResultSet rs;
     private final Connection conn = DCM.getConn();
 
 
@@ -79,6 +79,27 @@ public class BilRepository {
 
 
 
+    public List<Bil> viewLejeAftalePåKlarBil() {
+        List<Bil> udlejedeBiler = new ArrayList<>();
+
+        try {
+            /*int number;
+            String QUERY = "";*/
+            //Laver Callable statement
+            cstmt = conn.prepareCall("{call viewInfo(1)}");
+            cstmt.execute();
+
+            rs = cstmt.getResultSet();
+            String stelnummer = rs.getString("Stelnummer");
+            udlejedeBiler.add(viewBil(stelnummer));
+
+        } catch (SQLException e) {
+            System.err.println("Fejl, kan ikke hente biler");
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return udlejedeBiler;
+    }
 
    public List<Bil> viewLejeAftalePåUdlejetBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
@@ -87,7 +108,7 @@ public class BilRepository {
             /*int number;
             String QUERY = "";*/
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewInfo(1)}");
+            cstmt = conn.prepareCall("{call viewInfo(2)}");
             cstmt.execute();
             rs = cstmt.getResultSet();
             /*String stelnummer = rs.getString("Stelnummer");

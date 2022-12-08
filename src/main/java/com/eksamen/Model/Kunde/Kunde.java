@@ -35,7 +35,7 @@ public class Kunde {
         return info;
     }
 
-    public void setNyesteInfo(Kontaktinfo nyestelinfo) {
+    public void setKontaktInfo(Kontaktinfo nyestelinfo) {
         info = nyestelinfo;
     }
 

@@ -33,7 +33,10 @@ public class LejeAftale {
         this.lejeAftale_ID = lejeAftale_ID;
     }
 
-
+    public LejeAftale(Bil bil, Kunde kunde) {
+        this.bil = bil;
+        this.kunde = kunde;
+    }
 
     public int getLejeAftale_ID() {
         return lejeAftale_ID;
