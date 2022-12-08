@@ -13,22 +13,20 @@ public class LejeAftale {
     private Kunde kunde;
     private Bil bil;
     private LocalDate startDato;
-    private LocalDate afleveringsDato;
     private String nummerPlade;
     private AbonnementLejeaftale abonnementLejeaftale;
 
     private LeveringsType Type;
-    private double KørselDistanceInden;
+    private double kørselDistanceInden;
 
     private Skaderapport skaderapport;
 
-    private String Leveringsadresse;
-    private String Afleveringsadress;
-    private double TransportTillæg;
+    private String leveringsadresse;
+    private String afleveringsadresse;
+    private double transportTillæg;
 
-    public LejeAftale() {
-    }
 
+    // Constructors
     public LejeAftale(int lejeAftale_ID) {
         this.lejeAftale_ID = lejeAftale_ID;
     }
@@ -37,6 +35,31 @@ public class LejeAftale {
         this.bil = bil;
         this.kunde = kunde;
     }
+
+
+    // Custom made Metoder
+
+    // Marcus
+    public double calculatePrice() {
+        int abnmtLængde = abonnementLejeaftale.getAbonnementLængde();
+        double prisPrMåned = abonnementLejeaftale.getPricePrMonth();
+        double farveprisPrMåned = abonnementLejeaftale.getExtraColorPrice();
+        double udbetaling = abonnementLejeaftale.getUdbetaling();
+        double sum = (prisPrMåned + farveprisPrMåned) * abnmtLængde + udbetaling;
+        return sum;
+    }
+
+
+    // Jakob
+    // Udregner den sidste date en udlejet bil skal afleveres tilbage
+    public LocalDate calcAfleveringsDato() {
+        return getStartDato().plusDays(abonnementLejeaftale.getAbonnementLængde() * 30L);
+    }
+
+
+
+
+    // Getters, Setters og toString
 
     public int getLejeAftale_ID() {
         return lejeAftale_ID;
@@ -63,21 +86,14 @@ public class LejeAftale {
         this.startDato = startDato;
     }
 
-    public LocalDate getDefaultAfleveringsdato() {
-        return getStartDato().plusMonths(abonnementLejeaftale.getAbonnementLængde());
 
-    }
-
-    public void setAfleveringsDato(LocalDate afleveringsDato) {
-        this.afleveringsDato = afleveringsDato;
-    }
 
     public double getKørselDistanceInden() {
-        return KørselDistanceInden;
+        return kørselDistanceInden;
     }
 
     public void setKørselDistanceInden(double kørselDistanceInden) {
-        KørselDistanceInden = kørselDistanceInden;
+        this.kørselDistanceInden = kørselDistanceInden;
     }
 
     public String getNummerPlade() {
@@ -121,27 +137,27 @@ public class LejeAftale {
     }
 
     public String getLeveringsadresse() {
-        return Leveringsadresse;
+        return leveringsadresse;
     }
 
     public void setLeveringsadresse(String leveringsadresse) {
-        Leveringsadresse = leveringsadresse;
+        this.leveringsadresse = leveringsadresse;
     }
 
-    public String getAfleveringsadress() {
-        return Afleveringsadress;
+    public String getAfleveringsadresse() {
+        return afleveringsadresse;
     }
 
-    public void setAfleveringsadress(String afleveringsadress) {
-        Afleveringsadress = afleveringsadress;
+    public void setAfleveringsadresse(String afleveringsadresse) {
+        this.afleveringsadresse = afleveringsadresse;
     }
 
     public double getTransportTillæg() {
-        return TransportTillæg;
+        return transportTillæg;
     }
 
     public void setTransportTillæg(double transportTillæg) {
-        TransportTillæg = transportTillæg;
+        this.transportTillæg = transportTillæg;
     }
 
     @Override
@@ -151,15 +167,14 @@ public class LejeAftale {
                 ", kunde=" + kunde +
                 ", bil=" + bil +
                 ", startDato=" + startDato +
-                ", afleveringsDato=" + afleveringsDato +
                 ", nummerPlade='" + nummerPlade + '\'' +
                 ", abonnementLejeaftale=" + abonnementLejeaftale +
                 ", Type=" + Type +
-                ", KørselDistanceInden=" + KørselDistanceInden +
+                ", KørselDistanceInden=" + kørselDistanceInden +
                 ", skaderapport=" + skaderapport +
-                ", Leveringsadresse='" + Leveringsadresse + '\'' +
-                ", Afleveringsadress='" + Afleveringsadress + '\'' +
-                ", TransportTillæg=" + TransportTillæg +
+                ", Leveringsadresse='" + leveringsadresse + '\'' +
+                ", Afleveringsadress='" + afleveringsadresse + '\'' +
+                ", TransportTillæg=" + transportTillæg +
                 '}';
     }
 }

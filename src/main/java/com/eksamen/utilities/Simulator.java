@@ -344,7 +344,7 @@ public class Simulator {
         simuleretLejeAftale.setType(simulatedLeveringsType);
         simuleretLejeAftale.setTransportTillæg(transportTillæg);
         simuleretLejeAftale.setLeveringsadresse(leveringsAdresse);
-        simuleretLejeAftale.setAfleveringsadress(afleveringsAdresse);
+        simuleretLejeAftale.setAfleveringsadresse(afleveringsAdresse);
         simuleretLejeAftale.setKørselDistanceInden(kørselsdistanceFørUdlejning);
 
     }

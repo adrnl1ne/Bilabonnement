@@ -76,7 +76,7 @@ public class LejeAftaleRepository {
         int lejeaftalens_ID = lejeAftale.getLejeAftale_ID();
         int leveringsType_ID = lejeAftale.getType().getId();
         String leveringsAdresse = lejeAftale.getLeveringsadresse();
-        String afleveringsAdresse = lejeAftale.getAfleveringsadress();
+        String afleveringsAdresse = lejeAftale.getAfleveringsadresse();
         double kørtDistanceFørUdlejning = lejeAftale.getBil().getKmKørt();
         double transporttillæg = lejeAftale.getTransportTillæg();
 
@@ -143,7 +143,7 @@ public class LejeAftaleRepository {
         // Finder alle de værdier der er i en lejeaftales levering, som så skal updates
         int LeveringsType_ID = lejeAftale.getType().getId();
         String leveringsAdresse = lejeAftale.getLeveringsadresse();
-        String afleveringsAdresse = lejeAftale.getAfleveringsadress();
+        String afleveringsAdresse = lejeAftale.getAfleveringsadresse();
         double kmKørtFørUdlej = lejeAftale.getKørselDistanceInden();
         double transporttillæg = lejeAftale.getTransportTillæg();
 
@@ -186,7 +186,7 @@ public class LejeAftaleRepository {
                 lejeAftale.setLeveringsadresse(leveringsAdresse);
 
                 String afleveringsAdresse = resultSet.getString("Afleveringsadresse");
-                lejeAftale.setAfleveringsadress(afleveringsAdresse);
+                lejeAftale.setAfleveringsadresse(afleveringsAdresse);
 
                 double kmKørt = resultSet.getDouble("Km_Kørt");
                 lejeAftale.setKørselDistanceInden(kmKørt);
