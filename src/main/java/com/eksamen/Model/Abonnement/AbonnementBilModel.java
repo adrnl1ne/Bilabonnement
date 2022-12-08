@@ -3,17 +3,38 @@ package com.eksamen.Model.Abonnement;
 public class AbonnementBilModel {
     private int Model_ID;
     private boolean isUnlimited;
-    private double ThreeMonthsPris;
-    private double SiXMonthsPris;
-    private double TwelveMonthsPrice;
-    private double TwentyFourMonthsPrice;
-    private double ThirtysixMonthsPrice;
-    private double PriceForColorChoice;
-    private double StartUdbetaling;
-
-    // getters and setters and to string
+    private double threeMonthsPris;
+    private double siXMonthsPris;
+    private double twelveMonthsPrice;
+    private double twentyFourMonthsPrice;
+    private double thirtySixMonthsPrice;
+    private double priceForColorChoice;
+    private double startUdbetaling;
 
 
+    // Constructors
+    public AbonnementBilModel(int model_ID) {
+        this.Model_ID = model_ID;
+    }
+
+    public AbonnementBilModel() {
+
+    }
+
+
+    // Custom made Metoder
+    public String displayAbonnementType() {
+        if (isUnlimited) {
+            return "Unlimited";
+        } else {
+            return "Limited";
+        }
+    }
+
+
+
+
+    // getters and setters and toString
     public int getModel_ID() {
         return Model_ID;
     }
@@ -31,59 +52,59 @@ public class AbonnementBilModel {
     }
 
     public double getThreeMonthsPris() {
-        return ThreeMonthsPris;
+        return threeMonthsPris;
     }
 
     public void setThreeMonthsPris(double threeMonthsPris) {
-        ThreeMonthsPris = threeMonthsPris;
+        this.threeMonthsPris = threeMonthsPris;
     }
 
     public double getSiXMonthsPris() {
-        return SiXMonthsPris;
+        return siXMonthsPris;
     }
 
     public void setSiXMonthsPris(double siXMonthsPris) {
-        SiXMonthsPris = siXMonthsPris;
+        this.siXMonthsPris = siXMonthsPris;
     }
 
     public double getTwelveMonthsPrice() {
-        return TwelveMonthsPrice;
+        return twelveMonthsPrice;
     }
 
     public void setTwelveMonthsPrice(double twelveMonthsPrice) {
-        TwelveMonthsPrice = twelveMonthsPrice;
+        this.twelveMonthsPrice = twelveMonthsPrice;
     }
 
     public double getTwentyFourMonthsPrice() {
-        return TwentyFourMonthsPrice;
+        return twentyFourMonthsPrice;
     }
 
     public void setTwentyFourMonthsPrice(double twentyFourMonthsPrice) {
-        TwentyFourMonthsPrice = twentyFourMonthsPrice;
+        this.twentyFourMonthsPrice = twentyFourMonthsPrice;
     }
 
-    public double getThirtysixMonthsPrice() {
-        return ThirtysixMonthsPrice;
+    public double getThirtySixMonthsPrice() {
+        return thirtySixMonthsPrice;
     }
 
-    public void setThirtysixMonthsPrice(double thirtysixMonthsPrice) {
-        ThirtysixMonthsPrice = thirtysixMonthsPrice;
+    public void setThirtySixMonthsPrice(double thirtysixMonthsPrice) {
+        thirtySixMonthsPrice = thirtysixMonthsPrice;
     }
 
     public double getPriceForColorChoice() {
-        return PriceForColorChoice;
+        return priceForColorChoice;
     }
 
     public void setPriceForColorChoice(double priceForColorChoice) {
-        PriceForColorChoice = priceForColorChoice;
+        this.priceForColorChoice = priceForColorChoice;
     }
 
     public double getStartUdbetaling() {
-        return StartUdbetaling;
+        return startUdbetaling;
     }
 
     public void setStartUdbetaling(double startUdbetaling) {
-        StartUdbetaling = startUdbetaling;
+        this.startUdbetaling = startUdbetaling;
     }
 
     @Override
@@ -91,13 +112,13 @@ public class AbonnementBilModel {
         return "AbonnementBilModel{" +
                 "Model_ID=" + Model_ID +
                 ", isUnlimited=" + isUnlimited +
-                ", ThreeMonthsPris=" + ThreeMonthsPris +
-                ", SiXMonthsPris=" + SiXMonthsPris +
-                ", TwelveMonthsPrice=" + TwelveMonthsPrice +
-                ", TwentyFourMonthsPrice=" + TwentyFourMonthsPrice +
-                ", ThirtysixMonthsPrice=" + ThirtysixMonthsPrice +
-                ", PriceForColorChoice=" + PriceForColorChoice +
-                ", StartUdbetaling=" + StartUdbetaling +
+                ", ThreeMonthsPris=" + threeMonthsPris +
+                ", SiXMonthsPris=" + siXMonthsPris +
+                ", TwelveMonthsPrice=" + twelveMonthsPrice +
+                ", TwentyFourMonthsPrice=" + twentyFourMonthsPrice +
+                ", ThirtysixMonthsPrice=" + thirtySixMonthsPrice +
+                ", PriceForColorChoice=" + priceForColorChoice +
+                ", StartUdbetaling=" + startUdbetaling +
                 '}';
     }
 }

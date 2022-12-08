@@ -419,7 +419,7 @@ public class Simulator {
             prisOgMånedList.add(md24);
         }
 
-        double md36Pris = udlejetBilModelsAbonnement.getThirtysixMonthsPrice();
+        double md36Pris = udlejetBilModelsAbonnement.getThirtySixMonthsPrice();
         if (md36Pris != 0) {
             måneder = 36;
             double[] md36 = {md36Pris, måneder};

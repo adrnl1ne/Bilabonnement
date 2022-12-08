@@ -93,7 +93,7 @@ public class BilModelRepository {
                 abnmtBilmodel.setSiXMonthsPris(md6Pris);
                 abnmtBilmodel.setTwelveMonthsPrice(md12Pris);
                 abnmtBilmodel.setTwentyFourMonthsPrice(md24Pris);
-                abnmtBilmodel.setThirtysixMonthsPrice(md36Pris);
+                abnmtBilmodel.setThirtySixMonthsPrice(md36Pris);
                 abnmtBilmodel.setPriceForColorChoice(farveValgPris);
                 abnmtBilmodel.setStartUdbetaling(udbetaling);
                 return abnmtBilmodel;
