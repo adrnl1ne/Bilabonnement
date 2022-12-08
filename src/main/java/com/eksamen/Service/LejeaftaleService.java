@@ -13,7 +13,7 @@ import java.util.List;
 public class LejeaftaleService {
     private LejeAftaleRepository lejeAftaleRepository= new LejeAftaleRepository();
     private static BilRepository bilRepository = new BilRepository();
-    private static AbonnementLejeaftale abonnementLejeaftale = new AbonnementLejeaftale();
+    private static AbonnementLejeaftale abonnementLejeaftale = new AbonnementLejeaftale(); // Hvis du gerne vil have et objekt som en abonnementLejeaftale, så skal vi finde den via en view, så vi får et
 
     public void createLejeAftale(LejeAftale lejeAftale) throws RentingOutNoneReadyCarException {
         lejeAftaleRepository.createLejeaftale(lejeAftale);

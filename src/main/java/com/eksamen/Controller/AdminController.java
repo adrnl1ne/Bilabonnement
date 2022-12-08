@@ -5,10 +5,10 @@ import com.eksamen.Service.LejeaftaleService;
 import com.eksamen.utilities.NoCarReadyToRentOutException;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 import com.eksamen.utilities.Simulator;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {

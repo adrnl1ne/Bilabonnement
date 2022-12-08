@@ -1,7 +1,7 @@
 package com.eksamen.Model.Abonnement;
 
 public class AbonnementBilModel {
-    private int Model_ID;
+    private int model_ID;
     private boolean isUnlimited;
     private double threeMonthsPris;
     private double siXMonthsPris;
@@ -14,7 +14,7 @@ public class AbonnementBilModel {
 
     // Constructors
     public AbonnementBilModel(int model_ID) {
-        this.Model_ID = model_ID;
+        this.model_ID = model_ID;
     }
 
     public AbonnementBilModel() {
@@ -36,11 +36,11 @@ public class AbonnementBilModel {
 
     // getters and setters and toString
     public int getModel_ID() {
-        return Model_ID;
+        return model_ID;
     }
 
     public void setModel_ID(int model_ID) {
-        this.Model_ID = model_ID;
+        this.model_ID = model_ID;
     }
 
     public boolean isUnlimited() {
@@ -110,7 +110,7 @@ public class AbonnementBilModel {
     @Override
     public String toString() {
         return "AbonnementBilModel{" +
-                "Model_ID=" + Model_ID +
+                "Model_ID=" + model_ID +
                 ", isUnlimited=" + isUnlimited +
                 ", ThreeMonthsPris=" + threeMonthsPris +
                 ", SiXMonthsPris=" + siXMonthsPris +

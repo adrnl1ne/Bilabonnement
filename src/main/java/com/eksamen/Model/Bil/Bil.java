@@ -8,32 +8,37 @@ import java.util.List;
 public class Bil {
     private String stelnummer;
 
-    private int bilmodel_ID;
-
     private Biltilstand biltilstand;
 
-    private double km_Kørt;
+    private double kmKørt;
 
-    private List<Skaderapport> Skaderapport;
+    private List<Skaderapport> skaderapporter;
 
     private BilModel bilModel;
 
 
+    // Constructors
     public Bil(String stelnummer) {
         this.stelnummer = stelnummer;
     }
 
-    public Bil(String stelnummer, int bilmodel_ID, Biltilstand biltilstand, double km_Kørt) {
+    public Bil(String stelnummer, BilModel bilModel, Biltilstand biltilstand, double kmKørt) {
         this.stelnummer = stelnummer;
-        this.bilmodel_ID = bilmodel_ID;
+        this.bilModel = bilModel;
         this.biltilstand = biltilstand;
-        this.km_Kørt = km_Kørt;
+        this.kmKørt = kmKørt;
     }
 
+
+    // Custom made Metoder
+
     public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
-        double sum = abonnementLejeaftale.getPricePrMonth() * abonnementLejeaftale.getAbonnementLængde();
+        double sum = (abonnementLejeaftale.getPricePrMonth() + abonnementLejeaftale.getExtraColorPrice()) * abonnementLejeaftale.getAbonnementLængde() + abonnementLejeaftale.getUdbetaling();
         return sum;
     }
+
+
+    // Getters, Setters og toString
 
     public Biltilstand getBiltilstand() {
         return biltilstand;
@@ -52,20 +57,13 @@ public class Bil {
     }
 
 
-    public int getBilmodel_ID() {
-        return bilmodel_ID;
+
+    public double getKmKørt() {
+        return kmKørt;
     }
 
-    public void setBilmodel_ID(int bilmodel_ID) {
-        this.bilmodel_ID = bilmodel_ID;
-    }
-
-    public double getKm_Kørt() {
-        return km_Kørt;
-    }
-
-    public void setKm_Kørt(double km_Kørt) {
-        this.km_Kørt = km_Kørt;
+    public void setKmKørt(double kmKørt) {
+        this.kmKørt = kmKørt;
     }
 
     public BilModel getBilModel() {
@@ -76,22 +74,21 @@ public class Bil {
         this.bilModel = bilModel;
     }
 
-    public List<com.eksamen.Model.Skader.Skaderapport> getSkaderapport() {
-        return Skaderapport;
+    public List<com.eksamen.Model.Skader.Skaderapport> getSkaderapporter() {
+        return skaderapporter;
     }
 
-    public void setSkaderapport(List<com.eksamen.Model.Skader.Skaderapport> skaderapport) {
-        Skaderapport = skaderapport;
+    public void setSkaderapporter(List<com.eksamen.Model.Skader.Skaderapport> skaderapporter) {
+        this.skaderapporter = skaderapporter;
     }
 
     @Override
     public String toString() {
         return "Bil{" +
                 "stelnummer='" + stelnummer + '\'' +
-                ", bilmodel_ID=" + bilmodel_ID +
                 ", biltilstand=" + biltilstand +
-                ", km_Kørt=" + km_Kørt +
-                ", Skaderapport=" + Skaderapport +
+                ", kmKørt=" + kmKørt +
+                ", skaderapporter=" + skaderapporter +
                 ", bilModel=" + bilModel +
                 '}';
     }

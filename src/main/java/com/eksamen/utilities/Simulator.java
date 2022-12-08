@@ -339,7 +339,7 @@ public class Simulator {
         double transportTillæg = calculateTransportTillæg(simulatedLeveringsType);
         String leveringsAdresse = simulateLeveringsAdresse(simulatedLeveringsType);
         String afleveringsAdresse = leveringsAdresse;
-        double kørselsdistanceFørUdlejning = simuleretLejeAftale.getBil().getKm_Kørt();
+        double kørselsdistanceFørUdlejning = simuleretLejeAftale.getBil().getKmKørt();
 
         simuleretLejeAftale.setType(simulatedLeveringsType);
         simuleretLejeAftale.setTransportTillæg(transportTillæg);

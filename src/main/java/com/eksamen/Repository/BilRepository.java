@@ -3,7 +3,6 @@ package com.eksamen.Repository;
 import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Bil.BilModel;
 import com.eksamen.Model.Bil.Biltilstand;
-import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.utilities.DCM;
 
 import java.sql.*;
@@ -40,8 +39,7 @@ public class BilRepository {
                     Biltilstand tilstand = Biltilstand.getEnum(Tilstands_ID);
                     Bil bil = new Bil(stelnummer);
                     bil.setBiltilstand(tilstand);
-                    bil.setBilmodel_ID(Model_ID);
-                    bil.setKm_Kørt(KmKørt);
+                    bil.setKmKørt(KmKørt);
                     BilModel bilModel = new BilModelRepository().viewBilmodel(Model_ID);
                     bil.setBilModel(bilModel);
 
@@ -63,7 +61,7 @@ public class BilRepository {
             String Stelnummer = bil.getStelnummer();
             Biltilstand tilstand = bil.getBiltilstand();
             int Tilstands_ID = tilstand.getEnumToInt();
-            double Km_Kørt = bil.getKm_Kørt();
+            double Km_Kørt = bil.getKmKørt();
             String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
             preparedStatement.setInt(1, Tilstands_ID);

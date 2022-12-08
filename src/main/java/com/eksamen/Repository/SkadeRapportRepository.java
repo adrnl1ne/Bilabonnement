@@ -127,7 +127,7 @@ public class SkadeRapportRepository {
             String Stelnummer = skadeRapport.getBil().getStelnummer();
             LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
             double kørselsdistance = skadeRapport.getKørselsdistance();
-            skadeRapport.getBil().setKm_Kørt(kørselsdistance);
+            skadeRapport.getBil().setKmKørt(kørselsdistance);
 
             // Inserter de fundne værdier for skadesrapporten
 

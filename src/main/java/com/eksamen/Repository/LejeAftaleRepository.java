@@ -77,7 +77,7 @@ public class LejeAftaleRepository {
         int leveringsType_ID = lejeAftale.getType().getId();
         String leveringsAdresse = lejeAftale.getLeveringsadresse();
         String afleveringsAdresse = lejeAftale.getAfleveringsadress();
-        double kørtDistanceFørUdlejning = lejeAftale.getBil().getKm_Kørt();
+        double kørtDistanceFørUdlejning = lejeAftale.getBil().getKmKørt();
         double transporttillæg = lejeAftale.getTransportTillæg();
 
         try {
