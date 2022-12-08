@@ -60,7 +60,7 @@ public class BilRepository {
         try {
             String Stelnummer = bil.getStelnummer();
             Biltilstand tilstand = bil.getBiltilstand();
-            int Tilstands_ID = tilstand.getEnumToInt();
+            int Tilstands_ID = tilstand.getId();
             double Km_Kørt = bil.getKmKørt();
             String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);

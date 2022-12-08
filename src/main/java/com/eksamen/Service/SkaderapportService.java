@@ -13,7 +13,7 @@ public class SkaderapportService {
 
     public void createSkadeRapport(Bil bil, Skaderapport skadeRapport /*, LejeAftale lejeAftale*/) {
 
-        if (bilRepo.viewBil(bil.getStelnummer()).getBiltilstand().getEnumToInt() == 3) {
+        if (bilRepo.viewBil(bil.getStelnummer()).getBiltilstand().getId() == 3) {
             skadeRapportRepo.createSkadesRapport(skadeRapport);
         }
     }

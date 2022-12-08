@@ -9,40 +9,18 @@ public enum Biltilstand {
     private final int Id;
 
 
-    private Biltilstand (int Id) {
+    // Constructor
+    Biltilstand (int Id) {
         this.Id = Id;
     }
 
-
+    // Getter
     public int getId() {
         return Id;
     }
 
-    /*Biltilstand(int id) {
-        Id = id;
-    }*/
 
-
-
-    public int getEnumToInt() {
-        Biltilstand biltilstand;
-        switch (this) {
-            case KLAR:
-                biltilstand = Biltilstand.KLAR;
-                return biltilstand.getId();
-            case UDLEJET:
-                biltilstand = Biltilstand.UDLEJET;
-                return biltilstand.getId();
-            case CHECKUP:
-                biltilstand = Biltilstand.CHECKUP;
-                return biltilstand.getId();
-            case SKADET:
-                biltilstand = Biltilstand.SKADET;
-                return biltilstand.getId();
-            default:
-                throw new RuntimeException("Fejl i biltilstand");
-        }
-    }
+    // Custom made Metoder
 
     //Jakob
     public static Biltilstand getEnum(int Tilstands_ID) {
@@ -53,8 +31,11 @@ public enum Biltilstand {
                 return Biltilstand.UDLEJET;
             case 3:
                 return Biltilstand.CHECKUP;
-            default:
+            case 4:
                 return Biltilstand.SKADET;
+            default:
+                System.err.println("Det var ikke muligt at finde enum Biltilstand, ud efter ID'et: " + Tilstands_ID);
+                throw new RuntimeException();
         }
     }
 }
