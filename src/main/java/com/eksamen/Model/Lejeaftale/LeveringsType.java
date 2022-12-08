@@ -4,15 +4,20 @@ public enum LeveringsType {
     STANDARD(1),
     FDM(2);
 
-        private int Id;
+    private int Id;
 
-        private LeveringsType(int id) {
-            Id = id;
-        }
+    // Constructor
 
+    LeveringsType(int id) {
+        Id = id;
+    }
+
+
+    // Getters
     public int getId() {
         return Id;
     }
+
 
     public static LeveringsType getType(int id) {
             switch (id) {
