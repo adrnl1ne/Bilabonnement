@@ -12,6 +12,9 @@ public class AbonnementLejeaftale {
     private double XtraColorprice;
     private double PriceForOverDrive;
 
+    public AbonnementLejeaftale() {
+    }
+
     public AbonnementLejeaftale(int lejeaftale_ID) {
         this.lejeaftale_ID = lejeaftale_ID;
     }

@@ -1,7 +1,7 @@
 package com.eksamen.utilities;
 
 // Marcus: Alt inde i denne klasse er lavet af mig
-public class BilAbonnement {
+public class Simulator {
 /*
   private static final BilRepository bilRepo = new BilRepository();
   private static final Connection conn = DCM.getConn();

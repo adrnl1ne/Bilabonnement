@@ -1,5 +1,6 @@
 package com.eksamen.Model.Bil;
 
+import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
 import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skaderapport;
 
@@ -30,8 +31,8 @@ public class Bil {
         this.km_Kørt = km_Kørt;
     }
 
-    public double calculateTotalPrice(LejeAftale lejeAftale) {
-        double sum = lejeAftale.getPrisPrMåned() * lejeAftale.getAbonnementLængde();
+    public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
+        double sum = abonnementLejeaftale.getPriceprmonth() * abonnementLejeaftale.getAbonnementLængde();
         return sum;
     }
 

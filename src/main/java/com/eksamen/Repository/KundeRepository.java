@@ -84,8 +84,6 @@ public class KundeRepository {
                 kontaktInfo.setEmail(email);
                 int mobil = resultSet.getInt("Mobil");
                 kontaktInfo.setMobilNumber(mobil);
-                int counter = resultSet.getInt("Counter");
-                kontaktInfo.setCounter(counter);
                 kunde.setNyesteInfo(kontaktInfo);
                 return kontaktInfo;
             }
