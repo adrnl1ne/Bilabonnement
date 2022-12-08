@@ -9,7 +9,6 @@ public class EksamenApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EksamenApplication.class, args);
-        BilRepository bilRepository = new BilRepository();
-        bilRepository.viewLejeAftalePåKlarBil();
+
     }
 }

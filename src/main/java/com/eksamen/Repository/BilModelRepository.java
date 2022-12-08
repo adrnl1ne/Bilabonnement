@@ -72,7 +72,7 @@ public class BilModelRepository {
 
     private AbonnementBilModel viewAbonnementBilmodel(int Model_ID) {
         try {
-            String selectQUERY = "SELECT * FROM abnmtpris WHERE Model_ID = ?";
+            String selectQUERY = "SELECT * FROM abnmtbilmodel WHERE aModel_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
             preparedStatement.setInt(1, Model_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -109,14 +109,14 @@ public class BilModelRepository {
 
     public BilModel viewBilmodel(int Model_ID) {
         try {
-            String Model_ID_QUERY = "SELECT * FROM bilmodel WHERE Model_ID=?";
+            String Model_ID_QUERY = "SELECT * FROM bilmodel WHERE BMModel_ID=?";
             PreparedStatement preparedStatement = conn.prepareStatement(Model_ID_QUERY);
             preparedStatement.setInt(1, Model_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int Bilmærke_ID = resultSet.getInt("Bilmærke_ID");
                 String bilmærke = this.viewBilmærke(Bilmærke_ID);
-                int model_ID = resultSet.getInt("Model_ID");
+                int model_ID = resultSet.getInt("BMModel_ID");
                 int Energitype_ID = resultSet.getInt("Energitype_ID");
                 String Model = resultSet.getString("Model");
                 boolean isGearManuel = resultSet.getBoolean("isGearManuel");

@@ -4,7 +4,6 @@ import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Bil.BilModel;
 import com.eksamen.Model.Bil.Biltilstand;
 import com.eksamen.utilities.DCM;
-import com.eksamen.Model.Lejeaftale.LejeAftale;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class BilRepository {
                 ResultSet resultSet1 = preparedStatement1.executeQuery();
 
                 if (resultSet1.next()) {
-                    Biltilstand tilstand = Biltilstand.getEnum(resultSet1.getInt(Tilstands_ID));
+                    Biltilstand tilstand = Biltilstand.getEnum(Tilstands_ID);
                     Bil bil = new Bil(stelnummer);
                     bil.setBiltilstand(tilstand);
                     bil.setBilmodel_ID(Model_ID);
@@ -62,7 +61,7 @@ public class BilRepository {
         try {
             String Stelnummer = bil.getStelnummer();
             Biltilstand tilstand = bil.getBiltilstand();
-            int Tilstands_ID = tilstand.getInt();
+            int Tilstands_ID = tilstand.getEnumToInt();
             double Km_Kørt = bil.getKm_Kørt();
             String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
@@ -83,21 +82,24 @@ public class BilRepository {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
         try {
-            /*int number;
-            String QUERY = "";*/
+
             //Laver Callable statement
             cstmt = conn.prepareCall("{call viewInfo(1)}");
             cstmt.execute();
 
             rs = cstmt.getResultSet();
-            String stelnummer = rs.getString("Stelnummer");
-            udlejedeBiler.add(viewBil(stelnummer));
+            if (rs.next()) {
+                String stelnummer = rs.getString("Stelnummer");
+                udlejedeBiler.add(viewBil(stelnummer));
+            }
+
 
         } catch (SQLException e) {
             System.err.println("Fejl, kan ikke hente biler");
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        System.out.println(udlejedeBiler);
         return udlejedeBiler;
     }
 
@@ -105,14 +107,15 @@ public class BilRepository {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
         try {
-            /*int number;
-            String QUERY = "";*/
+
             //Laver Callable statement
             cstmt = conn.prepareCall("{call viewInfo(2)}");
             cstmt.execute();
             rs = cstmt.getResultSet();
-            /*String stelnummer = rs.getString("Stelnummer");
-            udlejedeBiler.add(viewBil(stelnummer));*/
+            if (rs.next()) {
+                String stelnummer = rs.getString("Stelnummer");
+                udlejedeBiler.add(viewBil(stelnummer));
+            }
 
         } catch (SQLException e) {
             System.err.println("Fejl, kan ikke hente biler");

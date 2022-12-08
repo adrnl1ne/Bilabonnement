@@ -6,26 +6,39 @@ public enum Biltilstand {
     UDLEJET(2),
     CHECKUP(3),
     SKADET(4);
-    private int Id;
+    private final int Id;
 
-    Biltilstand(int id) {
-        Id = id;
+
+    private Biltilstand (int Id) {
+        this.Id = Id;
     }
+
 
     public int getId() {
         return Id;
     }
 
-    public int getInt() {
+    /*Biltilstand(int id) {
+        Id = id;
+    }*/
+
+
+
+    public int getEnumToInt() {
+        Biltilstand biltilstand;
         switch (this) {
             case KLAR:
-                return 1;
+                biltilstand = Biltilstand.KLAR;
+                return biltilstand.getId();
             case UDLEJET:
-                return 2;
+                biltilstand = Biltilstand.UDLEJET;
+                return biltilstand.getId();
             case CHECKUP:
-                return 3;
+                biltilstand = Biltilstand.CHECKUP;
+                return biltilstand.getId();
             case SKADET:
-                return 4;
+                biltilstand = Biltilstand.SKADET;
+                return biltilstand.getId();
             default:
                 throw new RuntimeException("Fejl i biltilstand");
         }
