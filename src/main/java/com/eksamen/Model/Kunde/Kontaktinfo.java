@@ -7,7 +7,6 @@ public class Kontaktinfo {
     private int Postnr;
     private String City;
     private String Email;
-    private int Counter;
     private int MobilNumber;
 
     public Kontaktinfo() {
@@ -73,16 +72,6 @@ public class Kontaktinfo {
     public void setMobilNumber(int mobilNumber) {
         MobilNumber = mobilNumber;
     }
-
-
-    public int getCounter() {
-        return Counter;
-    }
-
-    public void setCounter(int counter) {
-        Counter = counter;
-    }
-
 
 
     @Override

@@ -10,7 +10,7 @@ public class BilService {
     BilRepository bilRepo = new BilRepository();
 
     public List<Bil> seUdlejetBiler() {
-        return bilRepo.viewUdlejetBiler();
+        return bilRepo.viewLejeAftalePåUdlejetBil();
 
     }
 

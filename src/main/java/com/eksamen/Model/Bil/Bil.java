@@ -1,5 +1,6 @@
 package com.eksamen.Model.Bil;
 
+import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skaderapport;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class Bil {
         this.bilmodel_ID = bilmodel_ID;
         this.biltilstand = biltilstand;
         this.km_Kørt = km_Kørt;
+    }
+
+    public double calculateTotalPrice(LejeAftale lejeAftale) {
+        double sum = lejeAftale.getPrisPrMåned() * lejeAftale.getAbonnementLængde();
+        return sum;
     }
 
     public Biltilstand getBiltilstand() {

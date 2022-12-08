@@ -13,7 +13,7 @@ public class Skaderapport {
     private Bil bil;
     private List<Skade> skade;
     private LejeAftale lejeaftale;
-    private LocalDate afleveringsdate = lejeaftale.getAfleveringsDato();
+    private LocalDate afleveringsdate;
     private double kørselsdistance;
 
 

@@ -24,8 +24,10 @@ public enum Biltilstand {
                 return 2;
             case CHECKUP:
                 return 3;
-            default:
+            case SKADET:
                 return 4;
+            default:
+                throw new RuntimeException("Fejl i biltilstand");
         }
     }
 

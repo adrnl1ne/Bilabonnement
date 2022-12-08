@@ -87,7 +87,7 @@ public class BilModelRepository {
                 double udbetaling = resultSet.getDouble("Udbetaling");
 
                 AbonnementBilModel abnmtBilmodel = new AbonnementBilModel();
-                abnmtBilmodel.setBilModel(Model_ID);
+                abnmtBilmodel.setModel_ID(Model_ID);
                 abnmtBilmodel.setUnlimited(isUnlimited);
                 abnmtBilmodel.setThreeMonthsPris(md3Pris);
                 abnmtBilmodel.setSiXMonthsPris(md6Pris);

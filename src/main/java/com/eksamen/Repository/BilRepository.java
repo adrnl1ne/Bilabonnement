@@ -80,15 +80,18 @@ public class BilRepository {
 
 
 
-   public List<Bil> viewUdlejetBiler() {
+   public List<Bil> viewLejeAftalePåUdlejetBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
+
         try {
+            /*int number;
+            String QUERY = "";*/
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewudlejet(2)}");
+            cstmt = conn.prepareCall("{call viewInfo(1)}");
             cstmt.execute();
             rs = cstmt.getResultSet();
-            String stelnummer = rs.getString("Stelnummer");
-            udlejedeBiler.add(viewBil(stelnummer));
+            /*String stelnummer = rs.getString("Stelnummer");
+            udlejedeBiler.add(viewBil(stelnummer));*/
 
         } catch (SQLException e) {
             System.err.println("Fejl, kan ikke hente biler");
@@ -99,25 +102,8 @@ public class BilRepository {
     }
 
 
-    public List<Bil> viewKlarBiler() {
-        List<Bil> bilerKlar = new ArrayList<>();
-        try {
-            //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewklar(1)}");
-            cstmt.execute();
-            rs = cstmt.getResultSet();
-            String stelnummer = rs.getString("Stelnummer");
-            bilerKlar.add(viewBil(stelnummer));
 
-        } catch (SQLException e) {
-            System.err.println("Fejl, kan ikke hente biler");
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return bilerKlar;
-    }
-
-   public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
+  /* public List<LejeAftale> viewLejeaftelerPåUdlejetBiler() {
         List<LejeAftale> udlejetBilsLejeaftale = new ArrayList<>();
         List<Bil> udlejetBiler = viewUdlejetBiler();
 
@@ -149,6 +135,6 @@ public class BilRepository {
 
         return udlejetBilsLejeaftale;
 
-    }
+    }*/
 
 }

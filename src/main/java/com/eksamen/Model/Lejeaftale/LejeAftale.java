@@ -8,32 +8,32 @@ import com.eksamen.Model.Skader.Skaderapport;
 import java.time.LocalDate;
 
 public class LejeAftale {
-    private Kunde kunde;
-    private AbonnementLejeaftale abonnementLejeaftale;
+
     private int lejeAftale_ID;
-    private String nummerPlade;
+    private Kunde kunde;
     private Bil bil;
-    private double prisPrMåned;
-    private double KørselDistanceInden;
-    private int abonnementLængde;
     private LocalDate startDato;
     private LocalDate afleveringsDato;
-    private Skaderapport skaderapport;
+    private String nummerPlade;
+    private AbonnementLejeaftale abonnementLejeaftale;
 
     private LeveringsType Type;
+    private double KørselDistanceInden;
+
+    private Skaderapport skaderapport;
+
     private String Leveringsadresse;
     private String Afleveringsadress;
     private double TransportTillæg;
 
+    public LejeAftale() {
+    }
 
     public LejeAftale(int lejeAftale_ID) {
         this.lejeAftale_ID = lejeAftale_ID;
     }
 
-    public double calculateTotalPrice() {
-        double sum = getPrisPrMåned() * getAbonnementLængde();
-        return sum;
-    }
+
 
     public int getLejeAftale_ID() {
         return lejeAftale_ID;
@@ -51,21 +51,6 @@ public class LejeAftale {
         this.bil = bil;
     }
 
-    public double getPrisPrMåned() {
-        return prisPrMåned;
-    }
-
-    public void setPrisPrMåned(double prisPrMåned) {
-        this.prisPrMåned = prisPrMåned;
-    }
-
-    public int getAbonnementLængde() {
-        return abonnementLængde;
-    }
-
-    public void setAbonnementLængde(int abonnementLængde) {
-        this.abonnementLængde = abonnementLængde;
-    }
 
     public LocalDate getStartDato() {
         return startDato;
@@ -75,18 +60,9 @@ public class LejeAftale {
         this.startDato = startDato;
     }
 
-    public LocalDate getAfleveringsDato() {
-        if (afleveringsDato.isEqual(getDefault())) {
-            return afleveringsDato;
-        } else {
-            afleveringsDato = LocalDate.now();
-        }
-        return afleveringsDato;
-    }
+    public LocalDate getDefaultAfleveringsdato() {
+        return getStartDato().plusMonths(abonnementLejeaftale.getAbonnementLængde());
 
-    public LocalDate getDefault() {
-        afleveringsDato = getStartDato().plusMonths(getAbonnementLængde());
-        return afleveringsDato;
     }
 
     public void setAfleveringsDato(LocalDate afleveringsDato) {
@@ -174,9 +150,7 @@ public class LejeAftale {
                 ", lejeAftale_ID=" + lejeAftale_ID +
                 ", nummerPlade='" + nummerPlade + '\'' +
                 ", bil=" + bil +
-                ", prisPrMåned=" + prisPrMåned +
                 ", KørselDistanceInden=" + KørselDistanceInden +
-                ", abonnementLængde=" + abonnementLængde +
                 ", startDato=" + startDato +
                 ", afleveringsDato=" + afleveringsDato +
                 ", skaderapport=" + skaderapport +

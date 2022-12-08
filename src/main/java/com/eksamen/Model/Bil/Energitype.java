@@ -32,8 +32,10 @@ public enum Energitype {
                 return 1;
             case ELEKTRISK:
                 return 2;
-            default:
+            case BENZIN:
                 return 3;
+            default:
+                throw new RuntimeException("Fejl i energitype");
         }
     }
 }

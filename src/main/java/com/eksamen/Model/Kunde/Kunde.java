@@ -11,7 +11,7 @@ public class Kunde {
     private String RegNum;
     private String KontoNum;
 
-    public Kunde(LejeAftale lejeaftaler, Kontaktinfo kontaktinfo, String CPR) {
+    public Kunde(Kontaktinfo kontaktinfo, String CPR) {
         info = kontaktinfo;
         cprnumber = CPR;
     }
