@@ -9,27 +9,47 @@ import java.util.List;
 public class Skaderapport {
 
 
-    private int Skaderapport_ID;
+    private int skaderapport_ID;
     private Bil bil;
-    private List<Skade> skade;
+    private List<Skade> skader;
     private LejeAftale lejeaftale;
     private LocalDate afleveringsdate;
     private double kørselsdistance;
 
 
-    //Constructor
+    //Constructors
+    // Denne constructer er til vores repository, når den skal view en skaderapport
     public Skaderapport(int skaderapport_ID) {
-        Skaderapport_ID = skaderapport_ID;
+        this.skaderapport_ID = skaderapport_ID;
     }
 
+    // Denne constructor er til at lave en skaderapport objekt der gives til vores repository, når den skal create en skaderapport
+    public Skaderapport(Bil bil, List<Skade> skader, LejeAftale lejeaftale, double kørselsdistance) {
+        this.bil = bil;
+        this.skader = skader;
+        this.lejeaftale = lejeaftale;
+        this.kørselsdistance = kørselsdistance;
+        //  Når en Skaderapport laves, så er det fordi at den udlejede bil er tilbage og den nuværende dato må være den rigtige afleveringsdato
+        this.setAfleveringsdate(LocalDate.now());
+    }
+
+
+    // Custom made Metoder
+    public double calcTotalPriceOfSkader() {
+        double sum = 0;
+        for (Skade skade : skader) {
+            sum += skade.getPrice();
+        }
+        return sum;
+    }
 
     //Getter og Setter
     public int getSkaderapport_ID() {
-        return Skaderapport_ID;
+        return skaderapport_ID;
     }
 
     public void setSkaderapport_ID(int skaderapport_ID) {
-        Skaderapport_ID = skaderapport_ID;
+        this.skaderapport_ID = skaderapport_ID;
     }
 
     public Bil getBil() {
@@ -40,12 +60,12 @@ public class Skaderapport {
         this.bil = bil;
     }
 
-    public List<Skade> getSkade() {
-        return skade;
+    public List<Skade> getSkader() {
+        return skader;
     }
 
-    public void setSkade(List<Skade> skade) {
-        this.skade = skade;
+    public void setSkader(List<Skade> skader) {
+        this.skader = skader;
     }
 
     public LejeAftale getLejeaftale() {
@@ -75,9 +95,9 @@ public class Skaderapport {
     @Override
     public String toString() {
         return "Skaderapport{" +
-                "Skaderapport_ID=" + Skaderapport_ID +
+                "Skaderapport_ID=" + skaderapport_ID +
                 ", bil=" + bil +
-                ", skade=" + skade +
+                ", skade=" + skader +
                 ", lejeaftale=" + lejeaftale +
                 ", afleveringsdate=" + afleveringsdate +
                 ", kørselsdistance=" + kørselsdistance +

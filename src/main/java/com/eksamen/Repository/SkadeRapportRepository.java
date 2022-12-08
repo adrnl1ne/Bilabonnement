@@ -147,7 +147,7 @@ public class SkadeRapportRepository {
             if (resultSet.next()) {
                 int SkadesRapport_ID = resultSet.getInt("Skaderapport_ID");
                 skadeRapport.setSkaderapport_ID(SkadesRapport_ID);
-                List<Skade> skader = skadeRapport.getSkade();
+                List<Skade> skader = skadeRapport.getSkader();
                 // Finder hver skade i en liste af skader og Inserter dem ind i tabellen for skader
                 for (Skade skade : skader) {
                     this.createSkade(skade);
