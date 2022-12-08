@@ -11,9 +11,14 @@ public enum Energitype {
         Id = id;
     }
 
+    // Getter
     public int getId() {
         return Id;
     }
+
+
+
+    // Custom made Metoder
 
     //Jakob
     public static Energitype getEnum(int EnergiType_ID) {
@@ -22,8 +27,11 @@ public enum Energitype {
                 return Energitype.DIESEL;
             case 2:
                 return Energitype.ELEKTRISK;
-            default:
+            case 3:
                 return Energitype.BENZIN;
+            default:
+                System.err.println("Det var ikke muligt at få en enum Energitype med ID'et: " + EnergiType_ID);
+                throw new RuntimeException();
         }
     }
     public int getInt() {
