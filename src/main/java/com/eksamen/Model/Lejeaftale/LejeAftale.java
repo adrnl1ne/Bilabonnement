@@ -144,20 +144,19 @@ public class LejeAftale {
         TransportTillæg = transportTillæg;
     }
 
-
     @Override
     public String toString() {
         return "LejeAftale{" +
-                "kunde=" + kunde +
-                ", abonnement=" + abonnementLejeaftale +
-                ", lejeAftale_ID=" + lejeAftale_ID +
-                ", nummerPlade='" + nummerPlade + '\'' +
+                "lejeAftale_ID=" + lejeAftale_ID +
+                ", kunde=" + kunde +
                 ", bil=" + bil +
-                ", KørselDistanceInden=" + KørselDistanceInden +
                 ", startDato=" + startDato +
                 ", afleveringsDato=" + afleveringsDato +
-                ", skaderapport=" + skaderapport +
+                ", nummerPlade='" + nummerPlade + '\'' +
+                ", abonnementLejeaftale=" + abonnementLejeaftale +
                 ", Type=" + Type +
+                ", KørselDistanceInden=" + KørselDistanceInden +
+                ", skaderapport=" + skaderapport +
                 ", Leveringsadresse='" + Leveringsadresse + '\'' +
                 ", Afleveringsadress='" + Afleveringsadress + '\'' +
                 ", TransportTillæg=" + TransportTillæg +

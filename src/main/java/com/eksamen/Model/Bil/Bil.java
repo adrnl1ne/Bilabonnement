@@ -84,4 +84,16 @@ public class Bil {
     public void setSkaderapport(List<com.eksamen.Model.Skader.Skaderapport> skaderapport) {
         Skaderapport = skaderapport;
     }
+
+    @Override
+    public String toString() {
+        return "Bil{" +
+                "stelnummer='" + stelnummer + '\'' +
+                ", bilmodel_ID=" + bilmodel_ID +
+                ", biltilstand=" + biltilstand +
+                ", km_Kørt=" + km_Kørt +
+                ", Skaderapport=" + Skaderapport +
+                ", bilModel=" + bilModel +
+                '}';
+    }
 }

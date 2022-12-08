@@ -80,12 +80,16 @@ public class Kontaktinfo {
 
     @Override
     public String toString() {
-        return "KontaktInfo{" +
+        return "Kontaktinfo{" +
+                "kunde=" + kunde +
+                ", CPR='" + CPR + '\'' +
                 ", FirstName='" + FirstName + '\'' +
                 ", LastName='" + LastName + '\'' +
                 ", Address='" + Address + '\'' +
+                ", Postnr=" + Postnr +
+                ", City='" + City + '\'' +
                 ", Email='" + Email + '\'' +
-                ", Mobilnumber=" + MobilNumber +
+                ", MobilNumber=" + MobilNumber +
                 '}';
     }
 

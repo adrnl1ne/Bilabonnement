@@ -88,7 +88,7 @@ public class AbonnementLejeaftale {
 
     @Override
     public String toString() {
-        return "Abonnement{" +
+        return "AbonnementLejeaftale{" +
                 "lejeaftale_ID=" + lejeaftale_ID +
                 ", isUnlimited=" + isUnlimited +
                 ", kmprMd=" + kmprMd +

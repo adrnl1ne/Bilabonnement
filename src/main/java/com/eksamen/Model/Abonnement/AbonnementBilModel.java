@@ -88,8 +88,8 @@ public class AbonnementBilModel {
 
     @Override
     public String toString() {
-        return "AbonnementsPriser{" +
-                "bilModel=" + Model_ID +
+        return "AbonnementBilModel{" +
+                "Model_ID=" + Model_ID +
                 ", isUnlimited=" + isUnlimited +
                 ", ThreeMonthsPris=" + ThreeMonthsPris +
                 ", SiXMonthsPris=" + SiXMonthsPris +

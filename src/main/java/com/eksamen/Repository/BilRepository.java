@@ -99,7 +99,6 @@ public class BilRepository {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        System.out.println(udlejedeBiler);
         return udlejedeBiler;
     }
 

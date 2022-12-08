@@ -66,8 +66,11 @@ public class Kunde {
     @Override
     public String toString() {
         return "Kunde{" +
-                "RegNum=" + RegNum +
-                ", KontoNum=" + KontoNum +
+                "lejeaftaler=" + lejeaftaler +
+                ", info=" + info +
+                ", cprnumber='" + cprnumber + '\'' +
+                ", RegNum='" + RegNum + '\'' +
+                ", KontoNum='" + KontoNum + '\'' +
                 '}';
     }
 }

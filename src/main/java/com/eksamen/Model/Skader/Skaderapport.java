@@ -71,4 +71,16 @@ public class Skaderapport {
     public void setKørselsdistance(double kørselsdistance) {
         this.kørselsdistance = kørselsdistance;
     }
+
+    @Override
+    public String toString() {
+        return "Skaderapport{" +
+                "Skaderapport_ID=" + Skaderapport_ID +
+                ", bil=" + bil +
+                ", skade=" + skade +
+                ", lejeaftale=" + lejeaftale +
+                ", afleveringsdate=" + afleveringsdate +
+                ", kørselsdistance=" + kørselsdistance +
+                '}';
+    }
 }

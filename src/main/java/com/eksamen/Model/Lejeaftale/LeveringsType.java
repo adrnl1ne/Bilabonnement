@@ -24,4 +24,12 @@ public enum LeveringsType {
         System.err.println("Der blev forsøgt at getType for en leveringstype, men talet/ID'et der blev brugt: " + id + " er ikke valid!");
             throw new RuntimeException();
     }
+
+
+    @Override
+    public String toString() {
+        return "LeveringsType{" +
+                "Id=" + Id +
+                '}';
+    }
 }

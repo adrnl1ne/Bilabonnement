@@ -108,4 +108,21 @@ public class BilModel {
     public void setUdstyr(List<String> udstyr) {
         this.udstyr = udstyr;
     }
+
+
+    @Override
+    public String toString() {
+        return "BilModel{" +
+                "Abopris=" + Abopris +
+                ", Mærke='" + Mærke + '\'' +
+                ", Model='" + Model + '\'' +
+                ", Model_ID=" + Model_ID +
+                ", CO2_Udslip=" + CO2_Udslip +
+                ", Stålpris=" + Stålpris +
+                ", KmPrX=" + KmPrX +
+                ", isGearManuel=" + isGearManuel +
+                ", energitype=" + energitype +
+                ", udstyr=" + udstyr +
+                '}';
+    }
 }
