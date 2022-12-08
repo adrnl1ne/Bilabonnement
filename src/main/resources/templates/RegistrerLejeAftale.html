@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Data Admin registerer lejeaftaler fra BilAbonnement.dk</title>
+    <link rel="stylesheet" href="/text.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -18,7 +19,7 @@
 <section>
     <div th:if="${lejeaftale != null}">
         <h2>Kundens info:</h2>
-        <table>
+
             <tr>
                 <th>CPR</th>
                 <th>Konto nr.</th>
@@ -32,16 +33,16 @@
                 <th>By</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.kunde.getCprnumber()}"></td>
-                <td th:text="${lejeaftale.kunde.getKontoNum()}"></td>
-                <td th:text="${lejeaftale.getKunden().getRegNum()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getFirstName()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getLastName()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getEmail()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getMobilNumber()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getAddress()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getPostnr()}"></td>
-                <td th:text="${lejeaftale.getKontakt().getCity()}"></td>
+                <td th:text="${lejeaftale.getKunde().getCprnumber()}"></td>
+                <td th:text="${lejeaftale.getKunde().getKontoNum()}"></td>
+                <td th:text="${lejeaftale.getKunde().getRegNum()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getFirstName()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getLastName()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getEmail()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getAddress()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getPostnr()}"></td>
+                <td th:text="${lejeaftale.getKunde().getInfo().getCity()}"></td>
             </tr>
         </table>
 
@@ -53,8 +54,8 @@
                 <th>Samlet Pris</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.displayStartDate()}"></td>
-                <td th:text="${lejeaftale.getNumberplate()}"></td>
+                <td th:text="${lejeaftale.getStartDato()}"></td>
+                <td th:text="${lejeaftale.getNummerPlade()}"></td>
                 <td th:text="${lejeaftale.calculatePrice()} + ' kr.'"></td>
             </tr>
         </table>
@@ -69,9 +70,9 @@
                 <th>Transporttillæg</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.getLeveringen().getType()}"></td>
-                <td th:text="${lejeaftale.getLeveringen().getLeveringsadresse()}"></td>
-                <td th:text="${lejeaftale.getLeveringen().getAfleveringsadress()}"></td>
+                <td th:text="${lejeaftale.getLeveringsadresse().getType()}"></td>
+                <td th:text="${lejeaftale.getLeveringsadresse().getType()}"></td>
+                <td th:text="${lejeaftale.getLeveringsadresse().getTransportTillæg()}"></td>
                 <td th:text="${lejeaftale.getLeveringen().getKørselDistanceInden()}"></td>
                 <td th:text="${lejeaftale.getLeveringen().getTransportTillæg()} + ' kr.'"></td>
             </tr>
@@ -91,11 +92,11 @@
             </tr>
             <tr>
                 <td th:text="${lejeaftale.getAbonnement().getAbonnementLængde()} + ' Måneder'"></td>
-                <td th:text="${lejeaftale.getAbonnement().getKmprMd()} + ' km/måned'"></td>
-                <td th:text="${lejeaftale.getAbonnement().getPriceprmonth()} + ' kr./måned'"></td>
+                <td th:text="${lejeaftale.getAbonnement().getKmPrMd()} + ' km/måned'"></td>
+                <td th:text="${lejeaftale.getAbonnement().getPricePrMonth()} + ' kr./måned'"></td>
                 <td th:text="${lejeaftale.getAbonnement().getAfleveringPrice()} + ' kr./dag'"></td>
                 <td th:text="${lejeaftale.getAbonnement().getUdbetaling()} + ' kr.'"></td>
-                <td th:text="${lejeaftale.getAbonnement().getXtraColorprice()} + ' kr./måned'"></td>
+                <td th:text="${lejeaftale.getAbonnement().getExtraColorPrice()()} + ' kr./måned'"></td>
                 <td th:text="${lejeaftale.getAbonnement().getPriceForOverDrive()} + ' kr./km'"></td>
             </tr>
         </table>
@@ -110,11 +111,11 @@
                 <th>Kilometer bilen har kørt</th>
             </tr>
             <tr>
-                <td th:text="${lejeaftale.getBilen().getStelnummer()}"></td>
-                <td th:text="${lejeaftale.getBilen().getTilstand()}"></td>
-                <td th:text="${lejeaftale.getBilen().getModel().getMærke()}"></td>
-                <td th:text="${lejeaftale.getBilen().getModel().getModel()}"></td>
-                <td th:text="${lejeaftale.getBilen().getKm_kørte()}"></td>
+                <td th:text="${lejeaftale.getBil().getStelnummer()}"></td>
+                <td th:text="${lejeaftale.getBil().getBiltilstand()}"></td>
+                <td th:text="${lejeaftale.getBil().getBilModel().getMærke()}"></td>
+                <td th:text="${lejeaftale.getBil().getBilModel().getModel()}"></td>
+                <td th:text="${lejeaftale.getBil().getKmKørt()}"></td>
             </tr>
         </table>
 

@@ -24,7 +24,12 @@ public class indexController {
     @GetMapping("/Udvikler")
     public String Udvikler() {return "Udvikler";
     }
-    @GetMapping("/Værksted")
+    @GetMapping("/UdviklerOversigt")
+    public String UdviklerOversigt() {
+        return "UdviklerOversigt";
+
+
+    } @GetMapping("/Værksted")
     public String Værksted() {return "Værksted";
     }
 }
