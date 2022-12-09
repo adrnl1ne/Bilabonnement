@@ -23,7 +23,7 @@ public class LejeAftaleRepository {
 
     private int findNyesteLejeAftale_ID() {
         try {
-            String newestLejeaftaleQUERY = "SELECT MAX(Lejeaftale_ID) FROM lejeaftale";
+            String newestLejeaftaleQUERY = "SELECT MAX(Lejeaftale_ID) AS Lejeaftale_ID FROM lejeaftale";
             PreparedStatement preparedStatement1 = conn.prepareStatement(newestLejeaftaleQUERY);
             ResultSet resultSet = preparedStatement1.executeQuery();
             if (resultSet.next()) {
@@ -42,7 +42,7 @@ public class LejeAftaleRepository {
         int lejeaftalens_ID = abonnementLejeaftale.getLejeaftale_ID();
         boolean isUnlimited = abonnementLejeaftale.isUnlimited();
         int kmPrMd = abonnementLejeaftale.getKmPrMd();
-        int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
+        int abonnementLængde = abonnementLejeaftale.getAbonnementLaengde();
         double overAflPris = abonnementLejeaftale.getAfleveringPrice();
         double prisPrMd = abonnementLejeaftale.getPricePrMonth();
         double udbetaling = abonnementLejeaftale.getUdbetaling();
@@ -77,8 +77,8 @@ public class LejeAftaleRepository {
         int leveringsType_ID = lejeAftale.getType().getId();
         String leveringsAdresse = lejeAftale.getLeveringsadresse();
         String afleveringsAdresse = lejeAftale.getAfleveringsadresse();
-        double kørtDistanceFørUdlejning = lejeAftale.getBil().getKmKørt();
-        double transporttillæg = lejeAftale.getTransportTillæg();
+        double kørtDistanceFørUdlejning = lejeAftale.getBil().getKmKort();
+        double transporttillæg = lejeAftale.getTransportTillaeg();
 
         try {
             String leveringQUERY = "INSERT INTO levering (Lejeaftale_ID, LeveringsType_ID, Leveringsadresse, " +
@@ -106,7 +106,7 @@ public class LejeAftaleRepository {
         // Finder alle de værdier der er i en lejeaftales abonnement, som så skal updates
         boolean isUnlimited = abonnementLejeaftale.isUnlimited();
         int kmPrMd = abonnementLejeaftale.getKmPrMd();
-        int abonnementLængde = abonnementLejeaftale.getAbonnementLængde();
+        int abonnementLængde = abonnementLejeaftale.getAbonnementLaengde();
         double overAflPris = abonnementLejeaftale.getAfleveringPrice();
         double prisPrMd = abonnementLejeaftale.getPricePrMonth();
         double udbetaling = abonnementLejeaftale.getUdbetaling();
@@ -144,8 +144,8 @@ public class LejeAftaleRepository {
         int LeveringsType_ID = lejeAftale.getType().getId();
         String leveringsAdresse = lejeAftale.getLeveringsadresse();
         String afleveringsAdresse = lejeAftale.getAfleveringsadresse();
-        double kmKørtFørUdlej = lejeAftale.getKørselDistanceInden();
-        double transporttillæg = lejeAftale.getTransportTillæg();
+        double kmKørtFørUdlej = lejeAftale.getKorselDistanceInden();
+        double transporttillæg = lejeAftale.getTransportTillaeg();
 
         // Updater tabellen med de fundne værdier
         try {
@@ -189,10 +189,10 @@ public class LejeAftaleRepository {
                 lejeAftale.setAfleveringsadresse(afleveringsAdresse);
 
                 double kmKørt = resultSet.getDouble("Km_Kørt");
-                lejeAftale.setKørselDistanceInden(kmKørt);
+                lejeAftale.setKorselDistanceInden(kmKørt);
 
                 double transporttillæg = resultSet.getDouble("Transporttillæg");
-                lejeAftale.setTransportTillæg(transporttillæg);
+                lejeAftale.setTransportTillaeg(transporttillæg);
 
                 return lejeAftale;
             }
@@ -223,7 +223,7 @@ public class LejeAftaleRepository {
                 lejeAftalesAbo.setKmPrMd(kmPrMd);
 
                 int aboLængde = resultSet.getInt("AbnmtLængde");
-                lejeAftalesAbo.setAbonnementLængde(aboLængde);
+                lejeAftalesAbo.setAbonnementLaengde(aboLængde);
 
                 double overAflPris = resultSet.getDouble("OverAflPris");
                 lejeAftalesAbo.setAfleveringPrice(overAflPris);
@@ -267,6 +267,9 @@ public class LejeAftaleRepository {
     }
 
     public void createLejeaftale(LejeAftale lejeAftale) throws RentingOutNoneReadyCarException {
+        // Som det første creates kunden, hvis kunden er ny, for ellers kan lejeaftalen ikke blive created, da den har en foreign key der henviser til en kunde i databasen
+        new KundeRepository().createKunde(lejeAftale.getKunde());
+
         int lejeaftalens_ID;
 
         Bil potentielBilTilUdlejning = lejeAftale.getBil();
@@ -310,7 +313,6 @@ public class LejeAftaleRepository {
             if (lejeaftalens_ID > 0) {
                 this.createAbonnement(abonnementLejeaftale);
                 this.createLevering(lejeAftale);
-                new KundeRepository().createKunde(lejeAftale.getKunde());
             } else {
                 this.deleteLejeaftale(lejeAftale);
             }

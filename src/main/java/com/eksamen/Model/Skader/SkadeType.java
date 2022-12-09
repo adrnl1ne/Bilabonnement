@@ -19,6 +19,27 @@ public enum SkadeType {
         this.timesTypeCanBeReported = timesTypeCanBeReported;
     }
 
+    // Custom made Metoder
+    public String displaySkadeType() {
+         switch (this.getId()) {
+             case 1:
+                 return "Stenslag";
+             case 2:
+                 return "Flere Stenslag";
+             case 3:
+                 return "Lakfelt";
+             case 4:
+                 return "Ridset Alufælg";
+             case 5:
+                 return "Ny Forrude";
+             case 6:
+                 return "Mangler Nøgle";
+             default:
+                 System.err.println("Det var ikke muligt at display en Type Skade, ud efter ID'et: " + this.getId());
+                 throw new RuntimeException();
+         }
+    }
+
     // Getters
     public int getId() {
         return Id;

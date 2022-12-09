@@ -5,7 +5,7 @@ public class AbonnementLejeaftale {
     private int lejeaftale_ID;
     private boolean isUnlimited;
     private int kmPrMd;
-    private int abonnementLængde;
+    private int abonnementLaengde;
     private double afleveringPrice;
     private double pricePrMonth;
     private double udbetaling;
@@ -29,6 +29,34 @@ public class AbonnementLejeaftale {
         } else {
             return "Limited";
         }
+    }
+
+    public String displayPricePrMonth() {
+        return pricePrMonth + " kr. per måned";
+    }
+
+    public String displayKmPrMd() {
+        return kmPrMd + " km/måned";
+    }
+
+    public String displayAbonnementLaengde() {
+        return abonnementLaengde + " måneder";
+    }
+
+    public String displayAfleveringsPrice() {
+        return afleveringPrice + " kr./dag";
+    }
+
+    public String displayUdbetaling() {
+        return udbetaling + " kr.";
+    }
+
+    public String displayExtraColorPrice() {
+        return extraColorPrice + " kr./måned";
+    }
+
+    public String displayPriceForOverDrive() {
+        return priceForOverDrive + " kr./km.";
     }
 
 
@@ -58,12 +86,12 @@ public class AbonnementLejeaftale {
         this.kmPrMd = kmPrMd;
     }
 
-    public int getAbonnementLængde() {
-        return abonnementLængde;
+    public int getAbonnementLaengde() {
+        return abonnementLaengde;
     }
 
-    public void setAbonnementLængde(int abonnementLængde) {
-        this.abonnementLængde = abonnementLængde;
+    public void setAbonnementLaengde(int abonnementLaengde) {
+        this.abonnementLaengde = abonnementLaengde;
     }
 
     public double getAfleveringPrice() {
@@ -113,7 +141,7 @@ public class AbonnementLejeaftale {
                 "lejeaftale_ID=" + lejeaftale_ID +
                 ", isUnlimited=" + isUnlimited +
                 ", kmPrMd=" + kmPrMd +
-                ", AbonnementLængde=" + abonnementLængde +
+                ", AbonnementLængde=" + abonnementLaengde +
                 ", AfleveringPrice=" + afleveringPrice +
                 ", PricePrMonth=" + pricePrMonth +
                 ", Udbetaling=" + udbetaling +

@@ -20,9 +20,7 @@ public class Kontaktinfo {
 
     // Custom made Metoder
 
-    public String displayNavn() {
-        return firstName + ' ' + lastName;
-    }
+
 
 
 

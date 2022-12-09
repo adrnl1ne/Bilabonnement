@@ -1,21 +1,15 @@
-</head>
-<body>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medarbejder lounge - Eksamen webside</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Homepage - Eksamen webside</title>
     <link rel="stylesheet" href="/MedarbejderStyles.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<section class="header">
-    <nav>
-        <a href="/static"><img src="/Pictures/newlogo.png" alt=""></a>
-        <div class="nav-links" id="navLinks">
-            <li><a href="/">HOME</a></li>
+<header th:insert="Header.html">
+</header>
 
-        </div>
-</section>
 <div class="container">
     <h2>Vaelge Din Opgave </h2>
     <div class="price-row">
@@ -27,8 +21,18 @@
                 <li>Tjekke Bogholderi</li>
                 <li>Tjekke Email </li>
                 <li>Update Lejeaftaler</li>
-                <li>Godkente Data</li>
+                <li>Godkendte Data</li>
                 <li> Support</li>
             </ul>
-            <a href="/RegistrerLejeAftale" class="hero-btn"><button>Admin Login</button></a>
+
+            <a class="hero-btn red-btn" href="/Admin/RegistrerAftale" style="font-size: 25px">Registrer Lejeaftaler</a>
+
         </div>
+    </div>
+</div>
+
+<footer th:insert="Footer.html">
+</footer>
+
+</body>
+</html>

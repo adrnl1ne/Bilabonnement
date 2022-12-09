@@ -12,6 +12,19 @@ public enum LeveringsType {
         Id = id;
     }
 
+    // Custom made Metoder
+    public String displayLeveringsType() {
+        switch (this.getId()) {
+            case 1:
+                return "Standard levering";
+            case 2:
+                return "FDM levering";
+            default:
+                System.err.println("Det var ikke muligt at display en Type levering, ud efter ID'et: " + this.getId());
+                throw new RuntimeException();
+        }
+    }
+
 
     // Getters
     public int getId() {

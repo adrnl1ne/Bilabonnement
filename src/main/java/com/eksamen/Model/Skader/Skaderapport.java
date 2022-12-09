@@ -14,7 +14,7 @@ public class Skaderapport {
     private List<Skade> skader;
     private LejeAftale lejeaftale;
     private LocalDate afleveringsdate;
-    private double kørselsdistance;
+    private double korselsdistance;
 
 
     //Constructors
@@ -87,12 +87,12 @@ public class Skaderapport {
         this.afleveringsdate = afleveringsdate;
     }
 
-    public double getKørselsdistance() {
-        return kørselsdistance;
+    public double getKorselsdistance() {
+        return korselsdistance;
     }
 
-    public void setKørselsdistance(double kørselsdistance) {
-        this.kørselsdistance = kørselsdistance;
+    public void setKorselsdistance(double korselsdistance) {
+        this.korselsdistance = korselsdistance;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Skaderapport {
                 ", skader=" + skader +
                 ", lejeaftale=" + lejeaftale +
                 ", afleveringsdate=" + afleveringsdate +
-                ", kørselsdistance=" + kørselsdistance +
+                ", kørselsdistance=" + korselsdistance +
                 '}';
     }
 }

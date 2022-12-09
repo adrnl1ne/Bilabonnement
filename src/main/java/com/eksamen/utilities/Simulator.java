@@ -339,13 +339,13 @@ public class Simulator {
         double transportTillæg = calculateTransportTillæg(simulatedLeveringsType);
         String leveringsAdresse = simulateLeveringsAdresse(simulatedLeveringsType);
         String afleveringsAdresse = leveringsAdresse;
-        double kørselsdistanceFørUdlejning = simuleretLejeAftale.getBil().getKmKørt();
+        double kørselsdistanceFørUdlejning = simuleretLejeAftale.getBil().getKmKort();
 
         simuleretLejeAftale.setType(simulatedLeveringsType);
-        simuleretLejeAftale.setTransportTillæg(transportTillæg);
+        simuleretLejeAftale.setTransportTillaeg(transportTillæg);
         simuleretLejeAftale.setLeveringsadresse(leveringsAdresse);
         simuleretLejeAftale.setAfleveringsadresse(afleveringsAdresse);
-        simuleretLejeAftale.setKørselDistanceInden(kørselsdistanceFørUdlejning);
+        simuleretLejeAftale.setKorselDistanceInden(kørselsdistanceFørUdlejning);
 
     }
 
@@ -376,7 +376,7 @@ public class Simulator {
 
         simuleretAbonnement.setUnlimited(isUnlimited);
         simuleretAbonnement.setPricePrMonth(prisPrMd);
-        simuleretAbonnement.setAbonnementLængde(abonnementslængde);
+        simuleretAbonnement.setAbonnementLaengde(abonnementslængde);
         simuleretAbonnement.setKmPrMd(kmPrMd);
         simuleretAbonnement.setUdbetaling(udbetaling);
         simuleretAbonnement.setExtraColorPrice(farvePris);
@@ -463,7 +463,7 @@ public class Simulator {
 
 
     private static LeveringsType decideLeveringsType(BilModel udlejetBilsModel) {
-        String bilensMærke = udlejetBilsModel.getMærke();
+        String bilensMærke = udlejetBilsModel.getMaerke();
         switch (bilensMærke) {
             case "DS":
                 return LeveringsType.FDM;

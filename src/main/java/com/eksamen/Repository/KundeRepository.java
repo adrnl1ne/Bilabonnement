@@ -44,6 +44,7 @@ public class KundeRepository {
                 preparedStatement.setString(2, regNum);
                 preparedStatement.setString(3, kontoNum);
                 preparedStatement.executeUpdate();
+                this.createKontaktinfo(kunde.getInfo());
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.err.println("Not possible to create, to Insert, a Kunde: " + kunde);
@@ -53,6 +54,37 @@ public class KundeRepository {
             this.updateKunde(kunde);
         }
 
+    }
+
+    // Marcus
+    public void createKontaktinfo(Kontaktinfo kontaktinfo) {
+        String CPR = kontaktinfo.getCPR();
+        String fornavn = kontaktinfo.getFirstName();
+        String efternavn = kontaktinfo.getLastName();
+        String adresse = kontaktinfo.getAddress();
+        int postNr = kontaktinfo.getPostnr();
+        String email = kontaktinfo.getEmail();
+        int mobil = kontaktinfo.getMobilNumber();
+        String city = kontaktinfo.getCity();
+
+        try {
+
+            String kontaktQUERY = "INSERT INTO kontaktinfo (CPR, Fornavn, Efternavn, Adresse, Postnr, Mail, Mobil, City) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement4 = conn.prepareStatement(kontaktQUERY);
+            preparedStatement4.setString(1, CPR);
+            preparedStatement4.setString(2, fornavn);
+            preparedStatement4.setString(3, efternavn);
+            preparedStatement4.setString(4, adresse);
+            preparedStatement4.setInt(5, postNr);
+            preparedStatement4.setString(6, email);
+            preparedStatement4.setInt(7, mobil);
+            preparedStatement4.setString(8, city);
+            preparedStatement4.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at create, altså Inserte i tabellen, Kontaktinformationen: " + kontaktinfo);
+            throw new RuntimeException(e);
+        }
     }
 
     // Marcus
@@ -73,8 +105,8 @@ public class KundeRepository {
                 kontaktInfo.setAddress(adresse);
                 int postnr = resultSet.getInt("Postnr");
                 kontaktInfo.setPostnr(postnr);
-                String by = resultSet.getString("By");
-                kontaktInfo.setCity(by);
+                String city = resultSet.getString("City");
+                kontaktInfo.setCity(city);
                 String email = resultSet.getString("Mail");
                 kontaktInfo.setEmail(email);
                 int mobil = resultSet.getInt("Mobil");
@@ -176,12 +208,12 @@ public class KundeRepository {
         int postnr = kontaktinfo.getPostnr();
         String mail = kontaktinfo.getEmail();
         int mobil = kontaktinfo.getMobilNumber();
-        String by = kontaktinfo.getCity();
+        String city = kontaktinfo.getCity();
 
         // Updater de fundne værdier med dem i tabellen
         try {
 
-            String kontaktQUERY = "UPDATE kontaktinfo SET Fornavn = ?, Efternavn = ?, Adresse = ?, Postnr = ?, Mail = ?, Mobil = ?, 'By' = ? WHERE CPR = ?";
+            String kontaktQUERY = "UPDATE kontaktinfo SET Fornavn = ?, Efternavn = ?, Adresse = ?, Postnr = ?, Mail = ?, Mobil = ?, City = ? WHERE CPR = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(kontaktQUERY);
 
             preparedStatement.setString(1, fornavn);
@@ -190,7 +222,7 @@ public class KundeRepository {
             preparedStatement.setInt(4, postnr);
             preparedStatement.setString(5, mail);
             preparedStatement.setInt(6, mobil);
-            preparedStatement.setString(7, by);
+            preparedStatement.setString(7, city);
             preparedStatement.setString(8, CPR);
             preparedStatement.executeUpdate();
 

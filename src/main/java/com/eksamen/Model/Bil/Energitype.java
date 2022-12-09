@@ -46,4 +46,18 @@ public enum Energitype {
                 throw new RuntimeException("Fejl i energitype");
         }
     }
+
+    public String displayEnergiType() {
+        switch (this.getId()) {
+            case 1:
+                return "Diesel";
+            case 2:
+                return "Elektrisk";
+            case 3:
+                return "Benzin";
+            default:
+                System.err.println("Det var ikke muligt at display en Energitype, ud efter ID'et: " + this.getId());
+                throw new RuntimeException();
+        }
+    }
 }

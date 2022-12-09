@@ -26,6 +26,9 @@ public class Kunde {
 
     // Custom made Metoder
 
+    public String displayNavn() {
+        return info.getFirstName() + ' ' + info.getLastName();
+    }
 
 
 

@@ -10,7 +10,7 @@ public class Bil {
 
     private Biltilstand biltilstand;
 
-    private double kmKørt;
+    private double kmKort;
 
     private List<Skaderapport> skaderapporter;
 
@@ -26,15 +26,19 @@ public class Bil {
         this.stelnummer = stelnummer;
         this.bilModel = bilModel;
         this.biltilstand = biltilstand;
-        this.kmKørt = kmKørt;
+        this.kmKort = kmKørt;
     }
 
 
     // Custom made Metoder
 
     public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
-        double sum = (abonnementLejeaftale.getPricePrMonth() + abonnementLejeaftale.getExtraColorPrice()) * abonnementLejeaftale.getAbonnementLængde() + abonnementLejeaftale.getUdbetaling();
+        double sum = (abonnementLejeaftale.getPricePrMonth() + abonnementLejeaftale.getExtraColorPrice()) * abonnementLejeaftale.getAbonnementLaengde() + abonnementLejeaftale.getUdbetaling();
         return sum;
+    }
+
+    public String displayKmKort() {
+        return kmKort + " kilometer kørt";
     }
 
 
@@ -58,12 +62,12 @@ public class Bil {
 
 
 
-    public double getKmKørt() {
-        return kmKørt;
+    public double getKmKort() {
+        return kmKort;
     }
 
-    public void setKmKørt(double kmKørt) {
-        this.kmKørt = kmKørt;
+    public void setKmKort(double kmKort) {
+        this.kmKort = kmKort;
     }
 
     public BilModel getBilModel() {
@@ -87,7 +91,7 @@ public class Bil {
         return "Bil{" +
                 "stelnummer='" + stelnummer + '\'' +
                 ", biltilstand=" + biltilstand +
-                ", kmKørt=" + kmKørt +
+                ", kmKørt=" + kmKort +
                 ", skaderapporter=" + skaderapporter +
                 ", bilModel=" + bilModel +
                 '}';

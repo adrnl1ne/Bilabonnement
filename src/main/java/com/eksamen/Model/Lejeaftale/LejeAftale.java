@@ -17,13 +17,13 @@ public class LejeAftale {
     private AbonnementLejeaftale abonnementLejeaftale;
 
     private LeveringsType Type;
-    private double kørselDistanceInden;
+    private double korselDistanceInden;
 
     private Skaderapport skaderapport;
 
     private String leveringsadresse;
     private String afleveringsadresse;
-    private double transportTillæg;
+    private double transportTillaeg;
 
 
     // Constructors
@@ -34,6 +34,7 @@ public class LejeAftale {
     public LejeAftale(Bil bil, Kunde kunde) {
         this.bil = bil;
         this.kunde = kunde;
+        this.korselDistanceInden = bil.getKmKort();
     }
 
 
@@ -41,7 +42,7 @@ public class LejeAftale {
 
     // Marcus
     public double calculatePrice() {
-        int abnmtLængde = abonnementLejeaftale.getAbonnementLængde();
+        int abnmtLængde = abonnementLejeaftale.getAbonnementLaengde();
         double prisPrMåned = abonnementLejeaftale.getPricePrMonth();
         double farveprisPrMåned = abonnementLejeaftale.getExtraColorPrice();
         double udbetaling = abonnementLejeaftale.getUdbetaling();
@@ -49,11 +50,23 @@ public class LejeAftale {
         return sum;
     }
 
+    public String displayCalculatedPrice() {
+        return this.calculatePrice() + " kr. over " + abonnementLejeaftale.displayAbonnementLaengde();
+    }
+
 
     // Jakob
     // Udregner den sidste date en udlejet bil skal afleveres tilbage
     public LocalDate calcAfleveringsDato() {
-        return getStartDato().plusDays(abonnementLejeaftale.getAbonnementLængde() * 30L);
+        return getStartDato().plusDays(abonnementLejeaftale.getAbonnementLaengde() * 30L);
+    }
+
+    public String displayTransportTillaeg() {
+        return transportTillaeg + " kr.";
+    }
+
+    public String displayKorselDistanceInden() {
+        return korselDistanceInden + " kilometer";
     }
 
 
@@ -88,12 +101,12 @@ public class LejeAftale {
 
 
 
-    public double getKørselDistanceInden() {
-        return kørselDistanceInden;
+    public double getKorselDistanceInden() {
+        return korselDistanceInden;
     }
 
-    public void setKørselDistanceInden(double kørselDistanceInden) {
-        this.kørselDistanceInden = kørselDistanceInden;
+    public void setKorselDistanceInden(double korselDistanceInden) {
+        this.korselDistanceInden = korselDistanceInden;
     }
 
     public String getNummerPlade() {
@@ -152,12 +165,12 @@ public class LejeAftale {
         this.afleveringsadresse = afleveringsadresse;
     }
 
-    public double getTransportTillæg() {
-        return transportTillæg;
+    public double getTransportTillaeg() {
+        return transportTillaeg;
     }
 
-    public void setTransportTillæg(double transportTillæg) {
-        this.transportTillæg = transportTillæg;
+    public void setTransportTillaeg(double transportTillaeg) {
+        this.transportTillaeg = transportTillaeg;
     }
 
     @Override
@@ -170,11 +183,11 @@ public class LejeAftale {
                 ", nummerPlade='" + nummerPlade + '\'' +
                 ", abonnementLejeaftale=" + abonnementLejeaftale +
                 ", Type=" + Type +
-                ", KørselDistanceInden=" + kørselDistanceInden +
+                ", KørselDistanceInden=" + korselDistanceInden +
                 ", skaderapport=" + skaderapport +
                 ", Leveringsadresse='" + leveringsadresse + '\'' +
                 ", Afleveringsadress='" + afleveringsadresse + '\'' +
-                ", TransportTillæg=" + transportTillæg +
+                ", TransportTillæg=" + transportTillaeg +
                 '}';
     }
 }

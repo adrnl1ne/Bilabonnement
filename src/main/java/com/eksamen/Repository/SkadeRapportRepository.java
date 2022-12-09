@@ -127,8 +127,8 @@ public class SkadeRapportRepository {
         int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
         String Stelnummer = skadeRapport.getBil().getStelnummer();
         LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
-        double kørselsdistance = skadeRapport.getKørselsdistance();
-        skadeRapport.getBil().setKmKørt(kørselsdistance);
+        double kørselsdistance = skadeRapport.getKorselsdistance();
+        skadeRapport.getBil().setKmKort(kørselsdistance);
 
         // Inserter de fundne værdier for skadesrapporten
         try {
@@ -170,7 +170,7 @@ public class SkadeRapportRepository {
         int lejeAftale_ID = skaderapport.getLejeaftale().getLejeAftale_ID();
         String stelnummer = skaderapport.getBil().getStelnummer();
         LocalDate afleveringsDato = skaderapport.getAfleveringsdate();
-        double kørselsdistance = skaderapport.getKørselsdistance();
+        double kørselsdistance = skaderapport.getKorselsdistance();
 
         // updater værdierne der lige er blevet fundet
         try {
@@ -185,7 +185,7 @@ public class SkadeRapportRepository {
 
             // Finder bilen, som skaderapporten er udfærdiget på, og opdater bilens km kørt til det der står i rapporten
             Bil bil = new BilRepository().viewBil(stelnummer);
-            bil.setKmKørt(kørselsdistance);
+            bil.setKmKort(kørselsdistance);
             new BilRepository().updateBil(bil);
 
             // Finder alle de skader en SkadeRapport har og updater dem, samt creater dem som er nye
@@ -300,7 +300,7 @@ public class SkadeRapportRepository {
                 skaderapport.setAfleveringsdate(afleveringsdato);
 
                 double kørselsdistance = resultSet.getDouble("Kørselsdistance");
-                skaderapport.setKørselsdistance(kørselsdistance);
+                skaderapport.setKorselsdistance(kørselsdistance);
 
                 List<Skade> rapportensSkader = this.viewAlleSkader(skaderapport);
                 skaderapport.setSkader(rapportensSkader);

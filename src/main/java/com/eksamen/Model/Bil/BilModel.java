@@ -8,10 +8,10 @@ public class BilModel {
 
     private int model_ID;
     private AbonnementBilModel abonnementBilModel;
-    private String mærke;
+    private String maerke;
     private String model;
     private double CO2_Udslip;
-    private double stålpris;
+    private double staalpris;
     private double kmPrX;
     private boolean isGearManuel;
     private Energitype energitype;
@@ -61,12 +61,12 @@ public class BilModel {
         this.abonnementBilModel = abonnementBilModel;
     }
 
-    public String getMærke() {
-        return mærke;
+    public String getMaerke() {
+        return maerke;
     }
 
-    public void setMærke(String mærke) {
-        this.mærke = mærke;
+    public void setMaerke(String maerke) {
+        this.maerke = maerke;
     }
 
     public String getModel() {
@@ -87,12 +87,12 @@ public class BilModel {
         this.CO2_Udslip = CO2_Udslip;
     }
 
-    public double getStålpris() {
-        return stålpris;
+    public double getStaalpris() {
+        return staalpris;
     }
 
-    public void setStålpris(double stålpris) {
-        this.stålpris = stålpris;
+    public void setStaalpris(double staalpris) {
+        this.staalpris = staalpris;
     }
 
     public double getKmPrX() {
@@ -132,11 +132,11 @@ public class BilModel {
     public String toString() {
         return "BilModel{" +
                 "Abopris=" + abonnementBilModel +
-                ", Mærke='" + mærke + '\'' +
+                ", Mærke='" + maerke + '\'' +
                 ", Model='" + model + '\'' +
                 ", Model_ID=" + model_ID +
                 ", CO2_Udslip=" + CO2_Udslip +
-                ", Stålpris=" + stålpris +
+                ", Stålpris=" + staalpris +
                 ", KmPrX=" + kmPrX +
                 ", isGearManuel=" + isGearManuel +
                 ", energitype=" + energitype +

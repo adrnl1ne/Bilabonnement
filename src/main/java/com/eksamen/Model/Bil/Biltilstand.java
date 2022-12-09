@@ -38,4 +38,21 @@ public enum Biltilstand {
                 throw new RuntimeException();
         }
     }
+
+
+    public String displayTilstand() {
+        switch (this.getId()) {
+            case 1:
+                return "Bilen er klar til at blive udlejet";
+            case 2:
+                return "Bilen er udlejet";
+            case 3:
+                return "Bilen er til eftersyn";
+            case 4:
+                return "Bilen er skadet";
+            default:
+                System.err.println("Det var ikke muligt at display en Biltilstand, ud efter ID'et: " + this.getId());
+                throw new RuntimeException();
+        }
+    }
 }

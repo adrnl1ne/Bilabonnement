@@ -127,11 +127,11 @@ public class BilModelRepository {
                 Energitype type = Energitype.getEnum(resultSet.getInt(Energitype_ID));
 
                 BilModel bilModel = new BilModel(model_ID);
-                bilModel.setMærke(bilmærke);
+                bilModel.setMaerke(bilmærke);
                 bilModel.setEnergitype(type);
                 bilModel.setModel(Model);
                 bilModel.setGearManuel(isGearManuel);
-                bilModel.setStålpris(Stålpris);
+                bilModel.setStaalpris(Stålpris);
                 bilModel.setCO2_Udslip(CO2_Udslip);
                 bilModel.setKmPrX(KmPrX);
                 bilModel.setUdstyr(udstyr);
