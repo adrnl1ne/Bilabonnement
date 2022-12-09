@@ -10,8 +10,8 @@ public enum SkadeType {
 
 
 
-    private int Id; // Måden vi finder ud af hvilken type en skade er når vi skal view eller create en skade
-    private int timesTypeCanBeReported; // Den mængde gange en skade kan være på en rapport, som der er kun 1 forrude
+    private final int Id; // Måden vi finder ud af hvilken type en skade er når vi skal view eller create en skade
+    private final int timesTypeCanBeReported; // Den mængde gange en skade kan være på en rapport, som der er kun 1 forrude
 
     // Constructor
      SkadeType(int id, int timesTypeCanBeReported) {

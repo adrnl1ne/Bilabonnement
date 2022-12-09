@@ -5,7 +5,7 @@ public enum Energitype {
     ELEKTRISK(2),
     BENZIN(3);
 
-    private int Id;
+    private final int Id;
 
     Energitype(int id){
         Id = id;
