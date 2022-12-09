@@ -123,16 +123,15 @@ public class SkadeRapportRepository {
         }
     }
     public void createSkadesRapport(Skaderapport skadeRapport) {
+        // Finder de værdier som skal Insertes i tabellen for Skadesrapporter
+        int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
+        String Stelnummer = skadeRapport.getBil().getStelnummer();
+        LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
+        double kørselsdistance = skadeRapport.getKørselsdistance();
+        skadeRapport.getBil().setKmKørt(kørselsdistance);
+
+        // Inserter de fundne værdier for skadesrapporten
         try {
-            // Finder de værdier som skal Insertes i tabellen for Skadesrapporter
-            int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
-            String Stelnummer = skadeRapport.getBil().getStelnummer();
-            LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
-            double kørselsdistance = skadeRapport.getKørselsdistance();
-            skadeRapport.getBil().setKmKørt(kørselsdistance);
-
-            // Inserter de fundne værdier for skadesrapporten
-
             String InsertQUERY = "INSERT INTO skadesrapport (Lejeaftale_ID, Stelnummer, Afleveringsdato," +
                     " Kørselsdistance) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement1 = conn.prepareStatement(InsertQUERY);
@@ -164,6 +163,69 @@ public class SkadeRapportRepository {
     }
 
 
+    // Marcus
+    public void updateSkadesRapport(Skaderapport skaderapport) {
+        // Finder de værdier i en SkadeRapport, som skal gemmes i SkadesRapport Tabellen
+        int skadesRapport_ID = skaderapport.getSkaderapport_ID();
+        int lejeAftale_ID = skaderapport.getLejeaftale().getLejeAftale_ID();
+        String stelnummer = skaderapport.getBil().getStelnummer();
+        LocalDate afleveringsDato = skaderapport.getAfleveringsdate();
+        double kørselsdistance = skaderapport.getKørselsdistance();
+
+        // updater værdierne der lige er blevet fundet
+        try {
+            String updateQUERY = "UPDATE skadesrapport Set Lejeaftale_ID = ?, Stelnummer = ?, Afleveringsdato = ?, Kørselsdistance = ? WHERE Skaderapport_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(updateQUERY);
+            preparedStatement.setInt(1, lejeAftale_ID);
+            preparedStatement.setString(2, stelnummer);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(afleveringsDato));
+            preparedStatement.setDouble(4, kørselsdistance);
+            preparedStatement.setInt(5, skadesRapport_ID);
+            preparedStatement.executeUpdate();
+
+            // Finder bilen, som skaderapporten er udfærdiget på, og opdater bilens km kørt til det der står i rapporten
+            Bil bil = new BilRepository().viewBil(stelnummer);
+            bil.setKmKørt(kørselsdistance);
+            new BilRepository().updateBil(bil);
+
+            // Finder alle de skader en SkadeRapport har og updater dem, samt creater dem som er nye
+            List<Skade> skader = skaderapport.getSkader();
+            for (Skade skade : skader) {
+                updateSkade(skade);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at Update SkadeRapporten: " + skaderapport);
+            throw new RuntimeException();
+        }
+
+
+    }
+
+    // Marcus
+    private void updateSkade(Skade skade) {
+        // Finder de værdier en skade har til at blive updated, sat ind i tabellen i stedet for hvad den skades værdi har i øjeblikket
+        int skade_ID = skade.getSkade_ID();
+        double pris = skade.getPrice();
+
+        // Hvis en skades ID er 0 så må den være ny den skade vil blive Created
+        if (skade_ID <= 0) {
+            this.createSkade(skade);
+        } // Ellers updates skaden bare, som dens nye pris er, ikke muligt at skifte en skades type eller skaderapport
+        else {
+            try {
+                String updateQUERY = "UPDATE skade SET Pris = ? WHERE Skade_ID = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(updateQUERY);
+                preparedStatement.setDouble(1, pris);
+                preparedStatement.setInt(2, skade_ID);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.err.println("Det var ikke muligt at update Skaden: " + skade);
+                throw new RuntimeException();
+            }
+        }
+    }
 
 
     public List<SkadeType> viewAlleSkadeTyper(Skaderapport rapport) {
