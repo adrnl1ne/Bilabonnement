@@ -16,21 +16,44 @@ public class SkadeRapportRepository {
 
     private static final Connection conn = DCM.getConn();
 
-    private double findSkadePris(int skadetype_id) {
-        // vil finde den pris, som er blevet sat til en skadetype i tabellen
+
+    public void createSkadesRapport(Skaderapport skadeRapport) {
+        // Finder de værdier som skal Insertes i tabellen for Skadesrapporter
+        int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
+        String Stelnummer = skadeRapport.getBil().getStelnummer();
+        LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
+        double kørselsdistance = skadeRapport.getKorselsdistance();
+        skadeRapport.getBil().setKmKort(kørselsdistance);
+
+        // Inserter de fundne værdier for skadesrapporten
         try {
-            String skadeTypeQUERY = "SELECT Pris FROM skadetype WHERE Skadetype_Id = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(skadeTypeQUERY);
-            preparedStatement.setInt(1, skadetype_id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            String InsertQUERY = "INSERT INTO skadesrapport (Lejeaftale_ID, Stelnummer, Afleveringsdato," +
+                " Kørselsdistance) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement1 = conn.prepareStatement(InsertQUERY);
+            preparedStatement1.setInt(1, Lejeaftale_ID);
+            preparedStatement1.setString(2, Stelnummer);
+            preparedStatement1.setDate(3, Date.valueOf(afleveringsdate));
+            preparedStatement1.setDouble(4, kørselsdistance);
+            preparedStatement1.executeUpdate();
+
+            // Finder SkadesRapportens, som lige er blevet inserted i tabellen, auto genererede ID/primær nøgle ved at søge efter dets unikke Lejeaftale
+            String SelectQUERY = "SELECT Skaderapport_ID FROM skadesrapport WHERE Lejeaftale_ID = ?";
+            PreparedStatement preparedStatement2 = conn.prepareStatement(SelectQUERY);
+            preparedStatement2.setInt(1, Lejeaftale_ID);
+            ResultSet resultSet = preparedStatement2.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getDouble("Pris");
+                int SkadesRapport_ID = resultSet.getInt("Skaderapport_ID");
+                skadeRapport.setSkaderapport_ID(SkadesRapport_ID);
+                List<Skade> skader = skadeRapport.getSkader();
+                // Finder hver skade i en liste af skader og Inserter dem ind i tabellen for skader
+                for (Skade skade : skader) {
+                    this.createSkade(skade);
+                }
             }
-            return -1;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at finde prisen for en SkadeType med dette ID: " + skadetype_id);
+            System.err.println("Det var ikke muligt at create, altså Inserte, SkadesRapporten: " + skadeRapport);
             throw new RuntimeException();
         }
     }
@@ -67,7 +90,80 @@ public class SkadeRapportRepository {
             }
         }
     }
+    private double findSkadePris(int skadetype_id) {
+        // vil finde den pris, som er blevet sat til en skadetype i tabellen
+        try {
+            String skadeTypeQUERY = "SELECT Pris FROM skadetype WHERE Skadetype_Id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(skadeTypeQUERY);
+            preparedStatement.setInt(1, skadetype_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getDouble("Pris");
+            }
+            return -1;
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at finde prisen for en SkadeType med dette ID: " + skadetype_id);
+            throw new RuntimeException();
+        }
+    }
+
+
+    public Skaderapport viewSkadesRapport(int skaderapport_ID) {
+
+        try {
+            String skadesRapportQUERY = "SELECT * FROM skadesrapport WHERE Skaderapport_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(skadesRapportQUERY);
+            preparedStatement.setInt(1, skaderapport_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Skaderapport skaderapport = new Skaderapport(skaderapport_ID);
+                int lejeAftale_ID = resultSet.getInt("Lejeaftale_ID");
+                LejeAftale lejeAftale = new LejeAftaleRepository().viewLejeaftale(lejeAftale_ID);
+                skaderapport.setLejeaftale(lejeAftale);
+
+                String stelnummer = resultSet.getString("Stelnummer");
+                Bil bil = new BilRepository().viewBil(stelnummer);
+                skaderapport.setBil(bil);
+
+                LocalDate afleveringsdato = resultSet.getDate("Afleveringsdato").toLocalDate();
+                skaderapport.setAfleveringsdate(afleveringsdato);
+
+                double kørselsdistance = resultSet.getDouble("Kørselsdistance");
+                skaderapport.setKorselsdistance(kørselsdistance);
+
+                List<Skade> rapportensSkader = this.viewAlleSkader(skaderapport);
+                skaderapport.setSkader(rapportensSkader);
+
+                return skaderapport;
+            }
+            return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at view, altså Select, en SkadesRapport med ID'et: " + skaderapport_ID);
+            throw new RuntimeException();
+        }
+    }
+    // Marcus
+    public Skaderapport viewSkadesRapport(LejeAftale lejeAftale) {
+        try {
+            String selectQUERY = "SELECT Skaderapport_ID FROM skadesrapport WHERE Lejeaftale_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            preparedStatement.setInt(1, lejeAftale.getLejeAftale_ID());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int skaderapport_ID = resultSet.getInt(1);
+                return this.viewSkadesRapport(skaderapport_ID);
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var en fejl ved at view en Skaderapport for LejeAftalen: " + lejeAftale);
+            throw new RuntimeException();
+        }
+    }
     private Skade viewSkade(int Skade_ID) {
         try {
             String skadeQUERY = "SELECT * FROM skade WHERE Skade_ID = ?";
@@ -98,6 +194,28 @@ public class SkadeRapportRepository {
         }
     }
 
+
+    // Marcus
+    public List<Skaderapport> viewAlleSkadeRapporter() {
+        List<Skaderapport> skadesRapporter = new ArrayList<>();
+        try {
+            String alleRapporterQUERY = "SELECT Skaderapport_ID FROM skadesrapport";
+            PreparedStatement preparedStatement = conn.prepareStatement(alleRapporterQUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int SkadesRapport_ID = resultSet.getInt(1);
+                Skaderapport rapport = this.viewSkadesRapport(SkadesRapport_ID);
+                if (rapport != null) {
+                    skadesRapporter.add(rapport);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at view, altså Select, alle SkadesRapporter.");
+        }
+        return skadesRapporter;
+    }
+
     private List<Skade> viewAlleSkader(Skaderapport skadesRapport) {
         List<Skade> skader = new ArrayList<>();
         int skadesRapport_ID = skadesRapport.getSkaderapport_ID();
@@ -122,45 +240,55 @@ public class SkadeRapportRepository {
             throw new RuntimeException();
         }
     }
-    public void createSkadesRapport(Skaderapport skadeRapport) {
-        // Finder de værdier som skal Insertes i tabellen for Skadesrapporter
-        int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
-        String Stelnummer = skadeRapport.getBil().getStelnummer();
-        LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
-        double kørselsdistance = skadeRapport.getKorselsdistance();
-        skadeRapport.getBil().setKmKort(kørselsdistance);
-
-        // Inserter de fundne værdier for skadesrapporten
+    public List<SkadeType> viewAlleSkadeTyper() {
+        List<SkadeType> skadeTyper = new ArrayList<>();
         try {
-            String InsertQUERY = "INSERT INTO skadesrapport (Lejeaftale_ID, Stelnummer, Afleveringsdato," +
-                    " Kørselsdistance) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement1 = conn.prepareStatement(InsertQUERY);
-            preparedStatement1.setInt(1, Lejeaftale_ID);
-            preparedStatement1.setString(2, Stelnummer);
-            preparedStatement1.setDate(3, Date.valueOf(afleveringsdate));
-            preparedStatement1.setDouble(4, kørselsdistance);
-            preparedStatement1.executeUpdate();
-
-            // Finder den nyeste SkadesRapport, som lige er blevet lagt ind i tabellen, og finder dens ID
-            String SelectQUERY = "SELECT MAX(Skaderapport_ID) FROM skadesrapport";
-            PreparedStatement preparedStatement2 = conn.prepareStatement(SelectQUERY);
-            ResultSet resultSet = preparedStatement2.executeQuery();
-            if (resultSet.next()) {
-                int SkadesRapport_ID = resultSet.getInt("Skaderapport_ID");
-                skadeRapport.setSkaderapport_ID(SkadesRapport_ID);
-                List<Skade> skader = skadeRapport.getSkader();
-                // Finder hver skade i en liste af skader og Inserter dem ind i tabellen for skader
-                for (Skade skade : skader) {
-                    this.createSkade(skade);
-                }
+            String selectQUERY = "SELECT Skadetype_Id FROM skadetype";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int skadetype_ID = resultSet.getInt("Skadetype_Id");
+                SkadeType type = SkadeType.getEnum(skadetype_ID);
+                skadeTyper.add(type);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at create, altså Inserte, SkadesRapporten: " + skadeRapport);
+            System.err.println("Det var ikke muligt at view, altså Select, alle SkadeTyper");
             throw new RuntimeException();
         }
+        return skadeTyper;
     }
+    public List<SkadeType> viewAlleSkadeTyper(Skaderapport rapport) {
+        // Finder de SkadeTyper, som kun må rapporteres efter at en anden er blevet rapporteret
+        SkadeType stenslag = SkadeType.STENSLAG;
+        SkadeType flereStenslag = SkadeType.FLERE_STENSLAG;
+
+
+        List<SkadeType> skadeTyper = this.viewAlleSkadeTyper();
+        List<Skade> rapportensSkader = rapport.getSkader();
+        List<SkadeType> valideSkadeTyper = new ArrayList<>();
+
+
+        for (SkadeType skadeType : skadeTyper) {
+            int antalEnSkadeTypeKanRapportes = skadeType.getTimesTypeCanBeReported();
+
+            for (Skade skade : rapportensSkader) {
+                SkadeType rapportensSkadesType = skade.getType();
+                if (rapportensSkadesType == skadeType) {
+                    antalEnSkadeTypeKanRapportes--;
+                    if (skadeType == stenslag) {
+                        valideSkadeTyper.add(flereStenslag);
+                    }
+                }
+            }
+            if (antalEnSkadeTypeKanRapportes > 0) {
+                valideSkadeTyper.add(skadeType);
+            }
+        }
+
+        return valideSkadeTyper;
+    }
+
 
 
     // Marcus
@@ -228,91 +356,33 @@ public class SkadeRapportRepository {
     }
 
 
-    public List<SkadeType> viewAlleSkadeTyper(Skaderapport rapport) {
-        // Finder de SkadeTyper, som kun må rapporteres efter at en anden er blevet rapporteret
-        SkadeType stenslag = SkadeType.STENSLAG;
-        SkadeType flereStenslag = SkadeType.FLERE_STENSLAG;
 
-
-        List<SkadeType> skadeTyper = this.viewAlleSkadeTyper();
-        List<Skade> rapportensSkader = rapport.getSkader();
-        List<SkadeType> valideSkadeTyper = new ArrayList<>();
-
-
-        for (SkadeType skadeType : skadeTyper) {
-            int antalEnSkadeTypeKanRapportes = skadeType.getTimesTypeCanBeReported();
-
-            for (Skade skade : rapportensSkader) {
-                SkadeType rapportensSkadesType = skade.getType();
-                if (rapportensSkadesType == skadeType) {
-                    antalEnSkadeTypeKanRapportes--;
-                    if (skadeType == stenslag) {
-                        valideSkadeTyper.add(flereStenslag);
-                    }
-                }
-            }
-            if (antalEnSkadeTypeKanRapportes > 0) {
-                valideSkadeTyper.add(skadeType);
-            }
-        }
-
-        return valideSkadeTyper;
-    }
-
-    public List<SkadeType> viewAlleSkadeTyper() {
-        List<SkadeType> skadeTyper = new ArrayList<>();
+    // Marcus
+    public void deleteSkadesRapport(Skaderapport skaderapport) {
         try {
-            String selectQUERY = "SELECT Skadetype_Id FROM skadetype";
-            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int skadetype_ID = resultSet.getInt("Skadetype_Id");
-                SkadeType type = SkadeType.getEnum(skadetype_ID);
-                skadeTyper.add(type);
-            }
+            String deleteQUERY = "DELETE FROM skadesrapport WHERE Skaderapport_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(deleteQUERY);
+            preparedStatement.setInt(1, skaderapport.getSkaderapport_ID());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at view, altså Select, alle SkadeTyper");
-            throw new RuntimeException();
-        }
-        return skadeTyper;
-    }
-
-
-    public Skaderapport viewSkadesRapport(int skaderapport_ID) {
-
-        try {
-            String skadesRapportQUERY = "SELECT * FROM skadesrapport WHERE Skaderapport_ID = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(skadesRapportQUERY);
-            preparedStatement.setInt(1, skaderapport_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                Skaderapport skaderapport = new Skaderapport(skaderapport_ID);
-                int lejeAftale_ID = resultSet.getInt("Lejeaftale_ID");
-                LejeAftale lejeAftale = new LejeAftaleRepository().viewLejeaftale(lejeAftale_ID);
-                skaderapport.setLejeaftale(lejeAftale);
-
-                String stelnummer = resultSet.getString("Stelnummer");
-                Bil bil = new BilRepository().viewBil(stelnummer);
-                skaderapport.setBil(bil);
-
-                LocalDate afleveringsdato = resultSet.getDate("Afleveringsdato").toLocalDate();
-                skaderapport.setAfleveringsdate(afleveringsdato);
-
-                double kørselsdistance = resultSet.getDouble("Kørselsdistance");
-                skaderapport.setKorselsdistance(kørselsdistance);
-
-                List<Skade> rapportensSkader = this.viewAlleSkader(skaderapport);
-                skaderapport.setSkader(rapportensSkader);
-
-                return skaderapport;
-            }
-            return null;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Det var ikke muligt at view, altså Select, en SkadesRapport med ID'et: " + skaderapport_ID);
+            System.err.println("Det var ikke muligt at fjerne, altså Delete, SkadesRapporten: " + skaderapport);
             throw new RuntimeException();
         }
     }
+
+    public void deleteSkade(Skade skade) {
+        try {
+            String deleteQUERY = "DELETE FROM skade WHERE Skade_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(deleteQUERY);
+            preparedStatement.setInt(1, skade.getSkade_ID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at fjerne, altså Delete, Skaden: " + skade);
+            throw new RuntimeException();
+        }
+    }
+
+
 }
