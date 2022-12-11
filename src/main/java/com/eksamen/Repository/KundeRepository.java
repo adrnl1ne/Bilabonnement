@@ -16,6 +16,7 @@ public class KundeRepository {
     private final Connection conn = DCM.getConn();
 
     // Marcus
+    // Indsætter et Kunde objekt der ikke eksisterer i databasen endnu, dog eksisterer kunden allerede, så kaldes updateKunde i stedet
     public void createKunde(Kunde kunde) {
         String CPR = kunde.getCPR();
         String regNum = kunde.getRegNum();
@@ -56,8 +57,9 @@ public class KundeRepository {
 
     }
 
-    // Marcus
-    public void createKontaktinfo(Kontaktinfo kontaktinfo) {
+    // Marcus og Jakob
+    // Indsætter et Konkaktinfo objekt for en kunde ind i databasen, metoden bruges når en kunde bliver indsat for første gang
+    private void createKontaktinfo(Kontaktinfo kontaktinfo) {
         String CPR = kontaktinfo.getCPR();
         String fornavn = kontaktinfo.getFirstName();
         String efternavn = kontaktinfo.getLastName();
@@ -88,6 +90,40 @@ public class KundeRepository {
     }
 
     // Marcus
+    // Returner et Kunde objekt ud fra en Primær nøgle i kunde tabellen i vores database
+    public Kunde viewKunde(String CPR) {
+        try {
+            String KundeQUERY = "SELECT * FROM kunde WHERE CPR = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(KundeQUERY);
+            preparedStatement.setString(1, CPR);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String CPRNum = resultSet.getString("CPR");
+                String regNum = resultSet.getString("RegNum");
+                String kontoNum = resultSet.getString("KontoNum");
+                Kunde kunde = new Kunde(CPRNum);
+                kunde.setRegNum(regNum);
+                kunde.setKontoNum(kontoNum);
+
+                // Finder kontaktinformationer, kontaktinfo, for kunden med det CPR som blev givet og giver det til vores kunde
+                Kontaktinfo nyesteKontaktInfo = this.viewKontaktInfo(CPR);
+                kunde.setKontaktInfo(nyesteKontaktInfo);
+
+
+                // Til sidst bringes en kunde over, der mangler sine LejeAftaler, men disse kan hentes fra LejeaftaleRepo
+                return kunde;
+            }
+            return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Not possible to view a Kunde med CPR:" + CPR);
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Marcus og Jakob
+    // Returner et Kontaktinfo objekt til et Kunde objekt ud fra en primær/foreign key i kontaktinfo tabellen
     private Kontaktinfo viewKontaktInfo(String CPR) {
 
         try {
@@ -123,38 +159,7 @@ public class KundeRepository {
     }
 
     // Marcus
-    public Kunde viewKunde(String CPR) {
-        try {
-            String KundeQUERY = "SELECT * FROM kunde WHERE CPR = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(KundeQUERY);
-            preparedStatement.setString(1, CPR);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String CPRNum = resultSet.getString("CPR");
-                String regNum = resultSet.getString("RegNum");
-                String kontoNum = resultSet.getString("KontoNum");
-                Kunde kunde = new Kunde(CPRNum);
-                kunde.setRegNum(regNum);
-                kunde.setKontoNum(kontoNum);
-
-                // Finder kontaktinformationer, kontaktinfo, for kunden med det CPR som blev givet og giver det til vores kunde
-                Kontaktinfo nyesteKontaktInfo = this.viewKontaktInfo(CPR);
-                kunde.setKontaktInfo(nyesteKontaktInfo);
-
-
-                // Til sidst bringes en kunde over, der mangler sine LejeAftaler, men disse kan hentes fra LejeaftaleRepo
-                return kunde;
-            }
-            return null;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Not possible to view a Kunde med CPR:" + CPR);
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Marcus
+    // Returner en liste af alle kunder der er i kunde tabellen i vores database
     public List<Kunde> viewAllKunder() {
         List<Kunde> alleKunder = new ArrayList<>();
 
@@ -177,6 +182,7 @@ public class KundeRepository {
     }
 
     // Marcus
+    // Updater en kunde i databasen, som allerede eksisterer, med RegNum og KontoNum for den kunde samt kundens Kontaktinfo
     public void updateKunde(Kunde kunde) {
         try {
             String CPR = kunde.getCPR();
@@ -196,7 +202,8 @@ public class KundeRepository {
         }
     }
 
-    // Marcus
+    // Marcus og Jakob
+    // Updater en kontaktinfo i databasen, som allerede eksisterer, for en kunde
     private void updateKontaktinfo(Kontaktinfo kontaktinfo) {
         // Finder id'et, CPR'et, til hvor i tabellen denne Kontaktinfo skal updates
         String CPR = kontaktinfo.getCPR();
@@ -233,6 +240,8 @@ public class KundeRepository {
         }
     }
 
+    // Marcus
+    // Sletter en kunde fra databasen, som så sletter den tilhørende kontaktinfo, samt alle de lejeaftaler, som den kunde havde
     public void deleteKunde(Kunde kunde) {
         try {
             String CPR = kunde.getCPR();
