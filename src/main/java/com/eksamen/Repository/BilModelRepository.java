@@ -16,97 +16,8 @@ public class BilModelRepository {
 
     private static final Connection conn = DCM.getConn();
 
-    private String viewBilmærke(int Bilmærke_ID) {
-        try {
-            String selectQUERY = "SELECT Mærket FROM mærke WHERE Bilmærke_ID = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
-            preparedStatement.setInt(1, Bilmærke_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
-            throw new SQLException();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Det var ikke muligt at skabe et Bilmærke, altså view, et Bilmærke med ID'et: " + Bilmærke_ID);
-            throw new RuntimeException();
-        }
-    }
-
-    private String viewUdstyr (int Udstyr_ID) {
-        try {
-            String SelectQUERY = "SELECT Udstyr FROM udstyr WHERE Udstyr_ID = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(SelectQUERY);
-            preparedStatement.setInt(1, Udstyr_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
-            throw new SQLException();
-        } catch (SQLException e){
-            e.printStackTrace();
-            System.err.println("Det var ikke muligt at view et udstyr med ID'et: " + Udstyr_ID);
-            throw new RuntimeException();
-        }
-    }
-
-    private List<String> viewAltUdstyrForEnBilModel(int BilModel_ID) {
-        List<String> udstyrEnBilModelHar = new ArrayList<>();
-        try {
-            String selectQUERY = "SELECT Udstyr_ID FROM modelharudstyr WHERE Model_ID = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
-            preparedStatement.setInt(1, BilModel_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int etUdstyrsID = resultSet.getInt(1);
-                String etUdstyr = this.viewUdstyr(etUdstyrsID);
-                udstyrEnBilModelHar.add(etUdstyr);
-            }
-            return udstyrEnBilModelHar;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Der var ikke muligt at view alt det udstyr der er for en BilModel med ID'et: " + BilModel_ID);
-            throw new RuntimeException();
-        }
-    }
-
-    private AbonnementBilModel viewAbonnementBilmodel(int Model_ID) {
-        try {
-            String selectQUERY = "SELECT * FROM abnmtbilmodel WHERE aModel_ID = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
-            preparedStatement.setInt(1, Model_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                boolean isUnlimited = resultSet.getBoolean("isUnlimited");
-                double md3Pris = resultSet.getDouble("Md3Pris");
-                double md6Pris = resultSet.getDouble("Md6Pris");
-                double md12Pris = resultSet.getDouble("Md12Pris");
-                double md24Pris = resultSet.getDouble("Md24Pris");
-                double md36Pris = resultSet.getDouble("Md36Pris");
-                double farveValgPris = resultSet.getDouble("FarvePris");
-                double udbetaling = resultSet.getDouble("Udbetaling");
-
-                AbonnementBilModel abnmtBilmodel = new AbonnementBilModel();
-                abnmtBilmodel.setModel_ID(Model_ID);
-                abnmtBilmodel.setUnlimited(isUnlimited);
-                abnmtBilmodel.setThreeMonthsPris(md3Pris);
-                abnmtBilmodel.setSiXMonthsPris(md6Pris);
-                abnmtBilmodel.setTwelveMonthsPrice(md12Pris);
-                abnmtBilmodel.setTwentyFourMonthsPrice(md24Pris);
-                abnmtBilmodel.setThirtySixMonthsPrice(md36Pris);
-                abnmtBilmodel.setPriceForColorChoice(farveValgPris);
-                abnmtBilmodel.setStartUdbetaling(udbetaling);
-                return abnmtBilmodel;
-            }
-            throw new SQLException();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Det var ikke muligt at view en AbonnementsPriser med ID'et: " + Model_ID);
-            throw new RuntimeException();
-        }
-    }
-
-
+    // Jakob
+    // Returner et BilModel objekt ud fra en primær nøgle i vores database
     public BilModel viewBilmodel(int Model_ID) {
         try {
             String Model_ID_QUERY = "SELECT * FROM bilmodel WHERE BMModel_ID=?";
@@ -148,6 +59,109 @@ public class BilModelRepository {
         }
 
     }
+
+    // Jakob og Marcus
+    // Returner et AbonnementBilModel objekt ud fra primær/foreign key der passer med en BilModel i databasen
+    private AbonnementBilModel viewAbonnementBilmodel(int Model_ID) {
+        try {
+            String selectQUERY = "SELECT * FROM abnmtbilmodel WHERE aModel_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            preparedStatement.setInt(1, Model_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                boolean isUnlimited = resultSet.getBoolean("isUnlimited");
+                double md3Pris = resultSet.getDouble("Md3Pris");
+                double md6Pris = resultSet.getDouble("Md6Pris");
+                double md12Pris = resultSet.getDouble("Md12Pris");
+                double md24Pris = resultSet.getDouble("Md24Pris");
+                double md36Pris = resultSet.getDouble("Md36Pris");
+                double farveValgPris = resultSet.getDouble("FarvePris");
+                double udbetaling = resultSet.getDouble("Udbetaling");
+
+                AbonnementBilModel abnmtBilmodel = new AbonnementBilModel();
+                abnmtBilmodel.setModel_ID(Model_ID);
+                abnmtBilmodel.setUnlimited(isUnlimited);
+                abnmtBilmodel.setThreeMonthsPris(md3Pris);
+                abnmtBilmodel.setSiXMonthsPris(md6Pris);
+                abnmtBilmodel.setTwelveMonthsPrice(md12Pris);
+                abnmtBilmodel.setTwentyFourMonthsPrice(md24Pris);
+                abnmtBilmodel.setThirtySixMonthsPrice(md36Pris);
+                abnmtBilmodel.setPriceForColorChoice(farveValgPris);
+                abnmtBilmodel.setStartUdbetaling(udbetaling);
+                return abnmtBilmodel;
+            }
+            throw new SQLException();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at view en AbonnementsPriser med ID'et: " + Model_ID);
+            throw new RuntimeException();
+        }
+    }
+
+    // Marcus
+    // Returner en BilModels mærke ud fra den foreign key en BilModel i databasen har
+    private String viewBilmærke(int Bilmærke_ID) {
+        try {
+            String selectQUERY = "SELECT Mærket FROM mærke WHERE Bilmærke_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            preparedStatement.setInt(1, Bilmærke_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            throw new SQLException();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at skabe et Bilmærke, altså view, et Bilmærke med ID'et: " + Bilmærke_ID);
+            throw new RuntimeException();
+        }
+    }
+
+    // Marcus
+    // Returner en tekst string der passer med den primær nøgle, som i tabellen mærke i vores database
+    private String viewUdstyr (int Udstyr_ID) {
+        try {
+            String SelectQUERY = "SELECT Udstyr FROM udstyr WHERE Udstyr_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(SelectQUERY);
+            preparedStatement.setInt(1, Udstyr_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            throw new SQLException();
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("Det var ikke muligt at view et udstyr med ID'et: " + Udstyr_ID);
+            throw new RuntimeException();
+        }
+    }
+
+    // Marcus
+    // Returner en liste af alt det udstyr, som passer overens med primær nøglen for en BilModel i databasen
+    private List<String> viewAltUdstyrForEnBilModel(int BilModel_ID) {
+        List<String> udstyrEnBilModelHar = new ArrayList<>();
+        try {
+            String selectQUERY = "SELECT Udstyr_ID FROM modelharudstyr WHERE Model_ID = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(selectQUERY);
+            preparedStatement.setInt(1, BilModel_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int etUdstyrsID = resultSet.getInt(1);
+                String etUdstyr = this.viewUdstyr(etUdstyrsID);
+                udstyrEnBilModelHar.add(etUdstyr);
+            }
+            return udstyrEnBilModelHar;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Der var ikke muligt at view alt det udstyr der er for en BilModel med ID'et: " + BilModel_ID);
+            throw new RuntimeException();
+        }
+    }
+
+
+
+
+
 
 
 
