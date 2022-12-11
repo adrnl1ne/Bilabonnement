@@ -16,6 +16,8 @@ public class BilRepository {
     private final Connection conn = DCM.getConn();
 
 
+    // Jakob
+    // Returner et Bil objekt ud fra en primær nøgle der passer med en række bil tabellen i vores database
     public Bil viewBil(String Stelnummer) {
         try {
             String Model_QUERY = "SELECT * FROM Bil WHERE Stelnummer=?";
@@ -54,28 +56,29 @@ public class BilRepository {
         return null;
     }
 
+    // Jakob
+    // Returner en liste af alle Bil objekter der er i bil tabellen i vores database
+    public List<Bil> viewAlleBiler() {
+        List<Bil> alleBiler = new ArrayList<>();
 
-    public void updateBil(Bil bil) {
-        viewBil(bil.getStelnummer());
         try {
-            String Stelnummer = bil.getStelnummer();
-            Biltilstand tilstand = bil.getBiltilstand();
-            int Tilstands_ID = tilstand.getId();
-            double Km_Kørt = bil.getKmKort();
-            String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
+            String QUERY = "SELECT Stelnummer FROM bil";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
-            preparedStatement.setInt(1, Tilstands_ID);
-            preparedStatement.setDouble(2, Km_Kørt);
-            preparedStatement.setString(3, Stelnummer);
-            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String stelnummer = resultSet.getString("Stelnummer");
+                alleBiler.add(viewBil(stelnummer));
+            }
         } catch (SQLException e) {
+            System.err.println("Fejl, Kan ikke se alle biler");
             e.printStackTrace();
-            System.err.println("Kan ikke opdatere " + bil);
             throw new RuntimeException(e);
         }
+        return alleBiler;
     }
 
-
+    // Jakob
+    // Returner en liste af alle de biler som har tilstanden Klar fra vores database
     public List<Bil> viewLejeAftalePåKlarBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
@@ -100,6 +103,8 @@ public class BilRepository {
         return udlejedeBiler;
     }
 
+    // Jakob
+    // Returner en liste af alle de biler som har tilstanden Udlejet fra vores database
     public List<Bil> viewLejeAftalePåUdlejetBil() {
         List<Bil> udlejedeBiler = new ArrayList<>();
 
@@ -122,22 +127,30 @@ public class BilRepository {
         return udlejedeBiler;
     }
 
-    public List<Bil> viewAlleBiler() {
-        List<Bil> alleBiler = new ArrayList<>();
-
+    // Jakob
+    // Dette updater en allerede eksisterende bil i vores database med f.eks. en anden Tilstand eller Km_Kørt
+    public void updateBil(Bil bil) {
+        viewBil(bil.getStelnummer());
         try {
-            String QUERY = "SELECT * FROM bil";
+            String Stelnummer = bil.getStelnummer();
+            Biltilstand tilstand = bil.getBiltilstand();
+            int Tilstands_ID = tilstand.getId();
+            double Km_Kørt = bil.getKmKort();
+            String QUERY = "UPDATE bil SET Tilstands_ID =?, Km_Kørt =? WHERE Stelnummer=?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String stelnummer = resultSet.getString("Stelnummer");
-                alleBiler.add(viewBil(stelnummer));
-            }
+            preparedStatement.setInt(1, Tilstands_ID);
+            preparedStatement.setDouble(2, Km_Kørt);
+            preparedStatement.setString(3, Stelnummer);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Fejl, Kan ikke se alle biler");
             e.printStackTrace();
+            System.err.println("Kan ikke opdatere " + bil);
             throw new RuntimeException(e);
         }
-        return alleBiler;
     }
+
+
+
+
+
 }
