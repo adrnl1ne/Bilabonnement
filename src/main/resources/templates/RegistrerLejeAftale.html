@@ -13,6 +13,10 @@
 
 <section class="header">
     <div th:if="${lejeaftale != null}" class="container">
+
+        <form method="POST" action="/Admin/RegistrerAftale/createAftale" id="createAftale">
+        </form>
+
         <h2 style="color: white">Kundens info:</h2>
         <table class="table table-striped table-dark">
             <tr>
@@ -116,12 +120,13 @@
             <tr>
                 <th>Tryk her for at <strong>Afvise</strong> den registrerede lejeaftale</th>
                 <th>Tryk her for at <strong>Acceptere</strong> den registrerede lejeaftale</th>
-
+                <th>Vælg en tidligere start dato til lejeaftalen end i dag</th>
             </tr>
             <tr>
                 <td><a class="hero-btn red-btn" href="/Admin/RegistrerAftale/deleteAftale">NEJ!</a></td>
-                <td><a class="hero-btn red-btn" href="/Admin/RegistrerAftale/createAftale">JA!</a></td>
-
+                <td><button class="hero-btn red-btn" type="submit" form="createAftale">JA!</button></td>
+                <td><label><input type="date" name="datoFelt" th:max="${maxDate}" form="createAftale"></label></td>
+            </tr>
         </table>
 
     </div>

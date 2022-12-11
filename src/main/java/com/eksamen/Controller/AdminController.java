@@ -8,7 +8,11 @@ import com.eksamen.utilities.Simulator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.context.request.WebRequest;
+
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 public class AdminController {
@@ -20,14 +24,21 @@ public class AdminController {
     public String registrerAftale(HttpSession session, Model model) {
         LejeAftale simuleretLejeAftale = setSessionAftale(session);
         model.addAttribute("lejeaftale", simuleretLejeAftale);
+        model.addAttribute("maxDate", LocalDate.now().minusDays(1));
         return "RegistrerLejeAftale";
     }
 
     //note bare test
-    @GetMapping("/Admin/RegistrerAftale/createAftale")
-    public String createAftale(HttpSession session) {
+    @PostMapping("/Admin/RegistrerAftale/createAftale")
+    public String createAftale(HttpSession session, WebRequest dataFromDateField) {
         LejeAftale sessionAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");
+
+        String datoFelt = dataFromDateField.getParameter("datoFelt");
+        if (datoFelt != null && !(datoFelt.isBlank())) {
+            sessionAftale.setStartDato(LocalDate.parse(datoFelt));
+        }
         session.invalidate();
+
         try {
             lejeaftaleService.createLejeAftale(sessionAftale);
             return "redirect:/Admin/RegistrerAftale";
