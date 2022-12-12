@@ -3,8 +3,10 @@ package com.eksamen.Service;
 import com.eksamen.Model.Abonnement.AbonnementLejeaftale;
 import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Lejeaftale.LejeAftale;
+import com.eksamen.Model.Skader.Skaderapport;
 import com.eksamen.Repository.BilRepository;
 import com.eksamen.Repository.LejeAftaleRepository;
+import com.eksamen.Repository.SkadeRapportRepository;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 
 
@@ -34,9 +36,17 @@ public class LejeaftaleService {
     }
 
     public List<LejeAftale> nyesteAftalerCheckUp() {
-        return lejeAftaleRepository.viewNyesteUdlejet(bilRepository.viewCheckUpBiler());
+        List<LejeAftale> lejeAftaler = lejeAftaleRepository.viewNyesteUdlejet(bilRepository.viewCheckUpBiler());
+        for (LejeAftale lejeAftale : lejeAftaler) {
+            Skaderapport skaderapport = new SkadeRapportRepository().viewSkadesRapport(lejeAftale);
+            lejeAftale.setSkaderapport(skaderapport);
+        }
+        return lejeAftaler;
     }
 
+    public LejeAftale viewLejeAftale(int Lejeaftale_ID) {
+        return lejeAftaleRepository.viewLejeaftale(Lejeaftale_ID);
+    }
 
 
 }

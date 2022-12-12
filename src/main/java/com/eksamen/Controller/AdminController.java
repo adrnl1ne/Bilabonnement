@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Controller
 public class AdminController {
 
+    private final LejeaftaleService lejeaftaleService = new LejeaftaleService();
     // Marcus
     @GetMapping("/Admin/RegistrerAftale")
     public String registrerAftale(HttpSession session, Model model) {
@@ -30,7 +31,6 @@ public class AdminController {
     @PostMapping("/Admin/RegistrerAftale/createAftale")
     public String createAftale(HttpSession session, WebRequest dataFromDateField) {
         //Note: Ikke bedste brug, men virker for nu
-        LejeaftaleService lejeaftaleService = new LejeaftaleService();
         LejeAftale sessionAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");
 
         String datoFelt = dataFromDateField.getParameter("datoFelt");

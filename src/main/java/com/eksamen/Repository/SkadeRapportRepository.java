@@ -334,10 +334,11 @@ public class SkadeRapportRepository {
             preparedStatement.executeUpdate();
 
             // Finder bilen, som skaderapporten er udfærdiget på, og opdater bilens km kørt til det der står i rapporten
-            Bil bil = new BilRepository().viewBil(stelnummer);
-            bil.setKmKort(kørselsdistance);
-            new BilRepository().updateBil(bil);
-
+            if (kørselsdistance > 0) {
+                Bil bil = new BilRepository().viewBil(stelnummer);
+                bil.setKmKort(kørselsdistance);
+                new BilRepository().updateBil(bil);
+            }
             // Finder alle de skader en SkadeRapport har og updater dem, samt creater dem som er nye
             List<Skade> skader = skaderapport.getSkader();
             for (Skade skade : skader) {

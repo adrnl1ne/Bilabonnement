@@ -14,7 +14,11 @@ public class BilService {
 
     public List<Bil> seUdlejetBiler() {
         return bilRepo.viewUdlejetBiler();
+    }
 
+
+    public void updateBil(Bil bil) {
+        bilRepo.updateBil(bil);
     }
 
 

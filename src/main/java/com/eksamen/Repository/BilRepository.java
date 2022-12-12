@@ -152,6 +152,30 @@ public class BilRepository {
         return udlejedeBiler;
     }
 
+    public List<Bil> viewSkadedeBiler() {
+        List<Bil> udlejedeBiler = new ArrayList<>();
+
+        try {
+
+            //Laver Callable statement
+            cstmt = conn.prepareCall("{call viewInfo(4)}");
+            cstmt.execute();
+
+            rs = cstmt.getResultSet();
+            while (rs.next()) {
+                String stelnummer = rs.getString("Stelnummer");
+                udlejedeBiler.add(viewBil(stelnummer));
+            }
+
+
+        } catch (SQLException e) {
+            System.err.println("Fejl, kan ikke hente biler");
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return udlejedeBiler;
+    }
+
     // Jakob
     // Dette updater en allerede eksisterende bil i vores database med f.eks. en anden Tilstand eller Km_Kørt
     public void updateBil(Bil bil) {

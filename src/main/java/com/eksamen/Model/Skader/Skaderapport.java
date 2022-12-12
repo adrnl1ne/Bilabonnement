@@ -4,6 +4,7 @@ import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Lejeaftale.LejeAftale;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Skaderapport {
@@ -68,6 +69,9 @@ public class Skaderapport {
     }
 
     public void setSkader(Skade skade) {
+        if (skader == null) {
+            skader = new ArrayList<>();
+        }
         skader.add(skade);
     }
 
