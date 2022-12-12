@@ -17,6 +17,8 @@ public class SkadeRapportRepository {
     private static final Connection conn = DCM.getConn();
 
 
+    // Marcus
+    // Indsætter en helt ny SkadeRapport ind i vores database og får en metode til at indsætte dens skader
     public void createSkadesRapport(Skaderapport skadeRapport) {
         // Finder de værdier som skal Insertes i tabellen for Skadesrapporter
         int Lejeaftale_ID = skadeRapport.getLejeaftale().getLejeAftale_ID();
@@ -57,6 +59,9 @@ public class SkadeRapportRepository {
             throw new RuntimeException();
         }
     }
+
+    // Marcus
+    // Indsætter en ny skade for en skaderapport ind i vores database, samt sætter en pris for den skade
     private void createSkade(Skade skaden) {
 
         // Finder de værdier en Skade har, når den for første gang skal sættes/insertes ind i tabellen
@@ -90,6 +95,9 @@ public class SkadeRapportRepository {
             }
         }
     }
+
+    // Marcus
+    // Finder en pris for en skade ud efter det skadetype_id den er blevet givet, fra prisliste tabellen, ellers bringes -1
     private double findSkadePris(int skadetype_id) {
         // vil finde den pris, som er blevet sat til en skadetype i tabellen
         try {
@@ -109,7 +117,8 @@ public class SkadeRapportRepository {
         }
     }
 
-
+    // Marcus
+    // Selecter, altså returner et skaderapport objekt ud efter et ID/primær nøgle, ellers bringes null
     public Skaderapport viewSkadesRapport(int skaderapport_ID) {
 
         try {
@@ -146,7 +155,9 @@ public class SkadeRapportRepository {
             throw new RuntimeException();
         }
     }
+
     // Marcus
+    // Selecter, altså returner et skaderapport objekt, ud efter en lejeaftale, hvis den skaderapport har en lejeaftale ellers returnes null
     public Skaderapport viewSkadesRapport(LejeAftale lejeAftale) {
         try {
             String selectQUERY = "SELECT Skaderapport_ID FROM skadesrapport WHERE Lejeaftale_ID = ?";
@@ -164,6 +175,8 @@ public class SkadeRapportRepository {
             throw new RuntimeException();
         }
     }
+
+    // Selecter, altså returner et Skade objekt ud efter dets ID/primær nøgle
     private Skade viewSkade(int Skade_ID) {
         try {
             String skadeQUERY = "SELECT * FROM skade WHERE Skade_ID = ?";
@@ -196,6 +209,7 @@ public class SkadeRapportRepository {
 
 
     // Marcus
+    // Selecter, altså returner en liste af alle skaderapporter der er i databasen
     public List<Skaderapport> viewAlleSkadeRapporter() {
         List<Skaderapport> skadesRapporter = new ArrayList<>();
         try {
@@ -216,6 +230,8 @@ public class SkadeRapportRepository {
         return skadesRapporter;
     }
 
+    // Marcus
+    // Selecter, altså returner en liste af alle skader der er i databasen for en specifik skaderapport
     private List<Skade> viewAlleSkader(Skaderapport skadesRapport) {
         List<Skade> skader = new ArrayList<>();
         int skadesRapport_ID = skadesRapport.getSkaderapport_ID();
@@ -240,6 +256,9 @@ public class SkadeRapportRepository {
             throw new RuntimeException();
         }
     }
+
+    // Marcus
+    // Selecter, altså returner en liste af alle de skadetyper der i databasen
     public List<SkadeType> viewAlleSkadeTyper() {
         List<SkadeType> skadeTyper = new ArrayList<>();
         try {
@@ -258,6 +277,9 @@ public class SkadeRapportRepository {
         }
         return skadeTyper;
     }
+
+    // Marcus
+    // Selecter, altså returner en liste af alle de skadetyper, der er tilladte at vælge til en specifik skaderapport
     public List<SkadeType> viewAlleSkadeTyper(Skaderapport rapport) {
         // Finder de SkadeTyper, som kun må rapporteres efter at en anden er blevet rapporteret
         SkadeType stenslag = SkadeType.STENSLAG;
@@ -290,8 +312,8 @@ public class SkadeRapportRepository {
     }
 
 
-
     // Marcus
+    // Updater en allerede eksisterende skaderapport med de attributter der er i et Skaderapport objekt, samt de skader den indeholder
     public void updateSkadesRapport(Skaderapport skaderapport) {
         // Finder de værdier i en SkadeRapport, som skal gemmes i SkadesRapport Tabellen
         int skadesRapport_ID = skaderapport.getSkaderapport_ID();
@@ -331,6 +353,7 @@ public class SkadeRapportRepository {
     }
 
     // Marcus
+    // Updater en allerede eksisterende skade med det attribut felt der er for dens pris der er i et Skade objekt eller creater skaden hvis den ikke har et ID
     private void updateSkade(Skade skade) {
         // Finder de værdier en skade har til at blive updated, sat ind i tabellen i stedet for hvad den skades værdi har i øjeblikket
         int skade_ID = skade.getSkade_ID();
@@ -358,6 +381,7 @@ public class SkadeRapportRepository {
 
 
     // Marcus
+    // Sletter en skaderapport fra vores database, samt alle de skader der tilknyttet til den
     public void deleteSkadesRapport(Skaderapport skaderapport) {
         try {
             String deleteQUERY = "DELETE FROM skadesrapport WHERE Skaderapport_ID = ?";
@@ -371,6 +395,8 @@ public class SkadeRapportRepository {
         }
     }
 
+    // Marcus
+    // Sletter en specifik skade, i tilfælde af at rapporten skal blive, men en skade i rapporten ikke skal være der mere
     public void deleteSkade(Skade skade) {
         try {
             String deleteQUERY = "DELETE FROM skade WHERE Skade_ID = ?";
