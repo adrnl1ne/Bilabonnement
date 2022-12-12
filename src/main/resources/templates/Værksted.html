@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Manageent- Eksamens</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Homepage - Eksamen webside</title>
     <link rel="stylesheet" href="/MedarbejderStyles.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
-<a href="/static"><img src="/Pictures/newlogo.png" alt=""></a>
-<div class="nav-links" id="navLinks">
-    <li><a href="/">HOME</a></li>
-    <body>
+<body>
+<header th:insert="Header.html">
+</header>
     <div class="container">
         <h2>Velkomme</h2>
         <div class="price-row">
@@ -20,5 +21,5 @@
                     <li>Check Email </li>
                     <li>Oversigt over Bilsstatus</li>
                 </ul>
-                <a href="/" class="hero-btn"><button>vaerksted Login</button></a>
+                <a class="hero-btn red-btn" href="/Mekaniker/hjemvendteBiler" style="font-size: 25px">Bil Status</a>
             </div>

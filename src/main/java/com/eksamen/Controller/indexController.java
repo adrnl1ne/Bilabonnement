@@ -32,6 +32,27 @@ public class indexController {
     } @GetMapping("/Værksted")
     public String Værksted() {return "Værksted";
     }
+
+    @GetMapping("/HjemvendteBiler")
+    public String hjemvendteBiler(){return "HjemvendteBiler";
+
+  }
+  @GetMapping("/RegistrerNyRapport")
+    public String RegistrerNyRapport(){ return "RegistrerNyRapport";
+
+    }
+
+    @GetMapping("/CreateSkadesRapport")
+    public String CreateSkadesRapport(){return "CreateSkadesRapport";
+
+    }
+    @GetMapping("/HjemvendtBiler")
+    public String HjemvendtBiler() {return"HjemvendtBiler";
 }
+    @GetMapping ("/AddSkade")
+    public String AddSkade (){ return "AddSkade";
+    }
+}
+
 
 
