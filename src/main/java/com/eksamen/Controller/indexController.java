@@ -52,6 +52,11 @@ public class indexController {
     @GetMapping ("/AddSkade")
     public String AddSkade (){ return "AddSkade";
     }
+    @GetMapping ("/FinishRapport")
+    public String FinishRapport(){ return"FinishRapport";
+}
+    {
+    }
 }
 
 
