@@ -8,25 +8,34 @@ import com.eksamen.Repository.LejeAftaleRepository;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LejeaftaleService {
-    private LejeAftaleRepository lejeAftaleRepository= new LejeAftaleRepository();
-    private static BilRepository bilRepository = new BilRepository();
-    private static AbonnementLejeaftale abonnementLejeaftale = new AbonnementLejeaftale(); // Hvis du gerne vil have et objekt som en abonnementLejeaftale, så skal vi finde den via en view, så vi får et
+    private final LejeAftaleRepository lejeAftaleRepository = new LejeAftaleRepository();
+
+    private final BilRepository bilRepository = new BilRepository();
 
     public void createLejeAftale(LejeAftale lejeAftale) throws RentingOutNoneReadyCarException {
         lejeAftaleRepository.createLejeaftale(lejeAftale);
     }
 
-    public static double calculateSumForUdlejedeBiler() {
-       List<Bil> udlejedeBiler = bilRepository.viewLejeAftalePåUdlejetBil();
-       double sum = 0;
-       for (Bil bil : udlejedeBiler) {
-           sum += bil.calculateTotalPrice(abonnementLejeaftale);
-       }
-       return sum;
-   }
+    public List<LejeAftale> nyesteLejeaftalerForUdlejedeBiler() {
+        List<LejeAftale> lejeAftale = lejeAftaleRepository.viewNyesteUdlejet(bilRepository.viewUdlejetBiler());
+        List<LejeAftale> lejeAftalerStartet = new ArrayList<>();
+        for (LejeAftale aftale : lejeAftale) {
+            LocalDate aftalensStartDato = aftale.getStartDato();
+            if (aftalensStartDato.isBefore(LocalDate.now())) {
+                lejeAftalerStartet.add(aftale);
+            }
+        }
+        return lejeAftalerStartet;
+    }
+
+    public List<LejeAftale> nyesteAftalerCheckUp() {
+        return lejeAftaleRepository.viewNyesteUdlejet(bilRepository.viewCheckUpBiler());
+    }
 
 
 

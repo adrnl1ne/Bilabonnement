@@ -29,9 +29,7 @@ public class Bil {
         this.kmKort = kmKørt;
     }
 
-
-    // Custom made Metoder
-
+    //Custom made metoder
     public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
         double sum = (abonnementLejeaftale.getPricePrMonth() + abonnementLejeaftale.getExtraColorPrice()) * abonnementLejeaftale.getAbonnementLaengde() + abonnementLejeaftale.getUdbetaling();
         return sum;
@@ -59,7 +57,6 @@ public class Bil {
     public void setStelnummer(String stelnummer) {
         this.stelnummer = stelnummer;
     }
-
 
 
     public double getKmKort() {

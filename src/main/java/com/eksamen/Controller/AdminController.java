@@ -17,8 +17,6 @@ import java.time.LocalDate;
 @Controller
 public class AdminController {
 
-    private final LejeaftaleService lejeaftaleService = new LejeaftaleService();
-
     // Marcus
     @GetMapping("/Admin/RegistrerAftale")
     public String registrerAftale(HttpSession session, Model model) {
@@ -31,6 +29,8 @@ public class AdminController {
     //note bare test
     @PostMapping("/Admin/RegistrerAftale/createAftale")
     public String createAftale(HttpSession session, WebRequest dataFromDateField) {
+        //Note: Ikke bedste brug, men virker for nu
+        LejeaftaleService lejeaftaleService = new LejeaftaleService();
         LejeAftale sessionAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");
 
         String datoFelt = dataFromDateField.getParameter("datoFelt");
@@ -44,7 +44,8 @@ public class AdminController {
             return "redirect:/Admin/RegistrerAftale";
         } catch (RentingOutNoneReadyCarException e) {
             e.printStackTrace();
-            System.err.println("Det var ikke muligt at create, ud fra en HttpSession, den simulerede LejeAftale: " + sessionAftale);
+            System.err.println("Det var ikke muligt at create, " +
+                    "ud fra en HttpSession, den simulerede LejeAftale: " + sessionAftale);
             return "redirect:/Admin";
         }
     }
@@ -71,4 +72,4 @@ public class AdminController {
             return null;
         }
     }
-     }
+}

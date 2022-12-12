@@ -9,16 +9,14 @@ import com.eksamen.Model.Lejeaftale.LeveringsType;
 import com.eksamen.utilities.DCM;
 import com.eksamen.utilities.RentingOutNoneReadyCarException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LejeAftaleRepository {
-
+    private CallableStatement cstmt;
+    private ResultSet rs;
     private final Connection conn = DCM.getConn();
 
     // Marcus
@@ -116,7 +114,7 @@ public class LejeAftaleRepository {
 
         try {
 
-            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (Lejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
+            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (ALejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
                 "OverAflPris, PrisPrMåned, Udbetaling, " +
                 "FarvePrisPrMåned, PrisPrKmOver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement2 = conn.prepareStatement(abonnementQUERY);
@@ -215,6 +213,9 @@ public class LejeAftaleRepository {
         return null;
     }
 
+
+
+
     // Marcus og Jakob
     // Returner et AbonnementLejeaftale objekt fra vores database, for en lejeaftale der allerede eksisterer
     private AbonnementLejeaftale viewAbonnement(LejeAftale lejeAftale) {
@@ -222,7 +223,7 @@ public class LejeAftaleRepository {
         AbonnementLejeaftale lejeAftalesAbo = new AbonnementLejeaftale(lejeAftale_ID);
 
         try {
-            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.Lejeaftale_ID = ?";
+            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.ALejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setInt(1, lejeAftale_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -324,6 +325,42 @@ public class LejeAftaleRepository {
         return lejeaftaler;
     }
 
+
+    public LejeAftale viewLejeAftale(Bil bil) {
+        String stelnummer = bil.getStelnummer();
+        try {
+            String SELECT_QUERY = "SELECT MAX(Lejeaftale_ID) FROM lejeaftale WHERE LAStelnummer=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_QUERY);
+            preparedStatement.setString(1, stelnummer);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+              int lejeaftale_ID = resultSet.getInt("LejeAftale_ID");
+              return this.viewLejeaftale(lejeaftale_ID);
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Kan ikke view nyeste lejeaftale for bilen: " + bil);
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Jakob
+    // Returner en liste af alle de biler som har tilstanden Udlejet fra vores database
+    public List<LejeAftale> viewNyesteUdlejet(List<Bil> valgteBiler) {
+        List<LejeAftale> lejeaftaler = new ArrayList<>();
+
+        for (Bil bil : valgteBiler) {
+        LejeAftale bilensNystesteAftale = this.viewLejeAftale(bil);
+        if (bilensNystesteAftale != null) {
+            lejeaftaler.add(bilensNystesteAftale);
+        } else {
+            System.out.println("Bilen: " + bil + " har ingen lejeaftaler");
+        }
+        }
+        return lejeaftaler;
+    }
+
     // Marcus
     // Updater en allerede eksisterende lejeaftalen i vores database, med attributterne i et LejeAftale objekt
     public void updateLejeaftale(LejeAftale lejeAftale) {
@@ -379,7 +416,7 @@ public class LejeAftaleRepository {
         try {
             String abonnementQUERY = "UPDATE abnmtlejeaftale SET isUnlimited = ?, KmPrMd = ?, AbnmtLængde = ?, " +
                     "OverAflPris = ?, PrisPrMåned = ?, Udbetaling = ?, FarvePrisPrMåned = ?, " +
-                    "PrisPrKmOver = ? WHERE Lejeaftale_ID = ?";
+                    "PrisPrKmOver = ? WHERE ALejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setBoolean(1, isUnlimited);
             preparedStatement.setInt(2, kmPrMd);
@@ -432,7 +469,8 @@ public class LejeAftaleRepository {
     }
 
     // Marcus
-    // Fjerne en lejeaftale fra databasen, samt fra tabellerne levering og abnmtlejeaftale, der passer med den lejeaftale der ønskes slettet
+    // Fjerne en lejeaftale fra databasen, samt fra tabellerne levering og abnmtlejeaftale,
+    // der passer med den lejeaftale der ønskes slettet
     public void deleteLejeaftale(LejeAftale lejeAftale) {
         try {
             int LejeAftale_ID = lejeAftale.getLejeAftale_ID();

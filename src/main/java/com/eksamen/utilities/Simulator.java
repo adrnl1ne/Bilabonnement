@@ -301,7 +301,7 @@ public class Simulator {
     }
 
     private static Bil simulateValgAfKlarBIL() throws NoCarReadyToRentOutException {
-        List<Bil> bilerKlar = bilRepo.viewLejeAftalePåKlarBil();
+        List<Bil> bilerKlar = bilRepo.viewKlarBil();
 
         int antalBilerDerErKLAR = bilerKlar.size();
         if (antalBilerDerErKLAR > 0) {
