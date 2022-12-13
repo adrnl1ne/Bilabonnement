@@ -6,6 +6,7 @@ import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skade;
 import com.eksamen.Model.Skader.SkadeType;
 import com.eksamen.Model.Skader.Skaderapport;
+import com.eksamen.Repository.BilRepository;
 import com.eksamen.Service.BilService;
 import com.eksamen.Service.LejeaftaleService;
 import com.eksamen.Service.SkaderapportService;

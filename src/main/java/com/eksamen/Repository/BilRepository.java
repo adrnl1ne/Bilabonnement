@@ -85,7 +85,7 @@ public class BilRepository {
         try {
 
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewInfo(1)}");
+            cstmt = conn.prepareCall("{call sp_viewBilerMedTilstand(1)}");
             cstmt.execute();
 
             rs = cstmt.getResultSet();
@@ -109,7 +109,7 @@ public class BilRepository {
         try {
 
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewInfo(2)}");
+            cstmt = conn.prepareCall("{call sp_viewBilerMedTilstand(2)}");
             cstmt.execute();
 
             rs = cstmt.getResultSet();
@@ -134,7 +134,7 @@ public class BilRepository {
         try {
 
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewInfo(3)}");
+            cstmt = conn.prepareCall("{call sp_viewBilerMedTilstand(3)}");
             cstmt.execute();
 
             rs = cstmt.getResultSet();
@@ -158,7 +158,7 @@ public class BilRepository {
         try {
 
             //Laver Callable statement
-            cstmt = conn.prepareCall("{call viewInfo(4)}");
+            cstmt = conn.prepareCall("{call sp_viewBilerMedTilstand(4)}");
             cstmt.execute();
 
             rs = cstmt.getResultSet();
