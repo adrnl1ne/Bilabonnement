@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skab Skaderapport til specifik bil</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<header th:insert="Header.html">
+</header>
+
+<section class="header">
+    <div class="hero">
+
+        <h1 style="color: white">Dette er her hvor en mekaniker kan udfærdige en skaderapport til en valg bil</h1>
+
+        <table class="table table-striped table-dark">
+            <tr>
+                <td>Bilens Stelnummer</td>
+                <td>Bilen tilstand</td>
+                <td>Kundens navn</td>
+            </tr>
+            <tr>
+                <td th:text="${Lejeaftale.getBil().getStelnummer()}"></td>
+                <td th:text="${Lejeaftale.getBil().getBiltilstand().displayTilstand()}"></td>
+                <td th:text="${Lejeaftale.getKunde().displayNavn()}"></td>
+            </tr>
+        </table>
+
+        <h2 style="color: white">De skader der er på rapporten allerede</h2>
+
+        <table class="table table-striped table-dark">
+            <tr>
+                <th>Skade Type</th>
+                <th>Skade Pris</th>
+            </tr>
+            <tr th:each="skade : ${Lejeaftale.getSkaderapport().getSkader()}">
+                <td th:text="${skade.getType().displaySkadeType()}"></td>
+                <td th:text="${skade.displayPris()}"></td>
+            </tr>
+        </table>
+
+        <h3 style="color: white">De skader der kan vælges til rapporten</h3>
+
+        <table class="table table-striped table-dark">
+            <tr>
+                <th>Skade Type</th>
+                <th>Vælg Skaden</th>
+            </tr>
+            <tr th:each="skadetype : ${Skadetyper}">
+                <td th:text="${skadetype.displaySkadeType()}"></td>
+                <td>
+                    <form method="POST" action="/Mekaniker/RegistrerNyrapport/CreateSkadesRapport/AddSkade">
+                        <input type="hidden" name="Lejeaftale_ID" th:value="${Lejeaftale.getLejeAftale_ID()}">
+                        <input type="hidden" name="SkadeType_ID" th:value="${skadetype.getId()}">
+                        <button type="submit" class="hero-btn red-btn">Tilføj Skaden</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <h3 style="color: white">Færdiggøre skaderapporten, ved at indsætte den nye kørselsdistance og bilens tilstand</h3>
+
+        <form method="POST" action="/Mekaniker/RegistrerNyrapport/CreateSkadesRapport/FinishRapport">
+            <input type="number" th:min="${Lejeaftale.getBil().getKmKort()}" name="Km_Kort" id="kmKort" step="0.01" required>
+            <label for="kmKort" style="color: white">Indsæt antallet bilen har kørt efter udlejning</label>
+            <input type="radio" id="skadet" name="Tilstand_ID" value="4" required>
+            <label for="skadet" style="color: white">Bilen er Skadet!</label>
+            <input type="radio" id="klar" name="Tilstand_ID" value="1">
+            <label for="klar" style="color: white">Bilen er klar!</label>
+            <input type="hidden" name="Lejeaftale_ID" th:value="${Lejeaftale.getLejeAftale_ID()}">
+            <button type="submit" class="hero-btn red-btn">Skab rapporten</button>
+        </form>
+
+    </div>
+</section>
+
+<footer th:insert="Footer.html">
+</footer>
 
 </body>
 </html>

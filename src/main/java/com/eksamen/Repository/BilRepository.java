@@ -28,25 +28,25 @@ public class BilRepository {
             if (resultSet.next()) {
                 String stelnummer = resultSet.getString("Stelnummer");
                 int Tilstands_ID = resultSet.getInt("Tilstands_ID");
+                Biltilstand tilstand = Biltilstand.getEnum(Tilstands_ID);
                 int Model_ID = resultSet.getInt("Model_ID");
                 double KmKørt = resultSet.getDouble("Km_Kørt");
 
+                Bil bil = new Bil(stelnummer);
+                bil.setBiltilstand(tilstand);
+                bil.setKmKort(KmKørt);
+                BilModel bilModel = new BilModelRepository().viewBilmodel(Model_ID);
+                bil.setBilModel(bilModel);
 
-                String Tilstand_QUERY = "SELECT Biltilstand FROM biltilstand WHERE TilStands_ID = ?";
+                return bil;
+
+               /*
+                if (resultSet1.next()) {
+                    String Tilstand_QUERY = "SELECT Biltilstand FROM biltilstand WHERE TilStands_ID = ?";
                 PreparedStatement preparedStatement1 = conn.prepareStatement(Tilstand_QUERY);
                 preparedStatement1.setInt(1, Tilstands_ID);
                 ResultSet resultSet1 = preparedStatement1.executeQuery();
-
-                if (resultSet1.next()) {
-                    Biltilstand tilstand = Biltilstand.getEnum(Tilstands_ID);
-                    Bil bil = new Bil(stelnummer);
-                    bil.setBiltilstand(tilstand);
-                    bil.setKmKort(KmKørt);
-                    BilModel bilModel = new BilModelRepository().viewBilmodel(Model_ID);
-                    bil.setBilModel(bilModel);
-
-                    return bil;
-                }
+                }*/
             }
         } catch (SQLException e) {
             e.printStackTrace();

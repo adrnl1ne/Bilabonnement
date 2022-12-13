@@ -1,11 +1,11 @@
 package com.eksamen.Controller;
 
+import com.eksamen.Model.Bil.Bil;
 import com.eksamen.Model.Bil.Biltilstand;
 import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skade;
 import com.eksamen.Model.Skader.SkadeType;
 import com.eksamen.Model.Skader.Skaderapport;
-import com.eksamen.Repository.BilRepository;
 import com.eksamen.Service.BilService;
 import com.eksamen.Service.LejeaftaleService;
 import com.eksamen.Service.SkaderapportService;
@@ -27,9 +27,9 @@ public class MekanikerController {
     @GetMapping("/Mekaniker/hjemvendteBiler")
     public String hjemvendteBiler(Model model) {
         // skal lister af iganværende lejeaftaler hvis bil har tilstand udlejet
-        List<LejeAftale> lejeAftaler = lejeaftaleService.nyesteLejeaftalerForUdlejedeBiler();
+        List<LejeAftale> lejeaftaler = lejeaftaleService.nyesteLejeaftalerForUdlejedeBiler();
         //sættes til model sendes viderer over til html.
-        model.addAttribute("lejeaftaler", lejeAftaler);
+        model.addAttribute("lejeaftaler", lejeaftaler);
 
         return "HjemvendteBiler";
 
@@ -111,6 +111,7 @@ public class MekanikerController {
                 SkadeType skadeType = SkadeType.getEnum(Integer.parseInt(skadeType_ID));
                 //new skade =new skadetype
                 Skade skade = new Skade(skadeType);
+                skade.setSkaderapport_ID(skaderapport.getSkaderapport_ID());
                 //add til skadesrapport og skadesrapport skal updates
                 skaderapport.setSkader(skade);
                 skaderapportService.updateSkaderapport(skaderapport);
@@ -161,6 +162,7 @@ public class MekanikerController {
                     //update skadesrapport
                     if (skaderapport.getBil().getBiltilstand() == Biltilstand.CHECKUP) {
                         skaderapport.getBil().setBiltilstand(Biltilstand.getEnum(Tilstands_ID));
+                        bilService.updateBil(skaderapport.getBil());
                         skaderapportService.updateSkaderapport(skaderapport);
                         return "redirect:/Mekaniker/RegistrerNyRapport";
                     }
@@ -172,4 +174,27 @@ public class MekanikerController {
         }
         return "redirect:/Værksted";
     }
+
+
+    @GetMapping("/Mekaniker/fixBrokenCars")
+    public String fixBrokenCars(Model model) {
+        List<Bil> alleSkadetBiler = bilService.viewSkadetBiler();
+        model.addAttribute("skadetBiler", alleSkadetBiler);
+        return "fixBrokenCars";
+    }
+
+    @PostMapping("/Mekaniker/fixBrokenCars/fixCar")
+    public String fixCar(WebRequest webRequest) {
+        String stelnummer = webRequest.getParameter("Stelnummer");
+        if (stelnummer != null && !(stelnummer.isBlank())) {
+            Bil valgtBil = bilService.viewBil(stelnummer);
+            if (valgtBil != null && valgtBil.getBiltilstand() == Biltilstand.SKADET) {
+                valgtBil.setBiltilstand(Biltilstand.KLAR);
+                bilService.updateBil(valgtBil);
+            }
+        }
+        return "redirect:/Mekaniker/fixBrokenCars";
+    }
+
+
 }

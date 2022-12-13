@@ -114,7 +114,7 @@ public class LejeAftaleRepository {
 
         try {
 
-            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (Lejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
+            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (ALejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
                 "OverAflPris, PrisPrMåned, Udbetaling, " +
                 "FarvePrisPrMåned, PrisPrKmOver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement2 = conn.prepareStatement(abonnementQUERY);
@@ -184,7 +184,7 @@ public class LejeAftaleRepository {
                 kunden = new KundeRepository().viewKunde(CPR);
                 lejeAftalen.setKunde(kunden);
 
-                String stelnummer = resultSet.getString("Stelnummer");
+                String stelnummer = resultSet.getString("LAStelnummer");
                 Bil udlejetBil = new BilRepository().viewBil(stelnummer);
                 lejeAftalen.setBil(udlejetBil);
 
@@ -223,7 +223,7 @@ public class LejeAftaleRepository {
         AbonnementLejeaftale lejeAftalesAbo = new AbonnementLejeaftale(lejeAftale_ID);
 
         try {
-            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.Lejeaftale_ID = ?";
+            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE ALejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setInt(1, lejeAftale_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -329,12 +329,12 @@ public class LejeAftaleRepository {
     public LejeAftale viewLejeAftale(Bil bil) {
         String stelnummer = bil.getStelnummer();
         try {
-            String SELECT_QUERY = "SELECT MAX(Lejeaftale_ID) FROM lejeaftale WHERE LAStelnummer=?";
+            String SELECT_QUERY = "SELECT MAX(lejeaftale.Lejeaftale_ID) AS Lejeaftale_ID FROM lejeaftale WHERE lejeaftale.LAStelnummer=?";
             PreparedStatement preparedStatement = conn.prepareStatement(SELECT_QUERY);
             preparedStatement.setString(1, stelnummer);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-              int lejeaftale_ID = resultSet.getInt("LejeAftale_ID");
+              int lejeaftale_ID = resultSet.getInt("Lejeaftale_ID");
               return this.viewLejeaftale(lejeaftale_ID);
             }
             return null;
@@ -416,7 +416,7 @@ public class LejeAftaleRepository {
         try {
             String abonnementQUERY = "UPDATE abnmtlejeaftale SET isUnlimited = ?, KmPrMd = ?, AbnmtLængde = ?, " +
                     "OverAflPris = ?, PrisPrMåned = ?, Udbetaling = ?, FarvePrisPrMåned = ?, " +
-                    "PrisPrKmOver = ? WHERE Lejeaftale_ID = ?";
+                    "PrisPrKmOver = ? WHERE ALejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setBoolean(1, isUnlimited);
             preparedStatement.setInt(2, kmPrMd);

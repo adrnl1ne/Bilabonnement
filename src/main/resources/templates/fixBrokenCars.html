@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registerer når en skadet bil er ikke skadet mere</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="Header.html">
+</header>
+
+<section class="header">
+  <div class="hero">
+
+    <h1 style="color: white">Dette er her hvor en mekaniker kan vælge en skadet bil til at være klar igen til udlejning</h1>
+
+    <table class="table table-striped table-dark">
+      <tr>
+        <td>Bilens Stelnummer</td>
+        <td>Bilen tilstand</td>
+        <td>Bilens mærke</td>
+        <td>Bilens model</td>
+        <td>Bilens geartype</td>
+        <td>Bilen energitype</td>
+        <td>Bilens forbrug</td>
+        <td>Vælg bil her</td>
+      </tr>
+      <tr th:each="skadetBil : ${skadetBiler}">
+        <td th:text="${skadetBil.getStelnummer()}"></td>
+        <td th:text="${skadetBil.getBiltilstand().displayTilstand()}"></td>
+        <td th:text="${skadetBil.getBilModel().getMaerke()}"></td>
+        <td th:text="${skadetBil.getBilModel().getModel()}"></td>
+        <td th:text="${skadetBil.getBilModel().displayGearType()}"></td>
+        <td th:text="${skadetBil.getBilModel().getEnergitype().displayEnergiType()}"></td>
+        <td th:text="${skadetBil.getBilModel().displayKmPrX()}"></td>
+        <td>
+          <form method="POST" action="/Mekaniker/fixBrokenCars/fixCar">
+            <input type="hidden" name="Stelnummer" th:value="${skadetBil.getStelnummer()}">
+            <button type="submit" class="hero-btn red-btn">Fikset</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</section>
+
+<footer th:insert="Footer.html">
+</footer>
+
+</body>
+</html>

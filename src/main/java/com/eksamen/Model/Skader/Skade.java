@@ -21,7 +21,9 @@ public class Skade {
 
     // Custom made Metoder
 
-
+    public String displayPris() {
+        return price + " kr.";
+    }
 
 
     // Getters, Setters og toStrings

@@ -73,6 +73,7 @@ public class SkadeRapportRepository {
         // fordi den ikke er sat, og så finder vi en pris inde i skadetype tabellen
         if (skaden.getPrice() == 0.0) {
             pris = this.findSkadePris(Skadetype_ID);
+            skaden.setPrice(pris);
         } else {
             pris = skaden.getPrice();
         }
@@ -186,8 +187,6 @@ public class SkadeRapportRepository {
 
             if (resultSet.next()) {
                 Skade skade = new Skade(Skade_ID);
-
-                int SkadesRapport_ID = resultSet.getInt("Skadesrapport_ID"); // Kan ikke bruge denne værdi, da hvis jeg laver en SkadesRapport med den, så vil den køre i selvsving
 
                 int SkadeType_ID = resultSet.getInt("Skadetype_ID");
                 SkadeType skadeType = SkadeType.getEnum(SkadeType_ID);

@@ -61,6 +61,9 @@ public class Skaderapport {
     }
 
     public List<Skade> getSkader() {
+        if (skader == null) {
+            skader = new ArrayList<>();
+        }
         return skader;
     }
 
