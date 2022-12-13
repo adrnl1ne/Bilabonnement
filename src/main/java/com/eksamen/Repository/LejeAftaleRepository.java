@@ -114,7 +114,7 @@ public class LejeAftaleRepository {
 
         try {
 
-            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (ALejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
+            String abonnementQUERY = "INSERT INTO abnmtlejeaftale (Lejeaftale_ID, isUnlimited, KmPrMd, AbnmtLængde, " +
                 "OverAflPris, PrisPrMåned, Udbetaling, " +
                 "FarvePrisPrMåned, PrisPrKmOver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement2 = conn.prepareStatement(abonnementQUERY);
@@ -223,7 +223,7 @@ public class LejeAftaleRepository {
         AbonnementLejeaftale lejeAftalesAbo = new AbonnementLejeaftale(lejeAftale_ID);
 
         try {
-            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.ALejeaftale_ID = ?";
+            String abonnementQUERY = "SELECT * FROM abnmtlejeaftale WHERE abnmtlejeaftale.Lejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setInt(1, lejeAftale_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -416,7 +416,7 @@ public class LejeAftaleRepository {
         try {
             String abonnementQUERY = "UPDATE abnmtlejeaftale SET isUnlimited = ?, KmPrMd = ?, AbnmtLængde = ?, " +
                     "OverAflPris = ?, PrisPrMåned = ?, Udbetaling = ?, FarvePrisPrMåned = ?, " +
-                    "PrisPrKmOver = ? WHERE ALejeaftale_ID = ?";
+                    "PrisPrKmOver = ? WHERE Lejeaftale_ID = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(abonnementQUERY);
             preparedStatement.setBoolean(1, isUnlimited);
             preparedStatement.setInt(2, kmPrMd);
