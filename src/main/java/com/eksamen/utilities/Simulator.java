@@ -237,7 +237,7 @@ public class Simulator {
     private static Kunde getKunde3() {
         Kunde kunde3 = new Kunde("270378-5566");
         kunde3.setRegNum("3333");
-        kunde3.setKontoNum("1234567890");
+        kunde3.setKontoNum("1234567891");
         Kontaktinfo kontaktInfo3 = new Kontaktinfo(kunde3.getCPR());
         kunde3.setKontaktInfo(kontaktInfo3);
         kontaktInfo3.setFirstName("Grethe");
