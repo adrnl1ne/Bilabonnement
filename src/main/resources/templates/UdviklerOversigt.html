@@ -1,64 +1,51 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Homepage - Eksamen webside</title>
-  <style>
-    table, th, td {
-      border:1px solid black;
-      border-collapse: collapse;
-    }
-    th, td {
-      background-color: #96D4D4;
-      border-color: #f44336;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info Om Udlejede Biler</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-
 <body>
 <header th:insert="Header.html">
 </header>
 
-<h2>Data Oversigt</h2>
+<section class="header">
+  <div class="hero">
 
-<table style="width:100%">
+    <h1 style="color: white">Her kan forretningudvikleren se udlejede biler, og deres samlede pris</h1>
 
-  <tr>
-    <th>BIler</th>
-    <th>lejeFTle</th>
-    <th>ddd</th>
-    <th>ddd</th>
-    <th>ddddd</th>
-    <th>kkkjk</th>
-    <th>lkko</th>
-    <th>mmkk</th>
-    <th>,mko</th>
-  </tr>
-  <tr>
-    <td>dddd</td>
-    <td>lkkm</td>
-    <td>kmko</td>
-    <td>mkkm</td>
-    <td>kmk</td>
-    <td>kkkj</td>
-    <td>km</td>
-    <td>kk</td>
-    <td>kk</td>
-  </tr>
-  <tr>
-    <td>lkk</td>
-    <td>mm</td>
-    <td>mm</td>
-    <td>mmkl</td>
-    <td>jkj</td>
-    <td>pok</td>
-    <td>kkj</td>
-    <td>mn</td>
-    <td>mkk</td>
-  </tr>
-</table>
+    <table class="table table-striped table-dark">
+      <tr>
+        <td>Bilens Stelnummer</td>
+        <td>Bilen tilstand</td>
+        <td>Kundens navn</td>
+        <td>Lejeaftalens start dato</td>
+        <td>Lejeaftalens forventede slut dato</td>
+        <td>Bilens pris</td>
+      </tr>
+      <tr th:each="lejeaftale : ${lejeaftaler}">
+        <td th:text="${lejeaftale.getBil().getStelnummer()}"></td>
+        <td th:text="${lejeaftale.getBil().getBiltilstand().displayTilstand()}"></td>
+        <td th:text="${lejeaftale.getKunde().displayNavn()}"></td>
+        <td th:text="${lejeaftale.getStartDato()}"></td>
+        <td th:text="${lejeaftale.calcAfleveringsDato()}"></td>
+        <td th:text="${lejeaftale.displayCalculatedPrice()}"></td>
+      </tr>
+      <tr>
+        <td>Sum på udlejede biler</td>
+      </tr>
+      <tr>
+        <td th:text="${sum}"></td>
+      </tr>
+    </table>
 
+  </div>
+</section>
 
+<footer th:insert="Footer.html">
+</footer>
 
 </body>
 </html>
-

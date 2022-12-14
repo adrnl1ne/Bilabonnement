@@ -31,7 +31,6 @@ public class MekanikerController {
         List<LejeAftale> lejeaftaler = lejeaftaleService.nyesteLejeaftalerForUdlejedeBiler();
         //sættes til model sendes viderer over til html.
         model.addAttribute("lejeaftaler", lejeaftaler);
-
         return "HjemvendteBiler";
 
     }

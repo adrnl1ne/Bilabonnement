@@ -26,38 +26,42 @@ public class SkadeRapportRepository {
         LocalDate afleveringsdate = skadeRapport.getAfleveringsdate();
         double kørselsdistance = skadeRapport.getKorselsdistance();
         skadeRapport.getBil().setKmKort(kørselsdistance);
+        if (skadeRapport.getSkaderapport_ID() > 0) {
+            this.updateSkadesRapport(skadeRapport);
+        } else {
+            // Inserter de fundne værdier for skadesrapporten
+            try {
+                String InsertQUERY = "INSERT INTO skadesrapport (Lejeaftale_ID, Stelnummer, Afleveringsdato," +
+                        " Kørselsdistance) VALUES (?, ?, ?, ?)";
+                PreparedStatement preparedStatement1 = conn.prepareStatement(InsertQUERY);
+                preparedStatement1.setInt(1, Lejeaftale_ID);
+                preparedStatement1.setString(2, Stelnummer);
+                preparedStatement1.setDate(3, Date.valueOf(afleveringsdate));
+                preparedStatement1.setDouble(4, kørselsdistance);
+                preparedStatement1.executeUpdate();
 
-        // Inserter de fundne værdier for skadesrapporten
-        try {
-            String InsertQUERY = "INSERT INTO skadesrapport (Lejeaftale_ID, Stelnummer, Afleveringsdato," +
-                " Kørselsdistance) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement1 = conn.prepareStatement(InsertQUERY);
-            preparedStatement1.setInt(1, Lejeaftale_ID);
-            preparedStatement1.setString(2, Stelnummer);
-            preparedStatement1.setDate(3, Date.valueOf(afleveringsdate));
-            preparedStatement1.setDouble(4, kørselsdistance);
-            preparedStatement1.executeUpdate();
-
-            // Finder SkadesRapportens, som lige er blevet inserted i tabellen, auto genererede ID/primær nøgle ved at søge efter dets unikke Lejeaftale
-            String SelectQUERY = "SELECT Skaderapport_ID FROM skadesrapport WHERE Lejeaftale_ID = ?";
-            PreparedStatement preparedStatement2 = conn.prepareStatement(SelectQUERY);
-            preparedStatement2.setInt(1, Lejeaftale_ID);
-            ResultSet resultSet = preparedStatement2.executeQuery();
-            if (resultSet.next()) {
-                int SkadesRapport_ID = resultSet.getInt("Skaderapport_ID");
-                skadeRapport.setSkaderapport_ID(SkadesRapport_ID);
-                List<Skade> skader = skadeRapport.getSkader();
-                // Finder hver skade i en liste af skader og Inserter dem ind i tabellen for skader
-                for (Skade skade : skader) {
-                    this.createSkade(skade);
+                // Finder SkadesRapportens, som lige er blevet inserted i tabellen, auto genererede ID/primær nøgle ved at søge efter dets unikke Lejeaftale
+                String SelectQUERY = "SELECT Skaderapport_ID FROM skadesrapport WHERE Lejeaftale_ID = ?";
+                PreparedStatement preparedStatement2 = conn.prepareStatement(SelectQUERY);
+                preparedStatement2.setInt(1, Lejeaftale_ID);
+                ResultSet resultSet = preparedStatement2.executeQuery();
+                if (resultSet.next()) {
+                    int SkadesRapport_ID = resultSet.getInt("Skaderapport_ID");
+                    skadeRapport.setSkaderapport_ID(SkadesRapport_ID);
+                    List<Skade> skader = skadeRapport.getSkader();
+                    // Finder hver skade i en liste af skader og Inserter dem ind i tabellen for skader
+                    for (Skade skade : skader) {
+                        this.createSkade(skade);
+                    }
                 }
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Det var ikke muligt at create, altså Inserte, SkadesRapporten: " + skadeRapport);
-            throw new RuntimeException();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.err.println("Det var ikke muligt at create, altså Inserte, SkadesRapporten: " + skadeRapport);
+                throw new RuntimeException();
+            }
         }
+
     }
 
     // Marcus

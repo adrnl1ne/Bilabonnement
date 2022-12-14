@@ -32,4 +32,8 @@ public class SkaderapportService {
         skadeRapportRepo.updateSkadesRapport(skaderapport);
     }
 
+
+   /* public boolean doesRapportExist(LejeAftale lejeAftale) {
+        Skaderapport skaderapport = skadeRapportRepo.viewSkadesRapport()
+    }*/
 }

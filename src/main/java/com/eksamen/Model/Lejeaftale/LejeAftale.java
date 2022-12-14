@@ -61,6 +61,14 @@ public class LejeAftale {
         return getStartDato().plusDays(abonnementLejeaftale.getAbonnementLaengde() * 30L);
     }
 
+    /*public boolean forSenAflevering() {
+        if (LocalDate.now().isAfter(calcAfleveringsDato()) && skaderapport.getAfleveringsdate() == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }*/
+
     public String displayTransportTillaeg() {
         return transportTillaeg + " kr.";
     }

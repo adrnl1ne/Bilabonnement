@@ -49,7 +49,15 @@ public class LejeaftaleService {
     }
 
 
-
+    public double calculateSumForLejeAftaler(List<LejeAftale> lejeAftaler) {
+        double sum = 0;
+        for (LejeAftale lejeAftale : lejeAftaler) {
+            double price = lejeAftale.calculatePrice();
+            sum += price;
+        }
+        return sum;
     }
+
+}
 
 
