@@ -24,6 +24,7 @@
         <td>Lejeaftalens start dato</td>
         <td>Lejeaftalens forventede slut dato</td>
         <td>Bilens pris</td>
+        <td>Er lejeaftalen overskredet</td>
       </tr>
       <tr th:each="lejeaftale : ${lejeaftaler}">
         <td th:text="${lejeaftale.getBil().getStelnummer()}"></td>
@@ -32,11 +33,24 @@
         <td th:text="${lejeaftale.getStartDato()}"></td>
         <td th:text="${lejeaftale.calcAfleveringsDato()}"></td>
         <td th:text="${lejeaftale.displayCalculatedPrice()}"></td>
+        <td th:text="${lejeaftale.displayOmOverskredetLevering()}"></td>
       </tr>
       <tr>
+        <td>Antal udlejede biler</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Sum på udlejede biler</td>
       </tr>
       <tr>
+        <td th:text="${lejeaftaler.size()}"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td th:text="${sum}"></td>
       </tr>
     </table>

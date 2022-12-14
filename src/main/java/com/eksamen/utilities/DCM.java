@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DCM {
-
+    //Lavet af Jakob
     private static Connection conn = createConnection();
 
         private static Connection createConnection() {

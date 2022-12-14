@@ -20,24 +20,32 @@ public enum SkadeType {
     }
 
     // Custom made Metoder
+    //Marcus
     public String displaySkadeType() {
-         switch (this.getId()) {
-             case 1:
-                 return "Stenslag";
-             case 2:
-                 return "Flere Stenslag";
-             case 3:
-                 return "Lakfelt";
-             case 4:
-                 return "Ridset Alufælg";
-             case 5:
-                 return "Ny Forrude";
-             case 6:
-                 return "Mangler Nøgle";
-             default:
-                 System.err.println("Det var ikke muligt at display en Type Skade, ud efter ID'et: " + this.getId());
-                 throw new RuntimeException();
-         }
+        switch (this.getId()) {
+            case 1 -> {
+                return "Stenslag";
+            }
+            case 2 -> {
+                return "Flere Stenslag";
+            }
+            case 3 -> {
+                return "Lakfelt";
+            }
+            case 4 -> {
+                return "Ridset Alufælg";
+            }
+            case 5 -> {
+                return "Ny Forrude";
+            }
+            case 6 -> {
+                return "Mangler Nøgle";
+            }
+            default -> {
+                System.err.println("Det var ikke muligt at display en Type Skade, ud efter ID'et: " + this.getId());
+                throw new RuntimeException();
+            }
+        }
     }
 
     // Getters
@@ -49,23 +57,31 @@ public enum SkadeType {
          return timesTypeCanBeReported;
     }
 
+    //Jakob
     public static SkadeType getEnum(int Skadetype_ID) {
         switch (Skadetype_ID) {
-            case 1:
+            case 1 -> {
                 return SkadeType.STENSLAG;
-            case 2:
+            }
+            case 2 -> {
                 return SkadeType.FLERE_STENSLAG;
-            case 3:
+            }
+            case 3 -> {
                 return SkadeType.LAKFELT;
-            case 4:
+            }
+            case 4 -> {
                 return SkadeType.RIDSET_ALUFÆLG;
-            case 5:
+            }
+            case 5 -> {
                 return SkadeType.NY_FORRUDE;
-            case 6:
+            }
+            case 6 -> {
                 return SkadeType.MANGLER_NØGLE;
-            default:
+            }
+            default -> {
                 System.err.println("Det var ikke muligt at udføre metoden getEnum for en SkadeType med ID'et: " + Skadetype_ID);
                 throw new RuntimeException();
+            }
         }
     }
 }

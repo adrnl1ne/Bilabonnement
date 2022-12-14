@@ -39,14 +39,6 @@ public class BilRepository {
                 bil.setBilModel(bilModel);
 
                 return bil;
-
-               /*
-                if (resultSet1.next()) {
-                    String Tilstand_QUERY = "SELECT Biltilstand FROM biltilstand WHERE TilStands_ID = ?";
-                PreparedStatement preparedStatement1 = conn.prepareStatement(Tilstand_QUERY);
-                preparedStatement1.setInt(1, Tilstands_ID);
-                ResultSet resultSet1 = preparedStatement1.executeQuery();
-                }*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +48,7 @@ public class BilRepository {
         return null;
     }
 
-    // Jakob
+    // Jakob & MArcus
     // Returner en liste af alle Bil objekter der er i bil tabellen i vores database
     public List<Bil> viewAlleBiler() {
         List<Bil> alleBiler = new ArrayList<>();

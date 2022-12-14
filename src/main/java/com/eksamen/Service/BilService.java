@@ -9,21 +9,15 @@ import java.util.List;
 public class BilService {
 
     private final BilRepository bilRepo = new BilRepository();
-
-
-    public List<Bil> seUdlejetBiler() {
-        return bilRepo.viewUdlejetBiler();
-    }
-
+    //Marcus
     public List<Bil> viewSkadetBiler() {
         return bilRepo.viewSkadedeBiler();
     }
-
+    //Marcus
     public Bil viewBil(String stelnummer) {
         return bilRepo.viewBil(stelnummer);
     }
-
-
+    //Jakob
     public void updateBil(Bil bil) {
         bilRepo.updateBil(bil);
     }

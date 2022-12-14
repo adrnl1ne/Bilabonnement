@@ -30,11 +30,7 @@ public class Bil {
     }
 
     //Custom made metoder
-    public double calculateTotalPrice(AbonnementLejeaftale abonnementLejeaftale) {
-        double sum = (abonnementLejeaftale.getPricePrMonth() + abonnementLejeaftale.getExtraColorPrice()) * abonnementLejeaftale.getAbonnementLaengde() + abonnementLejeaftale.getUdbetaling();
-        return sum;
-    }
-
+    //Marcus
     public String displayKmKort() {
         return kmKort + " kilometer kørt";
     }

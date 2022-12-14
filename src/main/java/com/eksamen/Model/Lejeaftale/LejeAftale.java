@@ -50,34 +50,51 @@ public class LejeAftale {
         return sum;
     }
 
+    //Marcus
     public String displayCalculatedPrice() {
         return this.calculatePrice() + " kr. over " + abonnementLejeaftale.displayAbonnementLaengde();
     }
 
 
     // Jakob
-    // Udregner den sidste date en udlejet bil skal afleveres tilbage
+    // Udregner den sidste date en udlejet bil skal afleveres tilbage, hvor en måned er 30 dage,
+    //idet at Bilabbonnement A/S benytter sig af et 30 dages system
     public LocalDate calcAfleveringsDato() {
         return getStartDato().plusDays(abonnementLejeaftale.getAbonnementLaengde() * 30L);
     }
 
-    /*public boolean forSenAflevering() {
-        if (LocalDate.now().isAfter(calcAfleveringsDato()) && skaderapport.getAfleveringsdate() == null) {
+    // Jakob
+    // Udregner den sidste date en udlejet bil skal afleveres tilbage, ud fra månedssystem
+    /*public LocalDate calcAfleveringsDato() {
+        return getStartDato().plusMonths(abonnementLejeaftale.getAbonnementLaengde());
+    }*/
+    //Jakob
+    public boolean forSenAflevering() {
+
+        if (LocalDate.now().isAfter(calcAfleveringsDato())) {
             return true;
         } else {
             return false;
         }
-    }*/
+    }
 
+    public String displayOmOverskredetLevering() {
+        if (forSenAflevering()) {
+            return "Lejeaftalen er overskredet";
+        } else {
+            return "";
+        }
+    }
+
+    //Marcus
     public String displayTransportTillaeg() {
         return transportTillaeg + " kr.";
     }
 
+    //Marcus
     public String displayKorselDistanceInden() {
         return korselDistanceInden + " kilometer";
     }
-
-
 
 
     // Getters, Setters og toString
@@ -106,7 +123,6 @@ public class LejeAftale {
     public void setStartDato(LocalDate startDato) {
         this.startDato = startDato;
     }
-
 
 
     public double getKorselDistanceInden() {

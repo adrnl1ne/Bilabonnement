@@ -14,8 +14,6 @@ public class AbonnementLejeaftale {
 
 
     // Constructors
-    public AbonnementLejeaftale() {
-    }
 
     public AbonnementLejeaftale(int lejeaftale_ID) {
         this.lejeaftale_ID = lejeaftale_ID;
@@ -23,6 +21,7 @@ public class AbonnementLejeaftale {
 
 
     // Custom made Metoder
+    //Marcus
     public String displayAbonnementType() {
         if (isUnlimited) {
             return "Unlimited";
@@ -42,19 +41,19 @@ public class AbonnementLejeaftale {
     public String displayAbonnementLaengde() {
         return abonnementLaengde + " måneder";
     }
-
+    //Marcus
     public String displayAfleveringsPrice() {
         return afleveringPrice + " kr./dag";
     }
-
+    //Marcus
     public String displayUdbetaling() {
         return udbetaling + " kr.";
     }
-
+    //Marcus
     public String displayExtraColorPrice() {
         return extraColorPrice + " kr./måned";
     }
-
+    //Marcus
     public String displayPriceForOverDrive() {
         return priceForOverDrive + " kr./km.";
     }

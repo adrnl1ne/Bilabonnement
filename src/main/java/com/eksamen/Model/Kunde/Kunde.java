@@ -13,24 +13,17 @@ public class Kunde {
     private List<LejeAftale> lejeaftaler;
 
     // Constructors
-    public Kunde(Kontaktinfo kontaktinfo, String CPR) {
-        info = kontaktinfo;
+
+    public Kunde(String CPR) {
         this.CPR = CPR;
     }
-
-    public Kunde (String CPR) {
-        this.CPR = CPR;
-    }
-
 
 
     // Custom made Metoder
-
+    //Marcus
     public String displayNavn() {
         return info.getFirstName() + ' ' + info.getLastName();
     }
-
-
 
 
     // Getters, Setters and toString()

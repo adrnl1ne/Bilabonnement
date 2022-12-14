@@ -2,7 +2,7 @@ package com.eksamen.utilities;
 
 public class NoCarReadyToRentOutException extends Exception {
 
-  // Marcus
+  //Lavet af Marcus
   public NoCarReadyToRentOutException(String message) {
     super(message);
   }

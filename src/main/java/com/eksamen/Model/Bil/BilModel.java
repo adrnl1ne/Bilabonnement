@@ -34,7 +34,7 @@ public class BilModel {
         }
         return kmPrX + " km/l";
     }
-
+    //Marcus
     public String displayGearType() {
         if (isGearManuel) {
             return "Manuelt";

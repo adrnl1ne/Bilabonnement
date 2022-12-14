@@ -507,14 +507,11 @@ public class Simulator {
 
     private static String getRandomFDMAdresse() {
         int randomNum = getRandomNum(3, 1);
-        switch (randomNum) {
-            case 1:
-                return "DS STORE VIRUM\nVirumgårdsvej 4-10\n2830 Virum";
-            case 2:
-                return "DS SALON ODENSE\nBrondovej 13-15\n5250 Odense SV";
-            default:
-                return "DS SALON SILKEBORG\nNørrevænget 9-23\n8600 Silkeborg";
-        }
+        return switch (randomNum) {
+            case 1 -> "DS STORE VIRUM\nVirumgårdsvej 4-10\n2830 Virum";
+            case 2 -> "DS SALON ODENSE\nBrondovej 13-15\n5250 Odense SV";
+            default -> "DS SALON SILKEBORG\nNørrevænget 9-23\n8600 Silkeborg";
+        };
     }
 
 

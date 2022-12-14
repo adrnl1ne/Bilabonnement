@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LejeAftaleRepository {
-    private CallableStatement cstmt;
-    private ResultSet rs;
     private final Connection conn = DCM.getConn();
 
     // Marcus
@@ -485,14 +483,4 @@ public class LejeAftaleRepository {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
 }

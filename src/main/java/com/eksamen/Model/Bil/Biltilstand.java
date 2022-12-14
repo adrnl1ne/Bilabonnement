@@ -25,34 +25,44 @@ public enum Biltilstand {
     //Jakob
     public static Biltilstand getEnum(int Tilstands_ID) {
         switch (Tilstands_ID) {
-            case 1:
+            case 1 -> {
                 return Biltilstand.KLAR;
-            case 2:
+            }
+            case 2 -> {
                 return Biltilstand.UDLEJET;
-            case 3:
+            }
+            case 3 -> {
                 return Biltilstand.CHECKUP;
-            case 4:
+            }
+            case 4 -> {
                 return Biltilstand.SKADET;
-            default:
+            }
+            default -> {
                 System.err.println("Det var ikke muligt at finde enum Biltilstand, ud efter ID'et: " + Tilstands_ID);
                 throw new RuntimeException();
+            }
         }
     }
 
-
+    //Marcus
     public String displayTilstand() {
         switch (this.getId()) {
-            case 1:
+            case 1 -> {
                 return "Bilen er klar til at blive udlejet";
-            case 2:
+            }
+            case 2 -> {
                 return "Bilen er udlejet";
-            case 3:
+            }
+            case 3 -> {
                 return "Bilen er til eftersyn";
-            case 4:
+            }
+            case 4 -> {
                 return "Bilen er skadet";
-            default:
+            }
+            default -> {
                 System.err.println("Det var ikke muligt at display en Biltilstand, ud efter ID'et: " + this.getId());
                 throw new RuntimeException();
+            }
         }
     }
 }

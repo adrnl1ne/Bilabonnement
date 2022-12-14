@@ -13,9 +13,6 @@ public class AbonnementBilModel {
 
 
     // Constructors
-    public AbonnementBilModel(int model_ID) {
-        this.model_ID = model_ID;
-    }
 
     public AbonnementBilModel() {
 
@@ -23,6 +20,7 @@ public class AbonnementBilModel {
 
 
     // Custom made Metoder
+    //Marcus
     public String displayAbonnementType() {
         if (isUnlimited) {
             return "Unlimited";

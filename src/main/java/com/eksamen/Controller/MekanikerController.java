@@ -25,6 +25,7 @@ public class MekanikerController {
     private final LejeaftaleService lejeaftaleService = new LejeaftaleService();
     private final BilService bilService = new BilService();
 
+    //Marcus & Flavie
     @GetMapping("/Mekaniker/hjemvendteBiler")
     public String hjemvendteBiler(Model model) {
         // skal lister af iganværende lejeaftaler hvis bil har tilstand udlejet
@@ -35,6 +36,7 @@ public class MekanikerController {
 
     }
 
+    //Jakob
     @PostMapping("/Mekaniker/hjemvendteBiler/tilbageVendte")
     public String tilbageVendte(WebRequest webRequest) {
         int Leje_ID;
@@ -59,6 +61,7 @@ public class MekanikerController {
         return "redirect:/Værksted";
     }
 
+    //Jakob
     @GetMapping("/Mekaniker/RegistrerNyRapport")
     public String RegistrerNyRapport(Model model) {
         //Skal have en list af iganværende lejeaftale hvis bil har tilstand checkup
@@ -70,6 +73,7 @@ public class MekanikerController {
         return "RegistrerNyRapport";
     }
 
+    //Jakob & Marcus
     @PostMapping("/Mekaniker/RegistrerNyrapport/CreateSkadesRapport")
     public String CreateSkadesRapport(WebRequest webRequest, Model model) {
         int Leje_ID;
@@ -93,6 +97,8 @@ public class MekanikerController {
         return "redirect:/Værksted";
     }
 
+
+    //Jakob & Marcus
     @PostMapping("/Mekaniker/RegistrerNyrapport/CreateSkadesRapport/AddSkade")
     public String AddSkade(WebRequest webRequest, Model model) {
         int Leje_ID;
@@ -130,6 +136,7 @@ public class MekanikerController {
 
     }
 
+    //Jakob & Marcus
     @PostMapping("/Mekaniker/RegistrerNyrapport/CreateSkadesRapport/FinishRapport")
     public String FinishRapport(WebRequest webRequest) {
         int Leje_ID;
@@ -175,7 +182,7 @@ public class MekanikerController {
         return "redirect:/Værksted";
     }
 
-
+    //Marcus
     @GetMapping("/Mekaniker/fixBrokenCars")
     public String fixBrokenCars(Model model) {
         List<Bil> alleSkadetBiler = bilService.viewSkadetBiler();
@@ -183,6 +190,7 @@ public class MekanikerController {
         return "fixBrokenCars";
     }
 
+    //Marcus
     @PostMapping("/Mekaniker/fixBrokenCars/fixCar")
     public String fixCar(WebRequest webRequest) {
         String stelnummer = webRequest.getParameter("Stelnummer");

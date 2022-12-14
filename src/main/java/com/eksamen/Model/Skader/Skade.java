@@ -20,7 +20,7 @@ public class Skade {
 
 
     // Custom made Metoder
-
+    //Marcus
     public String displayPris() {
         return price + " kr.";
     }

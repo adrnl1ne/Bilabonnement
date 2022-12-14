@@ -35,6 +35,7 @@ public class Skaderapport {
 
 
     // Custom made Metoder
+    //Marcus
     public double calcTotalPriceOfSkader() {
         double sum = 0;
         for (Skade skade : skader) {

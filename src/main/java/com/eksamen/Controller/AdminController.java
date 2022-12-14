@@ -27,10 +27,10 @@ public class AdminController {
         return "RegistrerLejeAftale";
     }
 
-    //note bare test
+    //Marcus & Jakob
     @PostMapping("/Admin/RegistrerAftale/createAftale")
     public String createAftale(HttpSession session, WebRequest dataFromDateField) {
-        //Note: Ikke bedste brug, men virker for nu
+
         LejeAftale sessionAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");
 
         String datoFelt = dataFromDateField.getParameter("datoFelt");
@@ -50,12 +50,14 @@ public class AdminController {
         }
     }
 
+    //Marcus
     @GetMapping("/Admin/RegistrerAftale/deleteAftale")
     public String deleteAftale(HttpSession session) {
         session.invalidate();
         return "redirect:/Admin/RegistrerAftale";
     }
 
+    //Marcus
     private LejeAftale setSessionAftale(HttpSession session) {
         try {
             LejeAftale sessionLejeAftale = (LejeAftale) session.getAttribute("sessionLejeAftale");

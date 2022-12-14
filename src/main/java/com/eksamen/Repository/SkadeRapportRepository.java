@@ -181,6 +181,7 @@ public class SkadeRapportRepository {
         }
     }
 
+    //Marcus
     // Selecter, altså returner et Skade objekt ud efter dets ID/primær nøgle
     private Skade viewSkade(int Skade_ID) {
         try {

@@ -13,15 +13,19 @@ public enum LeveringsType {
     }
 
     // Custom made Metoder
+    //Marcus
     public String displayLeveringsType() {
         switch (this.getId()) {
-            case 1:
+            case 1 -> {
                 return "Standard levering";
-            case 2:
+            }
+            case 2 -> {
                 return "FDM levering";
-            default:
+            }
+            default -> {
                 System.err.println("Det var ikke muligt at display en Type levering, ud efter ID'et: " + this.getId());
                 throw new RuntimeException();
+            }
         }
     }
 
@@ -31,14 +35,16 @@ public enum LeveringsType {
         return Id;
     }
 
-
+    //Jakob
     public static LeveringsType getType(int id) {
-            switch (id) {
-                case 1:
-                    return STANDARD;
-                case 2:
-                    return FDM;
+        switch (id) {
+            case 1 -> {
+                return STANDARD;
             }
+            case 2 -> {
+                return FDM;
+            }
+        }
         System.err.println("Der blev forsøgt at getType for en leveringstype, men talet/ID'et der blev brugt: " + id + " er ikke valid!");
             throw new RuntimeException();
     }
