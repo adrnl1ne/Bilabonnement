@@ -58,7 +58,7 @@ public class KundeRepository {
     }
 
     // Marcus og Jakob
-    // Indsætter et Konkaktinfo objekt for en kunde ind i databasen, metoden bruges når en kunde bliver indsat for første gang
+    // Indsætter et Kontaktinfo objekt for en kunde ind i databasen, metoden bruges når en kunde bliver indsat for første gang
     private void createKontaktinfo(Kontaktinfo kontaktinfo) {
         String CPR = kontaktinfo.getCPR();
         String fornavn = kontaktinfo.getFirstName();
