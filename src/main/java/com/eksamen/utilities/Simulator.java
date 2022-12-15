@@ -551,9 +551,6 @@ public class Simulator {
     }
 
 
-    // MARCUS: alle disse get kunder metoder er lavet af mig
-
-
     // Metode der finder et random tal fra 0 til men ikke med et givet max tal
     private static int getRandomNum(int maxNum) {
         Random random = new Random();
