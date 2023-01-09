@@ -1,7 +1,6 @@
 package com.eksamen.Controller;
 
 import com.eksamen.Model.Bil.Bil;
-import com.eksamen.Model.Bil.Biltilstand;
 import com.eksamen.Model.Lejeaftale.LejeAftale;
 import com.eksamen.Model.Skader.Skade;
 import com.eksamen.Model.Skader.SkadeType;
@@ -9,6 +8,10 @@ import com.eksamen.Model.Skader.Skaderapport;
 import com.eksamen.Service.BilService;
 import com.eksamen.Service.LejeaftaleService;
 import com.eksamen.Service.SkaderapportService;
+import com.eksamen.utilities.CheckingupNoneRentedCarException;
+import com.eksamen.utilities.DamagingNoneCheckedCarException;
+import com.eksamen.utilities.FixingNoneDamagedCarException;
+import com.eksamen.utilities.ReadyingNoneCheckedCarException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +38,7 @@ public class MekanikerController {
 
     }
 
+    // TODO: Har flyttet logikken for at kun biler der er udlejet kan få skiftet til at være til checkup/hjemvendte
     //Jakob
     @PostMapping("/Mekaniker/hjemvendteBiler/tilbageVendte")
     public String tilbageVendte(WebRequest webRequest) {
@@ -45,19 +49,24 @@ public class MekanikerController {
         if (lejeaftale_ID != null && !(lejeaftale_ID.isBlank())) {
             Leje_ID = Integer.parseInt(lejeaftale_ID);
             LejeAftale lejeAftale = lejeaftaleService.viewLejeAftale(Leje_ID);
+            Bil lejeaftalensBil = lejeAftale.getBil();
             //tjekke om biltilstand stadig er Udlejet hvis den er så sende tilbage til homepage.
-            if (lejeAftale.getBil().getBiltilstand() == Biltilstand.UDLEJET) {
+            try {
                 //sætte bilstand til at være checkup & update bil
-                lejeAftale.getBil().setBiltilstand(Biltilstand.CHECKUP);
-                bilService.updateBil(lejeAftale.getBil());
-                //laver en new/skadeRapport ved at give den lejeaftale.
-                //create skadesrapport.
+                bilService.updateUdlejetTilCheckup(lejeaftalensBil);
+                //laver en new/skadeRapport ved at give den lejeaftale, altså create skadesrapport.
                 skaderapportService.createSkadeRapport(lejeAftale);
                 return "redirect:/Mekaniker/hjemvendteBiler";
+            } catch (CheckingupNoneRentedCarException e) {
+                e.printStackTrace();
+                System.err.println("Det var ikke muligt at update Bilen:\n" + lejeaftalensBil +
+                    " i LejeAftalen:\n" + lejeAftale);
+                return "redirect:/Værksted";
             }
-        }
 
-        return "redirect:/Værksted";
+        }
+        System.out.println("MekanikkerController forsøgte at vende en udlejet bil tilbage ud efter lejeaftale_ID'et: " +  lejeaftale_ID);
+        return "redirect:/";
     }
 
     //Jakob
@@ -135,50 +144,63 @@ public class MekanikerController {
 
     }
 
+    // TODO: Har flyttet logikken for at kun biler der er til checkup/hjemvendte kan få skiftet til at være til enten skadet eller klar
     //Jakob & Marcus
     @PostMapping("/Mekaniker/RegistrerNyrapport/CreateSkadesRapport/FinishRapport")
     public String FinishRapport(WebRequest webRequest) {
         int Leje_ID;
-        double KM;
-        int Tilstands_ID;
         String lejeaftale_ID = webRequest.getParameter("Lejeaftale_ID");
-        String Km_Kort = webRequest.getParameter("Km_Kort");
-        String tilstand = webRequest.getParameter("Tilstand_ID");
-        //overførte nummerfelt (kørte_km)
         if (lejeaftale_ID != null && !(lejeaftale_ID.isBlank())) {
             Leje_ID = Integer.parseInt(lejeaftale_ID);
-            if (Km_Kort != null && !(Km_Kort.isBlank())) {
-                KM = Double.parseDouble(Km_Kort);
-
-                if (tilstand != null && !(tilstand.isBlank())) {
-                    Tilstands_ID = Integer.parseInt(tilstand);
-
-
-                    //View den lejeaftale for den ID
-                    //viewer en skaderapport lejeaftale
-                    Skaderapport skaderapport =
-                            skaderapportService.viewSkaderapport(lejeaftaleService.viewLejeAftale(Leje_ID));
-                    // skadesrapport satte sin kørsel distance til
-                    skaderapport.setKorselsdistance(KM);
-                    //overføret Biltilstand Id,og enum der passer til det.
-                    //overføre lejeaftale ID
-                    //skifte biltilstand sættes til Enum der passer
-                    //view bil ud fra lejeaftale
-                    //sætte bil Tilstand som passer og updates
-                    //update skadesrapport
-                    if (skaderapport.getBil().getBiltilstand() == Biltilstand.CHECKUP) {
-                        skaderapport.getBil().setBiltilstand(Biltilstand.getEnum(Tilstands_ID));
-                        bilService.updateBil(skaderapport.getBil());
-                        skaderapportService.updateSkaderapport(skaderapport);
-                        return "redirect:/Mekaniker/RegistrerNyRapport";
-                    }
-
-
-                }
-            }
-
+        } else {
+            System.out.println("Det var ikke muligt at finish rapporten til Lejeaftalen med ID'et: " + lejeaftale_ID);
+            return "redirect:/";
         }
-        return "redirect:/Værksted";
+
+        double KM;
+        String Km_Kort = webRequest.getParameter("Km_Kort");
+        if (Km_Kort != null && !(Km_Kort.isBlank())) {
+            KM = Double.parseDouble(Km_Kort);
+        } else {
+            System.out.println("Det var ikke muligt at finish rapporten til Lejeaftalen med ID'et: " + lejeaftale_ID +
+                "\nHvor kilometer kørt er: " + Km_Kort);
+            return "redirect:/";
+        }
+
+        int Tilstands_ID;
+        String tilstand = webRequest.getParameter("Tilstand_ID");
+        if (tilstand != null && !(tilstand.isBlank())) {
+            Tilstands_ID = Integer.parseInt(tilstand);
+        } else {
+            System.out.println("Det var ikke muligt at finish rapporten til Lejeaftalen med ID'et: " + lejeaftale_ID +
+                "\nHvor den ønskede tilstands id er: " + tilstand);
+            return "redirect:/";
+        }
+        //View lejeaftalen ud for det ID der blev overført
+        LejeAftale lejeAftale = lejeaftaleService.viewLejeAftale(Leje_ID);
+
+        //Finder lejeaftalens bils stelnummer
+        String lejeaftalensBilsStelnummer = lejeAftale.getBil().getStelnummer();
+        // Updater den hjemvendte bil (CHECKUP) til enten SKADET eller KLAR ved at give det tilstands ID'et
+        try {
+            bilService.updateHjemvendtBilTilKlarEllerSkadet(lejeaftalensBilsStelnummer, Tilstands_ID);
+        } catch (ReadyingNoneCheckedCarException e) {
+            System.out.println("Det var ikke muligt at update en hjemvendt bil til at være KLAR, Bilen:\n" + lejeAftale.getBil() +
+                " i LejeAftalen:\n" + lejeAftale);
+            return "redirect:/Værksted";
+        } catch (DamagingNoneCheckedCarException e) {
+            System.out.println("Det var ikke muligt at update en hjemvendt bil til at være SKADET, Bilen:\n" + lejeAftale.getBil() +
+                " i LejeAftalen:\n" + lejeAftale);
+            return "redirect:/Værksted";
+        }
+
+        //viewer en skaderapport ud fra lejeaftalen
+        Skaderapport skaderapport = skaderapportService.viewSkaderapport(lejeAftale);
+        //skaderapporten får sat sin kørsel til det overført
+        skaderapport.setKorselsdistance(KM);
+        // Updater skaderapporten
+        skaderapportService.updateSkaderapport(skaderapport);
+        return "redirect:/Mekaniker/RegistrerNyRapport";
     }
 
     //Marcus
@@ -189,18 +211,30 @@ public class MekanikerController {
         return "fixBrokenCars";
     }
 
+    // TODO: Har flyttet logikken for at kun biler der er skadet kan få skiftet til at være klar til udlejning igen
     //Marcus
     @PostMapping("/Mekaniker/fixBrokenCars/fixCar")
     public String fixCar(WebRequest webRequest) {
         String stelnummer = webRequest.getParameter("Stelnummer");
         if (stelnummer != null && !(stelnummer.isBlank())) {
             Bil valgtBil = bilService.viewBil(stelnummer);
-            if (valgtBil != null && valgtBil.getBiltilstand() == Biltilstand.SKADET) {
-                valgtBil.setBiltilstand(Biltilstand.KLAR);
-                bilService.updateBil(valgtBil);
+            if (valgtBil != null) {
+                try {
+                    bilService.updateSkadetTilKlar(valgtBil);
+                    return "redirect:/Mekaniker/fixBrokenCars";
+                } catch (FixingNoneDamagedCarException e) {
+                    System.out.println("Det var ikke muligt at update en skadet bil til at være KLAR, Bilen:\n" + valgtBil);
+                    return "redirect:/Værksted";
+                }
+            } else {
+                System.out.println("Det var ikke muligt at fixCar til bilen med stelnummeret: " + stelnummer +
+                    "\nFor den viewede bil er: " + null);
+                return "redirect:/";
             }
+        } else {
+            System.out.println("Det var ikke muligt at fixCar til bilen med stelnummeret: " + stelnummer);
+            return "redirect:/";
         }
-        return "redirect:/Mekaniker/fixBrokenCars";
     }
 
 
